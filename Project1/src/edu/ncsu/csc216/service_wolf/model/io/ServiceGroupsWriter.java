@@ -10,7 +10,7 @@ import edu.ncsu.csc216.service_wolf.model.service_group.ServiceGroup;
  * @author meles
  *
  */
-public class ServiceGroupWriter {
+public class ServiceGroupsWriter {
 
 	/**
 	 * 

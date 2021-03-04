@@ -13,7 +13,7 @@ import edu.ncsu.csc216.service_wolf.model.service_group.ServiceGroup;
  * @author meles
  *
  */
-public class ServiceGroupReader {
+public class ServiceGroupsReader {
 
 	/**
 	 * ddddd
