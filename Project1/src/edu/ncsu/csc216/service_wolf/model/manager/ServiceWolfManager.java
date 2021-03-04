@@ -104,7 +104,7 @@ public class ServiceWolfManager {
 
 	/**
 	 * 
-	 * @return
+	 * @return a single array of service Group list
 	 */
 	public String[] getServiceGroupList() {
 		return null;

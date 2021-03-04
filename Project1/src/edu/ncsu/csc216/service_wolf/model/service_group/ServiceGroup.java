@@ -44,7 +44,7 @@ public class ServiceGroup {
 	/**
 	 * 
 	 */
-	public void setIncidentcounter() {
+	public void setIncidentCounter() {
 		// impement set incident counter
 	}
 
@@ -60,7 +60,7 @@ public class ServiceGroup {
 	 * 
 	 * @return
 	 */
-	public List<Incident> getIncident() {
+	public List<Incident> getIncidents() {
 		return null;
 	}
 
