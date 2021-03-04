@@ -10,8 +10,9 @@ import edu.ncsu.csc216.service_wolf.model.service_group.ServiceGroup;
  * @author meles
  *
  */
-public class ServiceGroupsWriter {
-
+public class ServiceGroupWriter {
+	
+	
 	/**
 	 * 
 	 * @param fileName     and string that holds the loaction of the file that the
