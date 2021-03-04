@@ -30,14 +30,14 @@ public class ServiceGroup {
 	/**
 	 * @return the serviceGroupName
 	 */
-	private String getServiceGroupName() {
+	public String getServiceGroupName() {
 		return serviceGroupName;
 	}
 
 	/**
-	 * @param serviceGroupName the serviceGroupName to set
+	 * @param serviceGroupName the serviceGroupName to set -setServiceGroupName
 	 */
-	private void setServiceGroupName(String serviceGroupName) {
+	public void setServiceGroupName(String serviceGroupName) {
 		this.serviceGroupName = serviceGroupName;
 	}
 
