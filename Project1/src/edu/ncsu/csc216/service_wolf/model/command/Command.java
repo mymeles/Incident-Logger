@@ -12,41 +12,42 @@ package edu.ncsu.csc216.service_wolf.model.command;
 public class Command {
 
 	/**
-	 * A class within Command class that holds a list a possible command values fot
+	 * A class within Command class that holds a list a possible command values
 	 * the incident state.
 	 *
 	 * @author meles meles
 	 */
-	public enum CommandValue {
+	public enum CommandValue { ASSIGN, HOLD, INVESTIGATE, RESOLVE, REOPEN, CANCEL }
 
 		/**
 		 * assign value 
 		 */
-		ASSIGN, 
+		public static final CommandValue ASSIGN = null; 
 		/**
 		 * Hold value 
 		 */
-		HOLD, 
+		public static final  CommandValue HOLD = null; 
 		
 		/**
-		 * investigarte command
+		 * investigate value 
 		 */
-		INVESTIGATE, 
+		public static final CommandValue INVESTIGATE = null;
 	
-		/*
-		 * Resolve command
-		 */
-		RESOLVE, 
 		/**
-		 * reopen command
+		 * Resolve value 
 		 */
-		REOPEN, 
+		public static final CommandValue RESOLVE = null;
+		
 		/**
-		 * cancel command 
+		 * reopen value
 		 */
-		CANCEL;
+		public static final CommandValue REOPEN = null; 
+		
+		/**
+		 * cancel value 
+		 */
+		public static final CommandValue CANCEL =  null;
 
-	}
 
 	/**
 	 * A String representaion of command inforamtion
