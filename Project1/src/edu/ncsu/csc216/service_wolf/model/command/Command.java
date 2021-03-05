@@ -10,15 +10,15 @@ package edu.ncsu.csc216.service_wolf.model.command;
  *
  */
 public class Command {
-	
+
 	/**
 	 * A class within Command class that holds a list a possible command values fot
 	 * the incident state.
 	 *
-	 *@author meles meles
+	 * @author meles meles
 	 */
 	public enum CommandValue {
-	
+
 		ASSIGN, HOLD, INVESTIGATE, RESOLVE, REOPEN, CANCEL;
 
 	}
@@ -57,7 +57,7 @@ public class Command {
 	 * @throws IAE saying " These commands do NOT require an additional piece of
 	 *             information." if the command value is "INVESTIGATE" and "REOPEN"
 	 *             and a non-null commandinforamtion is passed.
-	 *  
+	 * 
 	 */
 	public Command(CommandValue command, String commandInformation, String commandMessage) {
 
@@ -65,7 +65,8 @@ public class Command {
 
 	/**
 	 * Retrvies comandvalue information
-	 * @return a commandValue 
+	 * 
+	 * @return a commandValue
 	 */
 	public CommandValue getCommand() {
 		return command;

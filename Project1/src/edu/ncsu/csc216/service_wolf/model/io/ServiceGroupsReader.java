@@ -22,11 +22,8 @@ public class ServiceGroupsReader {
 	 * 
 	 * @param fileName location of the file that is read
 	 * @return an array list of service groups
-	 * 
-	 * @throws FileNotFoundException if the filename is is null or empty or invalid
-	 *                               desitination
 	 */
-	public static ArrayList<ServiceGroup> readServiceGroupsFile(String fileName) throws FileNotFoundException {
+	public static ArrayList<ServiceGroup> readServiceGroupsFile(String fileName) {
 
 		return null;
 
