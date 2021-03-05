@@ -21,6 +21,8 @@ public class NewState implements IncidentState {
 	
 	/**
 	 *A method that updates the Incident state by passing through command
+	 *
+	 *@param command is a Command 
 	 */
 	public void updateState(Command command) {
 		// implement update state
@@ -28,6 +30,7 @@ public class NewState implements IncidentState {
 	
 	/**
 	 * A method that retrives the incidents state name
+	 * @return a string value of state name 
 	 */
 	public String getStateName() {
 		return null;

@@ -8,13 +8,14 @@ import static org.junit.Assert.*;
 import org.junit.Test;
 
 /**
+ * A test class for SeriviceGroup 
  * @author meles
  *
  */
 public class ServiceGroupTest {
-
+	// missing a constructor
 	/**
-	 * Test method for {@link edu.ncsu.csc216.service_wolf.model.service_group.ServiceGroup#ServiceGroup(java.lang.String)}.
+	 * Test method for serviceGroup
 	 */
 	@Test
 	public void testServiceGroup() {
@@ -22,7 +23,7 @@ public class ServiceGroupTest {
 	}
 
 	/**
-	 * Test method for {@link edu.ncsu.csc216.service_wolf.model.service_group.ServiceGroup#setIncidentcounter()}.
+	 * Test method for setIncidentCounter
 	 */
 	@Test
 	public void testSetIncidentcounter() {
@@ -30,7 +31,7 @@ public class ServiceGroupTest {
 	}
 
 	/**
-	 * Test method for {@link edu.ncsu.csc216.service_wolf.model.service_group.ServiceGroup#addIncident(edu.ncsu.csc216.service_wolf.model.incident.Incident)}.
+	 * Test method for addIncident
 	 */
 	@Test
 	public void testAddIncident() {
@@ -38,7 +39,7 @@ public class ServiceGroupTest {
 	}
 
 	/**
-	 * Test method for {@link edu.ncsu.csc216.service_wolf.model.service_group.ServiceGroup#getIncident()}.
+	 * Test method for getIncident
 	 */
 	@Test
 	public void testGetIncident() {
@@ -46,7 +47,7 @@ public class ServiceGroupTest {
 	}
 
 	/**
-	 * Test method for {@link edu.ncsu.csc216.service_wolf.model.service_group.ServiceGroup#getIncidentById(int)}.
+	 * Test method for getIncidentbyId
 	 */
 	@Test
 	public void testGetIncidentById() {
@@ -54,7 +55,7 @@ public class ServiceGroupTest {
 	}
 
 	/**
-	 * Test method for {@link edu.ncsu.csc216.service_wolf.model.service_group.ServiceGroup#executeCommand(int, edu.ncsu.csc216.service_wolf.model.command.Command)}.
+	 * Test method for executeCommand
 	 */
 	@Test
 	public void testExecuteCommand() {
@@ -62,7 +63,7 @@ public class ServiceGroupTest {
 	}
 
 	/**
-	 * Test method for {@link edu.ncsu.csc216.service_wolf.model.service_group.ServiceGroup#deleteIncidentById(int)}.
+	 * Test method for deletIncidentById
 	 */
 	@Test
 	public void testDeleteIncidentById() {

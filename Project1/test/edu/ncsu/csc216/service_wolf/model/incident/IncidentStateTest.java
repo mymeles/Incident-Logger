@@ -8,13 +8,14 @@ import static org.junit.Assert.*;
 import org.junit.Test;
 
 /**
+ * A test class for the class IncidentState
  * @author meles
  *
  */
 public class IncidentStateTest {
 
 	/**
-	 * Test method for {@link edu.ncsu.csc216.service_wolf.model.incident.IncidentState#updateState(edu.ncsu.csc216.service_wolf.model.command.Command)}.
+	 * Test method for updateState
 	 */
 	@Test
 	public void testUpdateState() {
@@ -22,7 +23,7 @@ public class IncidentStateTest {
 	}
 
 	/**
-	 * Test method for {@link edu.ncsu.csc216.service_wolf.model.incident.IncidentState#getStateName()}.
+	 * Test method for getStateName
 	 */
 	@Test
 	public void testGetStateName() {

@@ -8,13 +8,14 @@ import static org.junit.Assert.*;
 import org.junit.Test;
 
 /**
+ * A test calss for ServiceGroupReader
  * @author meles
  *
  */
 public class ServiceGroupsReaderTest {
 
 	/**
-	 * Test method for {@link edu.ncsu.csc216.service_wolf.model.io.ServiceGroupReader#readServiceGroupsFile(java.lang.String)}.
+	 * Test method for readServiceGroupsFile
 	 */
 	@Test
 	public void testReadServiceGroupsFile() {

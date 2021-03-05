@@ -8,13 +8,14 @@ import static org.junit.Assert.*;
 import org.junit.Test;
 
 /**
+ * A test class for ServiceGroupWriterTest
  * @author meles
  *
  */
-public class ServiceGroupsWriterTest {
+public class ServiceGroupWriterTest {
 
 	/**
-	 * Test method for {@link edu.ncsu.csc216.service_wolf.model.io.ServiceGroupWriter#writeServiceGroupsToFile(java.lang.String, java.util.List)}.
+	 * Test method for writeServiceGroupsToFile
 	 */
 	@Test
 	public void testWriteServiceGroupsToFile() {

@@ -8,13 +8,14 @@ import static org.junit.Assert.*;
 import org.junit.Test;
 
 /**
+ * A class to test ServiceWolfManager
  * @author meles
  *
  */
 public class ServiceWolfManagerTest {
 
 	/**
-	 * Test method for {@link edu.ncsu.csc216.service_wolf.model.manager.ServiceWolfManager#getInstance()}.
+	 * Test method for getinstance.
 	 */
 	@Test
 	public void testGetInstance() {
@@ -22,7 +23,7 @@ public class ServiceWolfManagerTest {
 	}
 
 	/**
-	 * Test method for {@link edu.ncsu.csc216.service_wolf.model.manager.ServiceWolfManager#saveToFile(java.lang.String)}.
+	 * Test method for saveTofile
 	 */
 	@Test
 	public void testSaveToFile() {
@@ -30,7 +31,7 @@ public class ServiceWolfManagerTest {
 	}
 
 	/**
-	 * Test method for {@link edu.ncsu.csc216.service_wolf.model.manager.ServiceWolfManager#loadFromFile(java.lang.String)}.
+	 * Test method for loadFromFile
 	 */
 	@Test
 	public void testLoadFromFile() {
@@ -38,7 +39,7 @@ public class ServiceWolfManagerTest {
 	}
 
 	/**
-	 * Test method for {@link edu.ncsu.csc216.service_wolf.model.manager.ServiceWolfManager#getIncidentsAsArray()}.
+	 * Test method for getIncidentAsArray
 	 */
 	@Test
 	public void testGetIncidentsAsArray() {
@@ -46,7 +47,7 @@ public class ServiceWolfManagerTest {
 	}
 
 	/**
-	 * Test method for {@link edu.ncsu.csc216.service_wolf.model.manager.ServiceWolfManager#getIncidentById(int)}.
+	 * Test method for getIncidentById
 	 */
 	@Test
 	public void testGetIncidentById() {
@@ -54,7 +55,7 @@ public class ServiceWolfManagerTest {
 	}
 
 	/**
-	 * Test method for {@link edu.ncsu.csc216.service_wolf.model.manager.ServiceWolfManager#executeCommand(int, edu.ncsu.csc216.service_wolf.model.command.Command)}.
+	 * Test method for executecommand
 	 */
 	@Test
 	public void testExecuteCommand() {
@@ -62,7 +63,7 @@ public class ServiceWolfManagerTest {
 	}
 
 	/**
-	 * Test method for {@link edu.ncsu.csc216.service_wolf.model.manager.ServiceWolfManager#deleteIncidentById(int)}.
+	 * Test method for deleteIncidentById
 	 */
 	@Test
 	public void testDeleteIncidentById() {
@@ -70,7 +71,7 @@ public class ServiceWolfManagerTest {
 	}
 
 	/**
-	 * Test method for {@link edu.ncsu.csc216.service_wolf.model.manager.ServiceWolfManager#addIncidentToServiceGroup(java.lang.String, java.lang.String, java.lang.String)}.
+	 * Test method for addIncidentToServiceGroup.
 	 */
 	@Test
 	public void testAddIncidentToServiceGroup() {
@@ -78,7 +79,7 @@ public class ServiceWolfManagerTest {
 	}
 
 	/**
-	 * Test method for {@link edu.ncsu.csc216.service_wolf.model.manager.ServiceWolfManager#loadServiceGroup(java.lang.String)}.
+	 * Test method for loadServiceGroup
 	 */
 	@Test
 	public void testLoadServiceGroup() {
@@ -86,7 +87,7 @@ public class ServiceWolfManagerTest {
 	}
 
 	/**
-	 * Test method for {@link edu.ncsu.csc216.service_wolf.model.manager.ServiceWolfManager#getServiceGroupName()}.
+	 * Test method for getServiceGroupName
 	 */
 	@Test
 	public void testGetServiceGroupName() {
@@ -94,7 +95,7 @@ public class ServiceWolfManagerTest {
 	}
 
 	/**
-	 * Test method for {@link edu.ncsu.csc216.service_wolf.model.manager.ServiceWolfManager#getServiceGroupList()}.
+	 * Test method for getServiceGroupList
 	 */
 	@Test
 	public void testGetServiceGroupList() {
@@ -102,7 +103,7 @@ public class ServiceWolfManagerTest {
 	}
 
 	/**
-	 * Test method for {@link edu.ncsu.csc216.service_wolf.model.manager.ServiceWolfManager#clearServiceGroups()}.
+	 * Test method for clearServiceGroup
 	 */
 	@Test
 	public void testClearServiceGroups() {
@@ -110,7 +111,7 @@ public class ServiceWolfManagerTest {
 	}
 
 	/**
-	 * Test method for {@link edu.ncsu.csc216.service_wolf.model.manager.ServiceWolfManager#editServiceGroup(java.lang.String)}.
+	 * Test method for editServiceGroup
 	 */
 	@Test
 	public void testEditServiceGroup() {
@@ -118,7 +119,7 @@ public class ServiceWolfManagerTest {
 	}
 
 	/**
-	 * Test method for {@link edu.ncsu.csc216.service_wolf.model.manager.ServiceWolfManager#addServiceGroup(java.lang.String)}.
+	 * Test method for addServiceGroup
 	 */
 	@Test
 	public void testAddServiceGroup() {
@@ -126,7 +127,7 @@ public class ServiceWolfManagerTest {
 	}
 
 	/**
-	 * Test method for {@link edu.ncsu.csc216.service_wolf.model.manager.ServiceWolfManager#deleteServiceGroup()}.
+	 * Test method for deleteServiceGroup
 	 */
 	@Test
 	public void testDeleteServiceGroup() {
@@ -134,7 +135,7 @@ public class ServiceWolfManagerTest {
 	}
 
 	/**
-	 * Test method for {@link edu.ncsu.csc216.service_wolf.model.manager.ServiceWolfManager#resetManager()}.
+	 * Test method for resetmanager
 	 */
 	@Test
 	public void testResetManager() {
