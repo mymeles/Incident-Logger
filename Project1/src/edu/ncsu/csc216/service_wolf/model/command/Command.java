@@ -19,7 +19,32 @@ public class Command {
 	 */
 	public enum CommandValue {
 
-		ASSIGN, HOLD, INVESTIGATE, RESOLVE, REOPEN, CANCEL;
+		/**
+		 * assign value 
+		 */
+		ASSIGN, 
+		/**
+		 * Hold value 
+		 */
+		HOLD, 
+		
+		/**
+		 * investigarte command
+		 */
+		INVESTIGATE, 
+	
+		/*
+		 * Resolve command
+		 */
+		RESOLVE, 
+		/**
+		 * reopen command
+		 */
+		REOPEN, 
+		/**
+		 * cancel command 
+		 */
+		CANCEL;
 
 	}
 

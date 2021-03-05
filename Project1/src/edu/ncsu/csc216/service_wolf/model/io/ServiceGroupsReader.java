@@ -3,7 +3,6 @@
  */
 package edu.ncsu.csc216.service_wolf.model.io;
 
-import java.io.FileNotFoundException;
 import java.util.ArrayList;
 
 import edu.ncsu.csc216.service_wolf.model.incident.Incident;
