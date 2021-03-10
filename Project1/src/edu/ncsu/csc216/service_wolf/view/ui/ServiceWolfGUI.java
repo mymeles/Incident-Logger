@@ -1956,7 +1956,7 @@ public class ServiceWolfGUI extends JFrame implements ActionListener {
 			boolean reset = true; //Assume done unless error
 			if (e.getSource() == btnAdd) {
 				String title = txtTitle.getText();
-				String caller = txtCaller.getText();
+				String caller = txtCaller.getText(); 
 				String action = txtMessage.getText();
 				
 				//Get instance of model and add incident

@@ -12,49 +12,19 @@ package edu.ncsu.csc216.service_wolf.model.command;
 public class Command {
 
 	/**
-	 * A class within Command class that holds a list a possible command values
-	 * the incident state.
+	 * A class within Command class that holds a list a possible command values the
+	 * incident state.
 	 *
 	 * @author meles meles
 	 */
-	public enum CommandValue { ASSIGN, HOLD, INVESTIGATE, RESOLVE, REOPEN, CANCEL }
-
-		/**
-		 * assign value 
-		 */
-		public static final CommandValue ASSIGN = null; 
-		/**
-		 * Hold value 
-		 */
-		public static final  CommandValue HOLD = null; 
-		
-		/**
-		 * investigate value 
-		 */
-		public static final CommandValue INVESTIGATE = null;
-	
-		/**
-		 * Resolve value 
-		 */
-		public static final CommandValue RESOLVE = null;
-		
-		/**
-		 * reopen value
-		 */
-		public static final CommandValue REOPEN = null; 
-		
-		/**
-		 * cancel value 
-		 */
-		public static final CommandValue CANCEL =  null;
-
+	public enum CommandValue { ASSIGN, HOLD, INVESTIGATE, RESOLVE, REOPEN, CANCEL } 
 
 	/**
 	 * A String representaion of command inforamtion
 	 */
 	private String commandInformation;
 
-	/**
+	/** 
 	 * A string represetnation of command message
 	 */
 	private String commandMessage;
@@ -62,7 +32,7 @@ public class Command {
 	/**
 	 * a Commandvalue called command
 	 */
-	CommandValue command;
+	private CommandValue command;
 
 	/**
 	 * A consturctor for command class that is constructors with Command, command
@@ -86,6 +56,25 @@ public class Command {
 	 * 
 	 */
 	public Command(CommandValue command, String commandInformation, String commandMessage) {
+
+		if (command == null) {
+			throw new IllegalArgumentException("A Command MUST have a CommandValue"); 
+		} else if (commandMessage == null || ("").equals(commandMessage)) {
+			throw new IllegalArgumentException("A Command MUST have a commandMessage");
+
+		} else if (((CommandValue.ASSIGN).equals(command) || (CommandValue.HOLD).equals(command) || (CommandValue.RESOLVE).equals(command) || 
+				(CommandValue.CANCEL).equals(command)) && (commandInformation == null || ("").equals(commandMessage))) {
+			throw new IllegalArgumentException("These commands require an additional piece of information");
+		}
+
+		else if (((CommandValue.INVESTIGATE).equals(command) || (CommandValue.REOPEN).equals(command))
+				&& commandInformation != null) {
+			throw new IllegalArgumentException("These commands do NOT require an additional piece of information");
+		} else {
+			this.command = command; 
+			this.commandInformation = commandInformation;
+			this.commandMessage = commandMessage; 
+		} 
 
 	}
 

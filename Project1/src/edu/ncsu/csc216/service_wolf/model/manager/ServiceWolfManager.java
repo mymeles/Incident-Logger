@@ -3,14 +3,19 @@
  */
 package edu.ncsu.csc216.service_wolf.model.manager;
 
+
+import java.io.IOException;
+import java.util.ArrayList;
+
 import edu.ncsu.csc216.service_wolf.model.command.Command;
 import edu.ncsu.csc216.service_wolf.model.incident.Incident;
+import edu.ncsu.csc216.service_wolf.model.io.ServiceGroupWriter;
 import edu.ncsu.csc216.service_wolf.model.service_group.ServiceGroup;
 
 /**
  * A concrete class that maintains a list of ServiceGroups, the active or
  * current serviceGroup, and handles events from the GUI. ServiceWolf implements
- * the Singleton Design Pattern and is accessed through the getInstance method. 
+ * the Singleton Design Pattern and is accessed through the getInstance method.
  * 
  * @author meles
  *
@@ -18,9 +23,26 @@ import edu.ncsu.csc216.service_wolf.model.service_group.ServiceGroup;
 public class ServiceWolfManager {
 
 	/**
-	 * A constructor for Service wolf manager
+	 * cretae an instance of servicewolf manager 
+	 */
+	private static ServiceWolfManager instance;
+	
+	/**
+	 *  A represerntation of service groups 
+	 */
+	private ArrayList<ServiceGroup> serviceGroups = new ArrayList<ServiceGroup>();
+	
+	/**
+	 * the currentservice group 
+	 */
+	private ServiceGroup currentServiceGroup;
+
+	/**
+	 * A constructor for Service wolf manager 
 	 */
 	private ServiceWolfManager() {
+		String name = null; 
+		serviceGroups = new ArrayList<ServiceGroup>(); 
 
 	}
 
@@ -30,7 +52,10 @@ public class ServiceWolfManager {
 	 * @return a serviceWolf Manager
 	 */
 	public static ServiceWolfManager getInstance() {
-		return null;
+		if (instance == null) {
+			instance = new ServiceWolfManager();
+		}
+		return instance;
 	}
 
 	/**
@@ -39,8 +64,16 @@ public class ServiceWolfManager {
 	 * @param fileName a location where the file is saved
 	 */
 	public void saveToFile(String fileName) {
-		// implement save to file
+		try {
+			ServiceGroupWriter.writeServiceGroupsToFile(fileName, serviceGroups);
+
+		} catch (IOException e) {
+			System.out.println("The file cannot be saved");
+			e.printStackTrace();
+		}
+
 	}
+	
 
 	/**
 	 * Uses the ServiceGroupReader to read the given fileName.
@@ -48,7 +81,7 @@ public class ServiceWolfManager {
 	 * @param fileName location of a service file
 	 */
 	public void loadFromFile(String fileName) {
-		// impements load from filke
+		
 	}
 
 	/**
@@ -92,17 +125,19 @@ public class ServiceWolfManager {
 	/**
 	 * A method that adds incidents to service groups.
 	 * 
-	 * @param title title of the incident
-	 * @param caller caller of the incident
-	 * @param message message of the incident 
+	 * @param title   title of the incident
+	 * @param caller  caller of the incident
+	 * @param message message of the incident
 	 */
 	public void addIncidentToServiceGroup(String title, String caller, String message) {
 		// impelement add incident to service group
 	}
 
-	/** 
-	 * A method to load and read service groups from a given file name  
-	 * @param filename is a string representaion of a file loaction to load service groups 
+	/**
+	 * A method to load and read service groups from a given file name
+	 * 
+	 * @param filename is a string representaion of a file loaction to load service
+	 *                 groups
 	 */
 	public void loadServiceGroup(String filename) {
 		// implement load service group
@@ -180,7 +215,7 @@ public class ServiceWolfManager {
 	 * A methos to reset the incident manager for testing
 	 */
 	protected void resetManager() {
-		// implement reset manager
+		
 	}
 
 }

@@ -5,7 +5,9 @@ package edu.ncsu.csc216.service_wolf.model.incident;
 
 import java.util.ArrayList;
 
+
 import edu.ncsu.csc216.service_wolf.model.command.Command;
+import edu.ncsu.csc216.service_wolf.model.command.Command.CommandValue;
 
 /**
  * A class that represents an incident that is Mannaged
@@ -17,8 +19,7 @@ public class Incident {
 	/**
 	 * An integer representing unique Incident Id
 	 */
-
-	private int id;
+	private int incidentid;
 	/**
 	 * A string representation of incident title
 	 */
@@ -44,6 +45,36 @@ public class Incident {
 	 * A string representation of incident status details
 	 */
 	private String statusDetails;
+
+	/**
+	 * An Incident State that keeps track of the incidents statet
+	 */
+	private IncidentState currentState;
+
+	/**
+	 * An incident state represenating cancneled state
+	 */
+	private final IncidentState canceledState = new CanceledState();
+
+	/**
+	 * An inscident state representing onhold state
+	 */
+	private final IncidentState onHoldState = new OnHoldState();
+
+	/**
+	 * An incident state representing resolved state
+	 */
+	private final IncidentState resolvedState = new ResolvedState();
+
+	/**
+	 * An incidnet state representing new state
+	 */
+	private final IncidentState newState = new NewState();
+
+	/**
+	 * An incident state representing inprogress state
+	 */
+	private final IncidentState inProgressState = new InProgressState();
 
 	/**
 	 * An ArrayList representation of incident logs in String form
@@ -156,7 +187,11 @@ public class Incident {
 	 * @throws IAE If any of the given parameters are null or empty string.
 	 */
 	public Incident(String title, String caller, String message) {
-		// implement incident constructor
+		setId(Incident.counter);
+		Incident.incrementCounter();
+		setTitle(title);
+		setCaller(caller);
+
 	}
 
 	/**
@@ -181,7 +216,16 @@ public class Incident {
 	 */
 	public Incident(int id, String state, String title, String caller, int reopenCount, String owner,
 			String statusDetails, ArrayList<String> incidentLog) {
-		// impement inciedent constructor
+
+		setId(id);
+		setTitle(title);
+		setCaller(caller);
+		setReopenCount(reopenCount);
+		setOwner(owner);
+		setStatusDetails(statusDetails);
+		this.incidentLog = incidentLog;
+		setState(state); 
+
 	}
 
 	/**
@@ -190,17 +234,28 @@ public class Incident {
 	 * @return an integer of Id
 	 */
 	public int getId() {
-		return id;
+		return incidentid;
 
 	}
 
 	/**
-	 * sets the id from the passed parameter
+	 * sets the id from the passed parameter if the id is greater than the counter
+	 * then it sets the counter to one greater than the ID.
+	 *
 	 * 
 	 * @param id the incident id to set
 	 */
 	private void setId(int id) {
-		this.id = id;
+
+		if (id <= 0) {
+			throw new IllegalArgumentException("Incident cannot br created.");
+		}
+		this.incidentid = id;
+
+		if (id > counter) {
+			setCounter(id);
+		}
+
 	}
 
 	/**
@@ -209,7 +264,7 @@ public class Incident {
 	 * @return a string value of state
 	 */
 	public String getState() {
-		return null;
+		return currentState.getStateName();
 	}
 
 	/**
@@ -218,6 +273,44 @@ public class Incident {
 	 * @param state the incident state to set
 	 */
 	private void setState(String state) {
+		if (state == null || ("".equals(state))) {
+			throw new IllegalArgumentException("Incident cannot be created.");
+		}
+
+		if (state.equals(NEW_NAME)) {
+			if (!(owner).equals(UNOWNED) || (!(statusDetails).equals(NO_STATUS))) {
+				throw new IllegalArgumentException("Incident cannot be created");
+			}
+			this.currentState = newState;
+		}
+
+		else if (state == IN_PROGRESS_NAME) {
+			if ((owner).equals(UNOWNED) || (!(statusDetails).equals(NO_STATUS))) {
+				throw new IllegalArgumentException("Incident cannot be created");
+			}
+			this.currentState = inProgressState;
+		} else if (state == ON_HOLD_NAME) {
+			if ((owner).equals(UNOWNED) || (!(statusDetails).equals(HOLD_AWAITING_CALLER))
+					|| (!(statusDetails).equals(HOLD_AWAITING_CHANGE))
+					|| (!(statusDetails).equals(HOLD_AWAITING_VENDOR))) {
+				throw new IllegalArgumentException("Incident cannot be created");
+			}
+			this.currentState = onHoldState;
+		} else if (state == RESOLVED_NAME) {
+			if ((owner).equals(UNOWNED) || (!(statusDetails).equals(RESOLUTION_PERMANENTLY_SOLVED))
+					|| (!(statusDetails).equals(RESOLUTION_WORKAROUND))
+					|| (!(statusDetails).equals(RESOLUTION_CALLER_CLOSED))) {
+				throw new IllegalArgumentException("Incident cannot be created");
+			}
+			this.currentState = resolvedState;
+		} else if (state == CANCELED_NAME) {
+			if (!(owner).equals(UNOWNED) || (!(statusDetails).equals(CANCELLATION_DUPLICATE))
+					|| (!(statusDetails).equals(CANCELLATION_UNNECESSARY))
+					|| (!(statusDetails).equals(CANCELLATION_NOT_AN_INCIDENT))) {
+				throw new IllegalArgumentException("Incident cannot be created");
+			}
+			this.currentState = canceledState;
+		}
 
 	}
 
@@ -234,8 +327,13 @@ public class Incident {
 	 * sets the incidets titke from the passesd parameter
 	 * 
 	 * @param title the title to set
+	 * 
+	 * @throws if title is empty or
 	 */
 	private void setTitle(String title) {
+		if (title == null || ("").equals(title)) {
+			throw new IllegalArgumentException("Incident cannot be created");
+		}
 		this.title = title;
 	}
 
@@ -249,15 +347,20 @@ public class Incident {
 	}
 
 	/**
-	 * sets the incidets caller from the passesd paramter 
+	 * sets the incidets caller from the passesd paramter
+	 * 
 	 * @param caller the caller to set
 	 */
 	private void setCaller(String caller) {
+		if (caller == null || ("").equals(caller)) {
+			throw new IllegalArgumentException("Incident cannot be created.");
+		}
 		this.caller = caller;
 	}
 
 	/**
-	 * retrives the Reopen  count of the incident 
+	 * retrives the Reopen count of the incident
+	 * 
 	 * @return the reopenCount
 	 */
 	public int getReopenCount() {
@@ -265,15 +368,20 @@ public class Incident {
 	}
 
 	/**
-	 * sets the incidets reopen count from the passesd paramter 
+	 * sets the incidets reopen count from the passesd paramter
+	 * 
 	 * @param reopenCount the reopenCount to set
 	 */
 	private void setReopenCount(int reopenCount) {
+		if (reopenCount < 0) {
+			throw new IllegalArgumentException("Incident cannot be created.");
+		}
 		this.reopenCount = reopenCount;
 	}
 
 	/**
 	 * returns the Owner of the incident resolver
+	 * 
 	 * @return the owner
 	 */
 	public String getOwner() {
@@ -281,15 +389,23 @@ public class Incident {
 	}
 
 	/**
-	 * sets the incidets relover owner from the passed parameter 
+	 * sets the incidets relover owner from the passed parameter
+	 * 
 	 * @param owner the owner to set
+	 * 
+	 * @throws IAE stating "Incident cannot be created" if the title is empty or
+	 *             null
 	 */
 	private void setOwner(String owner) {
+		if (owner == null || ("").equals(owner)) {
+			throw new IllegalArgumentException("Incident cannot be created.");
+		}
 		this.owner = owner;
 	}
 
 	/**
-	 * retrvies the status detail of the incident 
+	 * retrvies the status detail of the incident
+	 * 
 	 * @return the statusDetails
 	 */
 	public String getStatusDetails() {
@@ -297,56 +413,353 @@ public class Incident {
 	}
 
 	/**
-	 * sets the status detatila from the passsed parameter 
+	 * sets the status detatila from the passsed parameter
+	 * 
 	 * @param statusDetails the statusDetails to set
+	 * 
+	 * @throws IAE stating "Incident cannot be created" if the status detail is
+	 *             empty or null
 	 */
 	private void setStatusDetails(String statusDetails) {
+		if (statusDetails == null || ("").equals(statusDetails)) {
+			throw new IllegalArgumentException("Incident cannot be created.");
+		}
 		this.statusDetails = statusDetails;
 	}
 
 	/**
-	 * This method add messages to the inciodent log 
+	 * This method add messages to the inciodent log
+	 * 
 	 * @param message to set the message in the incident log
 	 * @return an integer reference of the log
 	 */
 	private int addMessageToIncidentLog(String message) {
-		return 0;
+
+		incidentLog.add(message);
+
+		return incidentLog.size();
 	}
 
 	/**
-	 * a method to incremet when an incident is added 
+	 * a method to incremet when an incident is added
 	 */
 	public static void incrementCounter() {
-		// implement Incerment counter
+		counter++;
 	}
 
 	/**
-	 * sets the incidet counter from the passesd paramter 
-	 * @param counter the counter to set
+	 * sets the incidet counter from the passesd paramter
+	 * 
+	 * @param id the counter to set
 	 */
-	public static void setCounter(int counter) {
-		// implement setCounter
+	public static void setCounter(int id) {
+		counter = id + 1;
 	}
 
 	/**
-	 * retrives the incident log message o
+	 * retrives the incident log message 
+	 * 
 	 * @return the incidentLog
 	 */
 	public String getIncidentLogMessages() {
-		return null;
+
+		String logMessages = "";
+		
+		for(int i = 0; i < incidentLog.size(); i++) {
+		logMessages = logMessages + "-" + incidentLog.get(i) + "\n";	
+		}
+		return logMessages;
 	}
 
 	@Override
 	public String toString() {
+		// add * 
 		return null;
 	}
 
 	/**
 	 * a method delegating to the current state’s updateState(Command) method.
-	 * @param command a Command 
+	 * 
+	 * @param command a Command
 	 */
 	public void update(Command command) {
-		// implement update
+		currentState.updateState(command);
+		addMessageToIncidentLog(command.getCommandMessage());
+	}
+
+	/**
+	 * Interface for states in the Incident State Pattern. All concrete incident
+	 * states must implement the IncidentState interface. The IncidentState
+	 * interface should be a private interface of the Incident class.
+	 * 
+	 * @author Dr. Sarah Heckman (sarah_heckman@ncsu.edu)
+	 */
+
+	private interface IncidentState {
+
+		/**
+		 * Update the Incident based on the given Command. An
+		 * UnsupportedOperationException is thrown if the Command is not a valid action
+		 * for the given state.
+		 * 
+		 * @param command Command describing the action that will update the Incident's
+		 *                state.
+		 * @throws UnsupportedOperationException if the Command is not a valid action
+		 *                                       for the given state.
+		 */
+		void updateState(Command command);
+
+		/**
+		 * Returns the name of the current state as a String.
+		 * 
+		 * @return the name of the current state as a String.
+		 */
+		String getStateName();
+
+	}
+
+	/**
+	 * A class that represents a New incident of the service wolf and implemented in
+	 * the Interface Incident State
+	 * 
+	 * @author meles
+	 *
+	 */
+	public class NewState implements IncidentState {
+
+		/**
+		 * Constructs New State so it is implemneted in Incident interface
+		 */
+		private NewState() {
+		
+			}
+
+		/**
+		 * A method that updates the Incident state by passing through command
+		 *
+		 * @param command is a Command
+		 */
+		public void updateState(Command command) {
+
+			if (command.getCommand() != CommandValue.ASSIGN || command.getCommand() != CommandValue.CANCEL) {
+				throw new UnsupportedOperationException();
+			}
+
+			if (command.getCommand() == CommandValue.ASSIGN) {
+				currentState = inProgressState;
+				setStatusDetails(command.getCommandInformation());
+				setOwner(owner); // I have a question
+
+			}
+
+			if (command.getCommand() == CommandValue.CANCEL) {
+				currentState = canceledState;
+				setStatusDetails(command.getCommandInformation());
+				setOwner(UNOWNED);
+			}
+		}
+
+		/**
+		 * A method that retrives the incidents state name
+		 * 
+		 * @return a string value of state name
+		 */
+		public String getStateName() {
+			return NEW_NAME;
+
+		}
+
+	}
+
+	/**
+	 * A class that represents a InProgress incident of the service wolf and
+	 * implemented in the Interface Incident State
+	 * 
+	 * @author meles
+	 *
+	 */
+	public class InProgressState implements IncidentState {
+
+		/**
+		 * Constructs InProgress State so it is implemneted in Incident interface
+		 */
+		private InProgressState() {
+			// TODO implement inprogress state
+		}
+
+		/**
+		 * A method that updates the Incident state by passing through command
+		 * 
+		 * @param command is a Command
+		 */
+		public void updateState(Command command) {
+			if ((command.getCommand() != CommandValue.ASSIGN) || (command.getCommand() != CommandValue.RESOLVE)
+					|| (command.getCommand() != CommandValue.ASSIGN) || (command.getCommand() != CommandValue.CANCEL)) {
+				throw new UnsupportedOperationException();
+			}
+
+			if (command.getCommand() == CommandValue.ASSIGN) {
+				currentState = inProgressState;
+				setStatusDetails(command.getCommandInformation());
+			} else if (command.getCommand() == CommandValue.HOLD) {
+				setStatusDetails(command.getCommandInformation());
+				currentState = onHoldState;
+				setStatusDetails(command.getCommandInformation());
+			}
+
+			else if (command.getCommand() == CommandValue.RESOLVE) {
+				currentState = resolvedState;
+				setStatusDetails(command.getCommandInformation());
+
+			} else if (command.getCommand() == CommandValue.CANCEL) {
+				currentState = canceledState;
+				setStatusDetails(command.getCommandInformation());
+				setCaller(UNOWNED);
+			} else {
+				throw new UnsupportedOperationException();
+			}
+		}
+
+		/**
+		 * A method that retrives the incidents state name
+		 * 
+		 * @return a string value of the incidents state name
+		 */
+		public String getStateName() {
+			return null;
+
+		}
+	}
+
+	/**
+	 * A class that represents a OnHold incident of the service wolf and implemented
+	 * in the Interface Incident State
+	 * 
+	 * @author meles
+	 *
+	 */
+	public class OnHoldState implements IncidentState {
+
+		/**
+		 * Constructs OnHold State so it is implemneted in Incident interface
+		 */
+		private OnHoldState() {
+
+		}
+
+		/**
+		 * A method that updates the Incident state by passing through command
+		 * 
+		 * @param command is a Command
+		 */
+		public void updateState(Command command) {
+			if (command.getCommand() != CommandValue.REOPEN) {
+				throw new UnsupportedOperationException();
+			} else {
+				currentState = inProgressState;
+				setStatusDetails(command.getCommandInformation());
+				reopenCount++;
+
+			}
+		}
+
+		/**
+		 * A method that retrives the incidents state name
+		 * 
+		 * @return a string value of the incidents state name
+		 */
+		public String getStateName() {
+			return null;
+
+		}
+
+	}
+
+	/**
+	 * A class that represents a Resolved incident of the service wolf and
+	 * implemented in the Interface Incident State
+	 * 
+	 * @author meles
+	 *
+	 */
+	public class ResolvedState implements IncidentState {
+		/**
+		 * Constructs Resolved State so it is implemneted in Incident interface
+		 */
+		private ResolvedState() {
+
+		}
+
+		/**
+		 * A method that updates the Incident state by passing through command
+		 * 
+		 * @param command is a Command
+		 */
+		public void updateState(Command command) {
+			if (command.getCommand() != CommandValue.REOPEN || command.getCommand() != CommandValue.CANCEL) {
+				throw new UnsupportedOperationException();
+			}
+
+			if (command.getCommand() == CommandValue.REOPEN) {
+				currentState = inProgressState;
+				reopenCount++;
+
+			}
+
+			if (command.getCommand() == CommandValue.CANCEL) {
+				currentState = canceledState;
+				setStatusDetails(command.getCommandInformation());
+				setOwner(UNOWNED);
+			}
+		}
+
+		/**
+		 * A method that retrives the incidents state name
+		 * 
+		 * @return a string value of the incidents state name
+		 */
+		public String getStateName() {
+			// TODO Auto-generated method stub
+			return null;
+		}
+
+	}
+
+	/**
+	 * A class that represents a cancled incident of the service wolf and
+	 * implemented in the Interface Incident State
+	 * 
+	 * @author meles
+	 *
+	 */
+	public class CanceledState implements IncidentState {
+
+		/**
+		 * Constructs cancled state so it is implemneted in Incident interface
+		 */
+		private CanceledState() {
+
+		}
+
+		/**
+		 * A method that updates the Incident state by passing through command
+		 * 
+		 * @param command a command that updates the state
+		 *
+		 */
+		public void updateState(Command command) {
+
+		}
+
+		/**
+		 * A method that retrives the incidents state name
+		 * 
+		 * @return a string value of the incidents state name
+		 */
+		public String getStateName() {
+			return null;
+
+		}
 	}
 
 }
