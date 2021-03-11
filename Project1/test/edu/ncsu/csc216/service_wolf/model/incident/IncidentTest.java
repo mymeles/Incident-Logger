@@ -21,29 +21,10 @@ public class IncidentTest {
 	// create a commad
 
 	/**
-	 * 
+	 * A command for  testing 
 	 */
-	private Command assign;
-	/**
-	 * 
-	 */
-	private Command investigate;
-	/**
-	 * 
-	 */
-	private Command Reopen;
-	/**
-	 * 
-	 */
-	private Command resolve;
-	/**
-	 * 
-	 */
-	private Command onHold;
-	/**
-	 * 
-	 */
-	private Command cancel;
+	private Command commad;
+
 
 	// values to test the second constructor
 	/**
@@ -85,7 +66,7 @@ public class IncidentTest {
 		}
 	};
 
-	@Before
+	@Before 
 	public void setUp() throws Exception {
 		// Reset the counter at the beginning of every test.
 		Incident.setCounter(0);
@@ -280,12 +261,12 @@ public class IncidentTest {
 //	 */
 //	@Test
 //	public void testSetCounter() {
-//		fail("Not yet implemented"); // TODO
+//		fail("Not yet implemented"); // TODO 
 //	}
 //
-//	/**
-//	 * A test method for toString
-//	 */
+	/** 
+	 * A test method for toString
+	 */
 	@Test
 	public void testToString() {
 		Incident in = null;
@@ -299,7 +280,6 @@ public class IncidentTest {
 		assertEquals(STATUSD, in.getStatusDetails());
 		assertEquals("-Set up piazza for Spring 2021\n-Canceled; not an NC State IT service\n",
 				in.getIncidentLogMessages());
-		System.out.println(in.toString());
 		assertEquals("* 2,Canceled,Piazza,sesmith5,0,Unowned,Not an Incident" + "\n" + "-Set up piazza for Spring 2021" + "\n" + "-" + "Canceled; not an NC State IT service\n", in.toString());
 		
 	}
@@ -309,7 +289,20 @@ public class IncidentTest {
 	 */
 	@Test
 	public void testUpdate() {
-		fail("Not yet implemented"); // TODO
+		Incident in = null;
+		in = new Incident(TITLE, CALLER, "Set up piazza for spring 2021");
+		assertEquals(TITLE, in.getTitle());
+		assertEquals(CALLER, in.getCaller());
+		assertEquals(1, in.getId());
+		assertEquals("-Set up piazza for spring 2021\n", in.getIncidentLogMessages()); 
+		System.out.print(in.getState());
+		commad = new Command(CommandValue.CANCEL, "Not an Incident", "not an NC State IT service");
+		in.update(commad);
+		in.setOwner(Incident.UNOWNED);
+		assertEquals(Incident.UNOWNED, in.getOwner());
+		assertEquals(Incident.CANCELED_NAME, in.getState());
+		assertEquals("-Set up piazza for spring 2021\n-not an NC State IT service\n", in.getIncidentLogMessages());
+		
 	}
 
 }

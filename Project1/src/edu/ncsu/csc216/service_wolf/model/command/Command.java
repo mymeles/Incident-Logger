@@ -72,7 +72,7 @@ public class Command {
 			throw new IllegalArgumentException("These commands do NOT require an additional piece of information");
 		} else {
 			this.command = command; 
-			this.commandInformation = commandInformation;
+			this.commandInformation = commandInformation; 
 			this.commandMessage = commandMessage; 
 		} 
 

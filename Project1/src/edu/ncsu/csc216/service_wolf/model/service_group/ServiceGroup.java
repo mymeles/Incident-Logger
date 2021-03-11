@@ -55,16 +55,18 @@ public class ServiceGroup {
 	 */
 	public void setServiceGroupName(String serviceGroupName) {
 		if (serviceGroupName == null || ("").equals(serviceGroupName)) {
-			throw new IllegalArgumentException("Invalid service group name ");
+			throw new IllegalArgumentException("Invalid service group name.");
 		}
 		this.serviceGroupName = serviceGroupName;
 	}
 
 	/**
-	 * a method to set the incident counter 
+	 * a method to set the incident counter
 	 */
 	public void setIncidentCounter() {
-		// impement set incident counter -- this is confusing me
+		int lastIncidnet = incident.size() - 1;
+		int id = incident.get(lastIncidnet).getId();
+		Incident.setCounter(id);
 	}
 
 	/**
@@ -73,7 +75,7 @@ public class ServiceGroup {
 	 * @param incidents a representation of an incident
 	 */
 	public void addIncident(Incident incidents) {
-		for (int i = 0; i < incident.size(); i++) { 
+		for (int i = 0; i < incident.size(); i++) {
 			if (incident.get(i).getId() == incidents.getId()) {
 				throw new IllegalArgumentException("Incident cannot be created.");
 			} // sort
@@ -103,12 +105,16 @@ public class ServiceGroup {
 	 * @param idx an integer referance of an incident
 	 * @return an incident
 	 */
-	public Incident getIncidentById(int idx) {
-		if (idx > 0) {
-			return incident.get(idx);
-		} else {
-			return null;
+	public Incident getIncidentById(int id) {
+		if (id > 0) {
+			for (int i = 0; i < incident.size(); i++) {
+				if (id == incident.get(i).getId()) {
+					return incident.get(i);
+				}
+
+			}
 		}
+		return null;
 	}
 
 	/**
@@ -118,31 +124,27 @@ public class ServiceGroup {
 	 * @param command is a command for incident
 	 */
 	public void executeCommand(int id, Command command) {
-		if (id < 0) {
-			throw new IllegalArgumentException();
+		for (int i = 0; i < incident.size(); i++) {
+			if (incident.get(i).getId() == id) {
+				incident.get(i).update(command);
+			}
 		}
 
-		else {
-			for (int i = 0; i < incident.size(); i++) {
-				if (incident.get(i).getId() == id) {
-					incident.get(i).update(command);
-				}
-			}
- 
-		}
 	}
 
 	/**
 	 * A method to delete an incident by the passed parameter
 	 * 
-	 * @param idx is an integer reference of incident
+	 * @param id is an integer reference of incident
 	 */
-	public void deleteIncidentById(int idx) {
-		if (idx < 0) {
-			throw new IllegalArgumentException("Incident cannot be deleted.");
-		} else {
-			incident.remove(idx);
+	public void deleteIncidentById(int id) {
+		for (int i = 0; i < incident.size(); i++) {
+			if (id == incident.get(i).getId()) {
+				incident.remove(i);
+			}
+
 		}
+
 	}
 
 }

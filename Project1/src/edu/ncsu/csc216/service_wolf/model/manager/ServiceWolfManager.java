@@ -27,6 +27,8 @@ public class ServiceWolfManager {
 	 */
 	private static ServiceWolfManager instance;
 	
+	
+	
 	/**
 	 *  A represerntation of service groups 
 	 */
