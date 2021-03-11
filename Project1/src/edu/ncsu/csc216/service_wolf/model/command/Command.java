@@ -55,7 +55,7 @@ public class Command {
 	 *             and a non-null commandinforamtion is passed.
 	 * 
 	 */
-	public Command(CommandValue command, String commandInformation, String commandMessage) {
+	public Command(CommandValue command, String commandInformation, String commandMessage) {  
 
 		if (command == null) {
 			throw new IllegalArgumentException("A Command MUST have a CommandValue"); 

@@ -61,7 +61,7 @@ public class ServiceGroup {
 	}
 
 	/**
-	 * a method to set the incident counter
+	 * a method to set the incident counter 
 	 */
 	public void setIncidentCounter() {
 		// impement set incident counter -- this is confusing me
@@ -73,7 +73,7 @@ public class ServiceGroup {
 	 * @param incidents a representation of an incident
 	 */
 	public void addIncident(Incident incidents) {
-		for (int i = 0; i < incident.size(); i++) {
+		for (int i = 0; i < incident.size(); i++) { 
 			if (incident.get(i).getId() == incidents.getId()) {
 				throw new IllegalArgumentException("Incident cannot be created.");
 			} // sort
@@ -128,7 +128,7 @@ public class ServiceGroup {
 					incident.get(i).update(command);
 				}
 			}
-
+ 
 		}
 	}
 

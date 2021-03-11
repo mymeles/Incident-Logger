@@ -36,7 +36,7 @@ public class ServiceWolfManager {
 	 * the currentservice group 
 	 */
 	private ServiceGroup currentServiceGroup;
-
+ 
 	/**
 	 * A constructor for Service wolf manager 
 	 */
@@ -118,8 +118,12 @@ public class ServiceWolfManager {
 	 * 
 	 * @param idx an integer that refrences incidents
 	 */
-	public void deleteIncidentById(int idx) {
-		// implement delete incidenet by id
+	public void deleteIncidentById(int id) {
+		for(int i = 0; i < serviceGroups.size(); i++) {
+			if(id == serviceGroups.get(i).getIncidents().get(i).getId()){
+				serviceGroups.get(i).deleteIncidentById(id);
+			}
+		}
 	}
 
 	/**

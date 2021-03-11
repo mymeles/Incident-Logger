@@ -5,7 +5,6 @@ package edu.ncsu.csc216.service_wolf.model.incident;
 
 import java.util.ArrayList;
 
-
 import edu.ncsu.csc216.service_wolf.model.command.Command;
 import edu.ncsu.csc216.service_wolf.model.command.Command.CommandValue;
 
@@ -191,6 +190,7 @@ public class Incident {
 		Incident.incrementCounter();
 		setTitle(title);
 		setCaller(caller);
+		addMessageToIncidentLog(message);
 
 	}
 
@@ -224,8 +224,7 @@ public class Incident {
 		setOwner(owner);
 		setStatusDetails(statusDetails);
 		this.incidentLog = incidentLog;
-		setState(state); 
-
+		setState(state);
 	}
 
 	/**
@@ -279,37 +278,42 @@ public class Incident {
 
 		if (state.equals(NEW_NAME)) {
 			if (!(owner).equals(UNOWNED) || (!(statusDetails).equals(NO_STATUS))) {
-				throw new IllegalArgumentException("Incident cannot be created");
+				throw new IllegalArgumentException("Incident cannot be created.");
 			}
 			this.currentState = newState;
 		}
-
-		else if (state == IN_PROGRESS_NAME) {
-			if ((owner).equals(UNOWNED) || (!(statusDetails).equals(NO_STATUS))) {
-				throw new IllegalArgumentException("Incident cannot be created");
+		// code failing here? why
+		if (state.equals(IN_PROGRESS_NAME)) {
+			if (owner.equals(UNOWNED) || (!(statusDetails).equals(NO_STATUS))) {
+				throw new IllegalArgumentException("Incident cannot be created.");
+			} else {
+				this.currentState = inProgressState;
 			}
-			this.currentState = inProgressState;
-		} else if (state == ON_HOLD_NAME) {
-			if ((owner).equals(UNOWNED) || (!(statusDetails).equals(HOLD_AWAITING_CALLER))
-					|| (!(statusDetails).equals(HOLD_AWAITING_CHANGE))
-					|| (!(statusDetails).equals(HOLD_AWAITING_VENDOR))) {
+		}
+		if (state.equals(ON_HOLD_NAME))	{
+			if ((owner).equals(UNOWNED) || (!(statusDetails).equals(HOLD_AWAITING_CALLER)) || (!(statusDetails).equals(HOLD_AWAITING_CHANGE))|| (!(statusDetails).equals(HOLD_AWAITING_VENDOR))) {
 				throw new IllegalArgumentException("Incident cannot be created");
-			}
-			this.currentState = onHoldState;
-		} else if (state == RESOLVED_NAME) {
+			} 
+				this.currentState = onHoldState;
+		 
+		}
+		if (state == RESOLVED_NAME) {
 			if ((owner).equals(UNOWNED) || (!(statusDetails).equals(RESOLUTION_PERMANENTLY_SOLVED))
 					|| (!(statusDetails).equals(RESOLUTION_WORKAROUND))
 					|| (!(statusDetails).equals(RESOLUTION_CALLER_CLOSED))) {
 				throw new IllegalArgumentException("Incident cannot be created");
 			}
 			this.currentState = resolvedState;
-		} else if (state == CANCELED_NAME) {
-			if (!(owner).equals(UNOWNED) || (!(statusDetails).equals(CANCELLATION_DUPLICATE))
-					|| (!(statusDetails).equals(CANCELLATION_UNNECESSARY))
-					|| (!(statusDetails).equals(CANCELLATION_NOT_AN_INCIDENT))) {
-				throw new IllegalArgumentException("Incident cannot be created");
+		}
+		if (state == CANCELED_NAME) {
+			if ((owner).equals(UNOWNED) && ((statusDetails).equals(CANCELLATION_DUPLICATE))
+					|| ((statusDetails).equals(CANCELLATION_UNNECESSARY))
+					|| ((statusDetails).equals(CANCELLATION_NOT_AN_INCIDENT))) {
+				this.currentState = canceledState;
+
+			} else {
+				throw new IllegalArgumentException("Incident cannot be created.");
 			}
-			this.currentState = canceledState;
 		}
 
 	}
@@ -332,7 +336,7 @@ public class Incident {
 	 */
 	private void setTitle(String title) {
 		if (title == null || ("").equals(title)) {
-			throw new IllegalArgumentException("Incident cannot be created");
+			throw new IllegalArgumentException("Incident cannot be created.");
 		}
 		this.title = title;
 	}
@@ -434,7 +438,9 @@ public class Incident {
 	 * @return an integer reference of the log
 	 */
 	private int addMessageToIncidentLog(String message) {
-
+		if (message == null || ("").equals(message)) {
+			throw new IllegalArgumentException("Incident cannot be created.");
+		}
 		incidentLog.add(message);
 
 		return incidentLog.size();
@@ -457,24 +463,27 @@ public class Incident {
 	}
 
 	/**
-	 * retrives the incident log message 
+	 * retrives the incident log message
 	 * 
 	 * @return the incidentLog
 	 */
 	public String getIncidentLogMessages() {
 
 		String logMessages = "";
-		
-		for(int i = 0; i < incidentLog.size(); i++) {
-		logMessages = logMessages + "-" + incidentLog.get(i) + "\n";	
+
+		for (int i = 0; i < incidentLog.size(); i++) {
+			logMessages = logMessages + "-" + incidentLog.get(i) + "\n";
 		}
 		return logMessages;
 	}
 
+	//int id, String state, String title, String caller, int reopenCount, String owner,
+	//String statusDetails, ArrayList<String> incidentLog) {
 	@Override
 	public String toString() {
-		// add * 
-		return null;
+		String finalString = "* " + incidentid + "," +currentState.getStateName() + "," + title + "," + caller + "," + reopenCount + "," + owner + "," + statusDetails +"\n" + getIncidentLogMessages();
+	
+		return finalString;
 	}
 
 	/**
@@ -531,8 +540,8 @@ public class Incident {
 		 * Constructs New State so it is implemneted in Incident interface
 		 */
 		private NewState() {
-		
-			}
+
+		}
 
 		/**
 		 * A method that updates the Incident state by passing through command
@@ -626,7 +635,7 @@ public class Incident {
 		 * @return a string value of the incidents state name
 		 */
 		public String getStateName() {
-			return null;
+			return IN_PROGRESS_NAME;
 
 		}
 	}
@@ -653,12 +662,14 @@ public class Incident {
 		 * @param command is a Command
 		 */
 		public void updateState(Command command) {
-			if (command.getCommand() != CommandValue.REOPEN) {
+			if (command.getCommand() != CommandValue.REOPEN || command.getCommand() != CommandValue.INVESTIGATE) {
 				throw new UnsupportedOperationException();
-			} else {
+			}
+			if (command.getCommand() == CommandValue.REOPEN) {
 				currentState = inProgressState;
 				setStatusDetails(command.getCommandInformation());
 				reopenCount++;
+			} else {
 
 			}
 		}
@@ -669,7 +680,7 @@ public class Incident {
 		 * @return a string value of the incidents state name
 		 */
 		public String getStateName() {
-			return null;
+			return ON_HOLD_NAME;
 
 		}
 
@@ -720,7 +731,7 @@ public class Incident {
 		 */
 		public String getStateName() {
 			// TODO Auto-generated method stub
-			return null;
+			return RESOLVED_NAME;
 		}
 
 	}
@@ -757,7 +768,7 @@ public class Incident {
 		 * @return a string value of the incidents state name
 		 */
 		public String getStateName() {
-			return null;
+			return CANCELED_NAME;
 
 		}
 	}
