@@ -19,7 +19,7 @@ public class CommandTest {
 	 */
 	private static final  String INFO = "kkkk";
 	
-	/**
+	/** 
 	 * A String to represent command message 
 	 */
 	private static final String MESSAGE = "kkkkk";
@@ -34,32 +34,37 @@ public class CommandTest {
 		Command c1 = new Command(INVESTIGATE, null, MESSAGE);
 		assertNull(null, c1.getCommandInformation());
 		
+		Command c3 = null;
 		try {
-			Command c3 = new Command(null, INFO, MESSAGE);
+			c3 = new Command(null, INFO, MESSAGE);
 			fail();
 		} catch (IllegalArgumentException e) {
+			assertNull(null, c3);
 			assertEquals("A Command MUST have a CommandValue", e.getMessage());
 				
 		} 
 		
 		try {
-			Command c3 = new Command(CANCEL, INFO, null);
+			 c3 = new Command(CANCEL, INFO, null);
 			fail();
 		} catch (IllegalArgumentException e) {
+			assertNull(null, c3);
 			assertEquals("A Command MUST have a commandMessage", e.getMessage());
 		} 
 		
 		try { 
-			Command c3 = new Command(ASSIGN, null, MESSAGE);
+			c3 = new Command(ASSIGN, null, MESSAGE);
 			fail();
 		} catch (IllegalArgumentException e) { 
+			assertNull(null, c3);
 			assertEquals("These commands require an additional piece of information", e.getMessage());
 		}
 		
 		try { 
-			Command c3 = new Command(INVESTIGATE, INFO, MESSAGE);
+			c3 = new Command(INVESTIGATE, INFO, MESSAGE);
 			fail();
 		} catch (IllegalArgumentException e) { 
+			assertNull(null, c3);
 			assertEquals("These commands do NOT require an additional piece of information", e.getMessage());
 		}
 	}  

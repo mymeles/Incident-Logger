@@ -37,7 +37,7 @@ public class ServiceWolfManager {
 	/**
 	 * the currentservice group 
 	 */
-	private ServiceGroup currentServiceGroup;
+	private ServiceGroup currentServiceGroup; 
  
 	/**
 	 * A constructor for Service wolf manager 

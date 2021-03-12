@@ -7,6 +7,7 @@ import static org.junit.Assert.*;
 
 import java.util.ArrayList;
 
+import org.junit.Before;
 import org.junit.Test;
 
 import edu.ncsu.csc216.service_wolf.model.command.Command;
@@ -26,7 +27,7 @@ public class ServiceGroupTest {
 	 */
 	private ServiceGroup serviceGroup;
 	
-	/**
+	/** 
 	 * A command for  testing 
 	 */
 	private Command commad;
@@ -91,6 +92,16 @@ public class ServiceGroupTest {
 
 		}
 	};
+	
+	/**
+	 * a setup that sets the counter to zero for everytest 
+	 * @throws Exception if the counter can not be set 
+	 */
+	@Before
+	public void setUp() throws Exception {
+		// Reset the counter at the beginning of every test.
+		Incident.setCounter(0);
+	}
 	/**
 	 * an incident to test serviceGroup
 	 */
@@ -132,14 +143,24 @@ public class ServiceGroupTest {
 		serviceGroup.addIncident(in1);
 		serviceGroup.addIncident(in);
 		serviceGroup.addIncident(in2);
-		serviceGroup.setIncidentCounter();
+		serviceGroup.setIncidentCounter(); 
+		
+		System.out.println("\n" + serviceGroup.getIncidents().get(0).getId());
+		System.out.println("\n" + serviceGroup.getIncidents().get(1).getId());
+		System.out.println("\n" + serviceGroup.getIncidents().get(2).getId());
 			
-		assertEquals(5, serviceGroup.getIncidentById(4).getId());
+		Incident u = new Incident("title", "James", "Set up piazza for spring 2021");
+		assertEquals(5, u.getId());
+		assertEquals("title", u.getTitle());
+		assertEquals("New", u.getState());
+		assertEquals(Incident.NO_STATUS, u.getStatusDetails());
+		assertEquals("-Set up piazza for spring 2021\n", u.getIncidentLogMessages());
+		assertEquals("James", u.getCaller());
 	}
 
 	/**
 	 * Test method for addIncident
-	 */
+	 */ 
 	@Test
 	public void testAddIncident() {
 		serviceGroup = new ServiceGroup("CSC IT");
@@ -192,7 +213,6 @@ public class ServiceGroupTest {
 		serviceGroup.getIncidentById(3).setOwner("James");
 		assertEquals("Canceled", serviceGroup.getIncidentById(3).getState());
 		assertEquals("James", serviceGroup.getIncidentById(3).getOwner());
-		//assertEquals("-Set up piazza for spring 2021\n-not an NC State IT service\n", in.getIncidentLogMessages());
 	}
  
 	/**

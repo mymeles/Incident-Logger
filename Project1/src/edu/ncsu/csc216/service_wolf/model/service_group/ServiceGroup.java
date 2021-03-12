@@ -66,7 +66,7 @@ public class ServiceGroup {
 	public void setIncidentCounter() {
 		int lastIncidnet = incident.size() - 1;
 		int id = incident.get(lastIncidnet).getId();
-		Incident.setCounter(id);
+		Incident.setCounter(id + 1 );
 	}
 
 	/**

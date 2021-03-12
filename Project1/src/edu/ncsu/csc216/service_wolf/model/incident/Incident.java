@@ -187,14 +187,14 @@ public class Incident {
 	 */
 	public Incident(String title, String caller, String message) {
 		setId(Incident.counter);
-		Incident.incrementCounter();
+		Incident.incrementCounter();  
 		setTitle(title);
 		setCaller(caller);
 		setOwner(UNOWNED);
 		setStatusDetails(NO_STATUS);
 		setState(NEW_NAME);
 		addMessageToIncidentLog(message);
-
+ 
 	}
 
 	/**
@@ -249,13 +249,13 @@ public class Incident {
 	 */
 	private void setId(int id) {
 
-		if (id <= 0) {
+		if (id < 0) {
 			throw new IllegalArgumentException("Incident cannot br created.");
 		}
 		this.incidentid = id;
 
 		if (id > counter) {
-			setCounter(id);
+			setCounter(id + 1);
 		}
 
 	}
@@ -278,42 +278,44 @@ public class Incident {
 		if (state == null || ("".equals(state))) {
 			throw new IllegalArgumentException("Incident cannot be created.");
 		}
-
+		// edited
 		if (state.equals(NEW_NAME)) {
-			if (!(owner).equals(UNOWNED) || (!(statusDetails).equals(NO_STATUS))) {
-				throw new IllegalArgumentException("Incident cannot be created.");
+			if ((owner).equals(UNOWNED) && ((statusDetails).equals(NO_STATUS))) {
+				this.currentState = newState;
+			} else {
+
+				throw new IllegalArgumentException("Incident cannot be created."); 
 			}
-			this.currentState = newState;
 		}
 		// code failing here? why
 		if (state.equals(IN_PROGRESS_NAME)) {
-			if (owner.equals(UNOWNED) || (!(statusDetails).equals(NO_STATUS))) {
-				throw new IllegalArgumentException("Incident cannot be created.");
-			} else {
+			if (!owner.equals(UNOWNED) && ((statusDetails).equals(NO_STATUS))) {
 				this.currentState = inProgressState;
+			} else {
+				throw new IllegalArgumentException("Incident cannot be created.");
 			}
 		}
 		if (state.equals(ON_HOLD_NAME)) {
-			if ((owner).equals(UNOWNED) || (!(statusDetails).equals(HOLD_AWAITING_CALLER))
-					|| (!(statusDetails).equals(HOLD_AWAITING_CHANGE))
-					|| (!(statusDetails).equals(HOLD_AWAITING_VENDOR))) {
-				throw new IllegalArgumentException("Incident cannot be created");
+			if (!(owner).equals(UNOWNED)
+					&& (((statusDetails).equals(HOLD_AWAITING_CALLER)) || ((statusDetails).equals(HOLD_AWAITING_CHANGE))
+							|| ((statusDetails).equals(HOLD_AWAITING_VENDOR)))) {
+				this.currentState = onHoldState;
+			} else {
+				throw new IllegalArgumentException("Incident cannot be created.");
 			}
-			this.currentState = onHoldState;
-
-		}
+		} 
 		// edited
 		if (state == RESOLVED_NAME) {
-			if (!(owner).equals(UNOWNED) && ((statusDetails).equals(RESOLUTION_PERMANENTLY_SOLVED))
+			if (!(owner).equals(UNOWNED) && (((statusDetails).equals(RESOLUTION_PERMANENTLY_SOLVED))
 					|| ((statusDetails).equals(RESOLUTION_WORKAROUND))
-					|| ((statusDetails).equals(RESOLUTION_CALLER_CLOSED))) {
+					|| ((statusDetails).equals(RESOLUTION_CALLER_CLOSED)))) {
 				this.currentState = resolvedState;
 			} else {
 				throw new IllegalArgumentException("Incident cannot be created");
 			}
-			 
+
 		}
-		//edited
+		// edited
 		if (state == CANCELED_NAME) {
 			if ((owner).equals(UNOWNED) && ((statusDetails).equals(CANCELLATION_DUPLICATE))
 					|| ((statusDetails).equals(CANCELLATION_UNNECESSARY))
@@ -468,7 +470,7 @@ public class Incident {
 	 * @param id the counter to set
 	 */
 	public static void setCounter(int id) {
-		counter = id + 1;
+		counter = id;
 	}
 
 	/**
@@ -504,7 +506,7 @@ public class Incident {
 	 */
 	public void update(Command command) {
 		currentState.updateState(command);
-		addMessageToIncidentLog(command.getCommandMessage());
+		addMessageToIncidentLog(command.getCommandMessage()); 
 	}
 
 	/**
@@ -565,11 +567,11 @@ public class Incident {
 				if (command.getCommand() == CommandValue.ASSIGN) {
 					currentState = inProgressState;
 					setStatusDetails(command.getCommandInformation());
-					setOwner(owner); // I have a question
+					setOwner(command.getCommandInformation()); // I have a question
 
 				}
 
-				if (command.getCommand() == CommandValue.CANCEL) {
+				if (command.getCommand() == CommandValue.CANCEL) { 
 					currentState = canceledState;
 					setStatusDetails(command.getCommandInformation());
 					setOwner(UNOWNED);
@@ -680,8 +682,6 @@ public class Incident {
 				currentState = inProgressState;
 				setStatusDetails(command.getCommandInformation());
 				reopenCount++;
-			} else {
-
 			}
 		}
 

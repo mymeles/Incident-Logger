@@ -21,44 +21,49 @@ public class IncidentTest {
 	// create a commad
 
 	/**
-	 * A command for  testing 
+	 * A command for testing
 	 */
 	private Command commad;
 
-
 	// values to test the second constructor
+	
 	/**
-	 * 
+	 *  An integer id for test incident 
 	 */
 	private static final int ID = 2;
 	/**
-	 * 
+	 * A string state fot test incidnet  
 	 */
 	private static final String STATE = "Canceled";
 	/**
-	 * 
+	 * A string name title for incident 
 	 */
 	private static final String TITLE = "Piazza";
 	/**
-	 * 
+	 * A string name caller for incident 
 	 */
 	private static final String CALLER = "sesmith5";
 	/**
-	 * 
+	 * An integer named reopencount for incident 
 	 */
 	private static final int REOPENCOUNT = 0;
 	/**
-	 * 
+	 * A string named Owner for incident  
 	 */
 	private static final String OWNER = "Unowned";
 	/**
-	 * 
+	 * A string named statusd for incident 
 	 */
 	private static final String STATUSD = Incident.CANCELLATION_NOT_AN_INCIDENT;
 	/**
-	 * 
+	 * An arraylist of strings contatning incident messages
 	 */
-	private static ArrayList<String> MESSAGES = new ArrayList<String>() {
+	private static final ArrayList<String> MESSAGES = new ArrayList<String>() {
+		/**
+		 * A default serialVersionUID for arraylist 
+		 */
+		private static final long serialVersionUID = 1L;
+
 		{
 			add("Set up piazza for Spring 2021");
 			add("Canceled; not an NC State IT service");
@@ -66,7 +71,11 @@ public class IncidentTest {
 		}
 	};
 
-	@Before 
+	/**
+	 * a setup that sets the counter to zero for everytest 
+	 * @throws Exception if the counter can not be set 
+	 */
+	@Before
 	public void setUp() throws Exception {
 		// Reset the counter at the beginning of every test.
 		Incident.setCounter(0);
@@ -81,9 +90,9 @@ public class IncidentTest {
 		// check for a valid incident
 		Incident in = null;
 		in = new Incident(TITLE, CALLER, "Set up piazza for spring 2021");
-		assertEquals(TITLE, in.getTitle());
+		assertEquals(TITLE, in.getTitle()); 
 		assertEquals(CALLER, in.getCaller());
-		assertEquals(1, in.getId());
+		assertEquals(0, in.getId());
 		assertEquals("-Set up piazza for spring 2021\n", in.getIncidentLogMessages());
 
 		// test incident contructor with null title
@@ -164,25 +173,24 @@ public class IncidentTest {
 				in.getIncidentLogMessages());
 
 		Incident in1 = null;
-		// Invalid state with null value 
+		// Invalid state with null value
 		try {
 			in1 = new Incident(ID, STATE, TITLE, CALLER, REOPENCOUNT, OWNER, null, MESSAGES);
 			fail();
 		} catch (IllegalArgumentException e) {
 			assertEquals("Incident cannot be created.", e.getMessage());
 			assertNull(null, in1);
-
+ 
 		}
-		// invalid canceld state 
+		// invalid canceld state
 		try {
 			in1 = new Incident(ID, STATE, TITLE, CALLER, REOPENCOUNT, OWNER, "Invalid status", MESSAGES);
 			fail();
 		} catch (IllegalArgumentException e) {
-			assertNull(null, in1); 
+			assertNull(null, in1);
 			assertEquals("Incident cannot be created.", e.getMessage());
 		}
-				
-		
+
 		// create a valid newState incident
 		Incident in2 = null;
 		in2 = new Incident(4, Incident.NEW_NAME, TITLE, CALLER, REOPENCOUNT, Incident.UNOWNED, Incident.NO_STATUS,
@@ -196,17 +204,17 @@ public class IncidentTest {
 		assertEquals(Incident.NO_STATUS, in2.getStatusDetails());
 		assertEquals("-Set up piazza for Spring 2021\n-Canceled; not an NC State IT service\n",
 				in2.getIncidentLogMessages());
-		
-		// check Incalid new state 			
+
+		// check Incalid new state
 		Incident in3 = null;
 		try {
 			in3 = new Incident(4, "New", TITLE, CALLER, REOPENCOUNT, "Unowned", "Invalid status", MESSAGES);
 			fail();
 		} catch (IllegalArgumentException e) {
-			assertNull(null, in3); 
+			assertNull(null, in3);
 			assertEquals("Incident cannot be created.", e.getMessage());
 		}
-		
+
 		try {
 			in3 = new Incident(4, "New", TITLE, CALLER, REOPENCOUNT, "owned", "Not an Incident", MESSAGES);
 			fail();
@@ -215,11 +223,10 @@ public class IncidentTest {
 			assertEquals("Incident cannot be created.", e.getMessage());
 		}
 
-		// test inprogress valid and invalid 
+		// test inprogress valid and invalid
 		Incident in4 = null;
-		// test valid 
-		in4 = new Incident(5, "In Progress", TITLE, CALLER, REOPENCOUNT, "James", Incident.NO_STATUS,
-				MESSAGES);
+		// test valid
+		in4 = new Incident(5, "In Progress", TITLE, CALLER, REOPENCOUNT, "James", Incident.NO_STATUS, MESSAGES);
 		assertEquals(TITLE, in4.getTitle());
 		assertEquals(CALLER, in4.getCaller());
 		assertEquals(5, in4.getId());
@@ -229,23 +236,31 @@ public class IncidentTest {
 		assertEquals(Incident.NO_STATUS, in4.getStatusDetails());
 		assertEquals("-Set up piazza for Spring 2021\n-Canceled; not an NC State IT service\n",
 				in2.getIncidentLogMessages());
-		// Test invalid 
+		// Test invalid
 		in4 = null;
-	
-		// test inprogress with setting the owner to UNOWNED 
+
+		// test inprogress with setting the owner to UNOWNED
 		try {
-		in4 = new Incident(6, "In Progress", TITLE, CALLER, REOPENCOUNT, Incident.UNOWNED, Incident.NO_STATUS, MESSAGES);
+			in4 = new Incident(6, "In Progress", TITLE, CALLER, REOPENCOUNT, Incident.UNOWNED, Incident.NO_STATUS,
+					MESSAGES);
 			fail();
 		} catch (IllegalArgumentException e) {
 			assertNull(null, in4);
 			assertEquals("Incident cannot be created.", e.getMessage());
-		} 
-		
-		
-		// test onHold states
-//		Incident in5 = null;
-//		in5 = new Incident(10, "On Hold", TITLE, CALLER, REOPENCOUNT, "James", Incident.HOLD_AWAITING_CHANGE, MESSAGES);	
+		}
 
+		// test onHold states
+		Incident in5 = null;
+		in5 = new Incident(10, "On Hold", TITLE, CALLER, REOPENCOUNT, "James", Incident.HOLD_AWAITING_CHANGE, MESSAGES);
+		in5 = null;
+
+		try {
+			in5 = new Incident(10, "On Hold", TITLE, CALLER, REOPENCOUNT, Incident.UNOWNED,	Incident.HOLD_AWAITING_CHANGE, MESSAGES);
+			fail();
+		} catch (IllegalArgumentException e) {
+			assertNull(null, in5);
+			assertEquals("Incident cannot be created.", e.getMessage());
+		}
 	}
 
 //	/**
@@ -264,7 +279,7 @@ public class IncidentTest {
 //		fail("Not yet implemented"); // TODO 
 //	}
 //
-	/** 
+	/**
 	 * A test method for toString
 	 */
 	@Test
@@ -280,8 +295,9 @@ public class IncidentTest {
 		assertEquals(STATUSD, in.getStatusDetails());
 		assertEquals("-Set up piazza for Spring 2021\n-Canceled; not an NC State IT service\n",
 				in.getIncidentLogMessages());
-		assertEquals("* 2,Canceled,Piazza,sesmith5,0,Unowned,Not an Incident" + "\n" + "-Set up piazza for Spring 2021" + "\n" + "-" + "Canceled; not an NC State IT service\n", in.toString());
-		
+		assertEquals("* 2,Canceled,Piazza,sesmith5,0,Unowned,Not an Incident" + "\n" + "-Set up piazza for Spring 2021"
+				+ "\n" + "-" + "Canceled; not an NC State IT service\n", in.toString());
+
 	}
 
 	/**
@@ -293,8 +309,8 @@ public class IncidentTest {
 		in = new Incident(TITLE, CALLER, "Set up piazza for spring 2021");
 		assertEquals(TITLE, in.getTitle());
 		assertEquals(CALLER, in.getCaller());
-		assertEquals(1, in.getId());
-		assertEquals("-Set up piazza for spring 2021\n", in.getIncidentLogMessages()); 
+		assertEquals(0, in.getId());
+		assertEquals("-Set up piazza for spring 2021\n", in.getIncidentLogMessages());
 		System.out.print(in.getState());
 		commad = new Command(CommandValue.CANCEL, "Not an Incident", "not an NC State IT service");
 		in.update(commad);
@@ -302,7 +318,7 @@ public class IncidentTest {
 		assertEquals(Incident.UNOWNED, in.getOwner());
 		assertEquals(Incident.CANCELED_NAME, in.getState());
 		assertEquals("-Set up piazza for spring 2021\n-not an NC State IT service\n", in.getIncidentLogMessages());
-		
+
 	}
 
 }
