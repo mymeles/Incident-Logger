@@ -186,15 +186,17 @@ public class Incident {
 	 * @throws IAE If any of the given parameters are null or empty string.
 	 */
 	public Incident(String title, String caller, String message) {
+	
 		setId(Incident.counter);
-		Incident.incrementCounter();  
+		Incident.incrementCounter();
 		setTitle(title);
 		setCaller(caller);
 		setOwner(UNOWNED);
 		setStatusDetails(NO_STATUS);
 		setState(NEW_NAME);
 		addMessageToIncidentLog(message);
- 
+		
+
 	}
 
 	/**
@@ -269,64 +271,37 @@ public class Incident {
 		return currentState.getStateName();
 	}
 
+	// helper method  for determinign  the incident state 
+	private void createState(boolean condition, IncidentState state) {
+		if (condition) {
+			this.currentState = state;
+		} else {
+
+			throw new IllegalArgumentException("Incident cannot be created.");
+		}
+
+	}
+
 	/**
 	 * sets the incidets state from the passesd parameter
 	 * 
 	 * @param state the incident state to set
 	 */
 	private void setState(String state) {
+		
 		if (state == null || ("".equals(state))) {
 			throw new IllegalArgumentException("Incident cannot be created.");
+		} else if (state.equals(NEW_NAME)) {
+			createState(owner.equals(UNOWNED) && statusDetails.equals(NO_STATUS), newState);
+		} else if (state.equals(IN_PROGRESS_NAME)) {
+			createState(!owner.equals(UNOWNED) && statusDetails.equals(NO_STATUS), inProgressState);
+		} else if (state.equals(ON_HOLD_NAME)) {
+			createState(!(owner).equals(UNOWNED) && (((statusDetails).equals(HOLD_AWAITING_CALLER)) || ((statusDetails).equals(HOLD_AWAITING_CHANGE)) || ((statusDetails).equals(HOLD_AWAITING_VENDOR))),	inProgressState);
+		} else if (state == RESOLVED_NAME) {
+			createState(!(owner).equals(UNOWNED) && (((statusDetails).equals(RESOLUTION_PERMANENTLY_SOLVED)) || ((statusDetails).equals(RESOLUTION_WORKAROUND))	|| ((statusDetails).equals(RESOLUTION_CALLER_CLOSED))), resolvedState);
+		} else if (state == CANCELED_NAME) {
+			createState((owner).equals(UNOWNED) && ((statusDetails).equals(CANCELLATION_DUPLICATE))	|| ((statusDetails).equals(CANCELLATION_UNNECESSARY))|| ((statusDetails).equals(CANCELLATION_NOT_AN_INCIDENT)), canceledState);
 		}
-		// edited
-		if (state.equals(NEW_NAME)) {
-			if ((owner).equals(UNOWNED) && ((statusDetails).equals(NO_STATUS))) {
-				this.currentState = newState;
-			} else {
-
-				throw new IllegalArgumentException("Incident cannot be created."); 
-			}
-		}
-		// code failing here? why
-		if (state.equals(IN_PROGRESS_NAME)) {
-			if (!owner.equals(UNOWNED) && ((statusDetails).equals(NO_STATUS))) {
-				this.currentState = inProgressState;
-			} else {
-				throw new IllegalArgumentException("Incident cannot be created.");
-			}
-		}
-		if (state.equals(ON_HOLD_NAME)) {
-			if (!(owner).equals(UNOWNED)
-					&& (((statusDetails).equals(HOLD_AWAITING_CALLER)) || ((statusDetails).equals(HOLD_AWAITING_CHANGE))
-							|| ((statusDetails).equals(HOLD_AWAITING_VENDOR)))) {
-				this.currentState = onHoldState;
-			} else {
-				throw new IllegalArgumentException("Incident cannot be created.");
-			}
-		} 
-		// edited
-		if (state == RESOLVED_NAME) {
-			if (!(owner).equals(UNOWNED) && (((statusDetails).equals(RESOLUTION_PERMANENTLY_SOLVED))
-					|| ((statusDetails).equals(RESOLUTION_WORKAROUND))
-					|| ((statusDetails).equals(RESOLUTION_CALLER_CLOSED)))) {
-				this.currentState = resolvedState;
-			} else {
-				throw new IllegalArgumentException("Incident cannot be created");
-			}
-
-		}
-		// edited
-		if (state == CANCELED_NAME) {
-			if ((owner).equals(UNOWNED) && ((statusDetails).equals(CANCELLATION_DUPLICATE))
-					|| ((statusDetails).equals(CANCELLATION_UNNECESSARY))
-					|| ((statusDetails).equals(CANCELLATION_NOT_AN_INCIDENT))) {
-				this.currentState = canceledState;
-
-			} else {
-				throw new IllegalArgumentException("Incident cannot be created.");
-			}
-		}
-
 	}
 
 	/**
@@ -411,7 +386,7 @@ public class Incident {
 	 * @throws IAE stating "Incident cannot be created" if the title is empty or
 	 *             null
 	 */
-	public void setOwner(String owner) {
+	private void setOwner(String owner) {
 		if (owner == null || ("").equals(owner)) {
 			throw new IllegalArgumentException("Incident cannot be created.");
 		}
@@ -483,7 +458,7 @@ public class Incident {
 		String logMessages = "";
 
 		for (int i = 0; i < incidentLog.size(); i++) {
-			logMessages = logMessages + "-" + incidentLog.get(i) + "\n";
+			logMessages = logMessages + "- " + incidentLog.get(i) + "\n";
 		}
 		return logMessages;
 	}
@@ -493,20 +468,21 @@ public class Incident {
 	// String statusDetails, ArrayList<String> incidentLog) {
 	@Override
 	public String toString() {
-		String finalString = "* " + incidentid + "," + currentState.getStateName() + "," + title + "," + caller + ","
-				+ reopenCount + "," + owner + "," + statusDetails + "\n" + getIncidentLogMessages();
+		return "* " + incidentid + "," + currentState.getStateName() + "," + title + "," + caller + "," + reopenCount
+				+ "," + owner + "," + statusDetails + "\n" + getIncidentLogMessages();
 
-		return finalString;
 	}
 
 	/**
 	 * a method delegating to the current state’s updateState(Command) method.
 	 * 
 	 * @param command a Command
+	 * 
+	 * @throws UnsupportedOperationException if an invalid command is passed
 	 */
 	public void update(Command command) {
 		currentState.updateState(command);
-		addMessageToIncidentLog(command.getCommandMessage()); 
+		addMessageToIncidentLog(command.getCommandMessage());
 	}
 
 	/**
@@ -571,7 +547,7 @@ public class Incident {
 
 				}
 
-				if (command.getCommand() == CommandValue.CANCEL) { 
+				else if (command.getCommand() == CommandValue.CANCEL) {
 					currentState = canceledState;
 					setStatusDetails(command.getCommandInformation());
 					setOwner(UNOWNED);
@@ -678,10 +654,9 @@ public class Incident {
 			if (command.getCommand() != CommandValue.REOPEN || command.getCommand() != CommandValue.INVESTIGATE) {
 				throw new UnsupportedOperationException();
 			}
-			if (command.getCommand() == CommandValue.REOPEN) {
+			if (command.getCommand() == CommandValue.INVESTIGATE) {
 				currentState = inProgressState;
-				setStatusDetails(command.getCommandInformation());
-				reopenCount++;
+				setStatusDetails(NO_STATUS);
 			}
 		}
 
@@ -729,9 +704,10 @@ public class Incident {
 			}
 
 			if (command.getCommand() == CommandValue.CANCEL) {
-				currentState = canceledState;
+
 				setStatusDetails(command.getCommandInformation());
 				setOwner(UNOWNED);
+				currentState = canceledState;
 			}
 		}
 

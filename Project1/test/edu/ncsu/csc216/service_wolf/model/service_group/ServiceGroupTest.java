@@ -138,23 +138,24 @@ public class ServiceGroupTest {
 	 */
 	@Test
 	public void testSetIncidentcounter() {
-		serviceGroup = new ServiceGroup("CSC IT");
+		serviceGroup = new ServiceGroup("CSC IT"); 
 		assertEquals(0, serviceGroup.getIncidents().size());
 		serviceGroup.addIncident(in1);
 		serviceGroup.addIncident(in);
 		serviceGroup.addIncident(in2);
-		serviceGroup.setIncidentCounter(); 
+		assertEquals(3, serviceGroup.getIncidents().size());
+		serviceGroup.setIncidentCounter();  
 		
-		System.out.println("\n" + serviceGroup.getIncidents().get(0).getId());
-		System.out.println("\n" + serviceGroup.getIncidents().get(1).getId());
-		System.out.println("\n" + serviceGroup.getIncidents().get(2).getId());
-			
+//		System.out.println("\n" + serviceGroup.getIncidents().get(0).getId());
+//		System.out.println("\n" + serviceGroup.getIncidents().get(1).getId());
+//	    System.out.println("\n" + serviceGroup.getIncidents().get(2).getId());
+//			
 		Incident u = new Incident("title", "James", "Set up piazza for spring 2021");
 		assertEquals(5, u.getId());
 		assertEquals("title", u.getTitle());
 		assertEquals("New", u.getState());
 		assertEquals(Incident.NO_STATUS, u.getStatusDetails());
-		assertEquals("-Set up piazza for spring 2021\n", u.getIncidentLogMessages());
+		assertEquals("- Set up piazza for spring 2021\n", u.getIncidentLogMessages());
 		assertEquals("James", u.getCaller());
 	}
 
@@ -210,11 +211,10 @@ public class ServiceGroupTest {
 		
 		commad = new Command(CommandValue.CANCEL, "Not an Incident", "not an NC State IT service");
 		serviceGroup.executeCommand(3, commad);
-		serviceGroup.getIncidentById(3).setOwner("James");
 		assertEquals("Canceled", serviceGroup.getIncidentById(3).getState());
-		assertEquals("James", serviceGroup.getIncidentById(3).getOwner());
+		assertEquals("Unowned", serviceGroup.getIncidentById(3).getOwner());
 	}
- 
+  
 	/**
 	 * Test method for deletIncidentById 
 	 */ 

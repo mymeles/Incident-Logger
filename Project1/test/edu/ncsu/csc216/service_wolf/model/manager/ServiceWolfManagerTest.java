@@ -5,7 +5,16 @@ package edu.ncsu.csc216.service_wolf.model.manager;
 
 import static org.junit.Assert.*;
 
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.util.Properties;
+
+import org.junit.Before;
 import org.junit.Test;
+
+
+import edu.ncsu.csc216.service_wolf.model.service_group.ServiceGroup;
 
 /**
  * A class to test ServiceWolfManager
@@ -14,20 +23,34 @@ import org.junit.Test;
  */
 public class ServiceWolfManagerTest {
 
+	private ServiceWolfManager manager;
 	/**
-	 * Test method for getinstance.
+	 * Sets up the RegistrationManager and clears the data.
+	 * 
+	 * @throws Exception if error
 	 */
-	@Test
-	public void testGetInstance() {
-		fail("Not yet implemented"); // TODO
-	}
+	@Before
+	public void setUp() throws Exception {
+	
+		manager = ServiceWolfManager.getInstance();
+		manager.resetManager();
 
+	} 
 	/**
 	 * Test method for saveTofile
 	 */
 	@Test
 	public void testSaveToFile() {
-		fail("Not yet implemented"); // TODO
+		
+		ServiceGroup g2;
+		ServiceGroup g3; 
+		ServiceGroup g1; 
+		manager.addServiceGroup("CSC");
+		manager.addIncidentToServiceGroup("jj", "jhasfdkjasy:", "asjhdgfakjh");
+		
+		manager.saveToFile("asjhdfaskjh");
+		
+		
 	}
 
 	/**

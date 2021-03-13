@@ -4,8 +4,6 @@ import java.io.File;
 import java.io.IOException;
 import java.io.PrintStream;
 import java.util.ArrayList;
-import java.util.List;
-
 
 import edu.ncsu.csc216.service_wolf.model.service_group.ServiceGroup;
 
@@ -25,13 +23,12 @@ public class ServiceGroupWriter {
 	public static void writeServiceGroupsToFile(String fileName, ArrayList<ServiceGroup> serviceGroup) throws IOException{
 		PrintStream fileWriter = new PrintStream(new File(fileName));
 		for (int i = 0; i < serviceGroup.size(); i++) {
-			fileWriter.println("# " + serviceGroup.get(i).getServiceGroupName() + "\n" + serviceGroup.get(i).getIncidents().toString());
+			fileWriter.println(serviceGroup.get(i).toString().trim());
 		}
-
+  
 		fileWriter.close();
 
 	}
 
 	}
-
-
+ 

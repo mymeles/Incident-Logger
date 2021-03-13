@@ -60,7 +60,7 @@ public class CommandTest {
 			assertEquals("These commands require an additional piece of information", e.getMessage());
 		}
 		
-		try { 
+		try {  
 			c3 = new Command(INVESTIGATE, INFO, MESSAGE);
 			fail();
 		} catch (IllegalArgumentException e) { 

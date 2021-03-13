@@ -66,7 +66,7 @@ public class ServiceGroup {
 	public void setIncidentCounter() {
 		int lastIncidnet = incident.size() - 1;
 		int id = incident.get(lastIncidnet).getId();
-		Incident.setCounter(id + 1 );
+		Incident.setCounter(id + 1);
 	}
 
 	/**
@@ -78,7 +78,7 @@ public class ServiceGroup {
 		for (int i = 0; i < incident.size(); i++) {
 			if (incident.get(i).getId() == incidents.getId()) {
 				throw new IllegalArgumentException("Incident cannot be created.");
-			} // sort
+			}
 		}
 		incident.add(incidents);
 
@@ -114,7 +114,7 @@ public class ServiceGroup {
 
 			}
 		}
-		return null;
+		return null; 
 	}
 
 	/**
@@ -135,7 +135,7 @@ public class ServiceGroup {
 	/**
 	 * A method to delete an incident by the passed parameter
 	 * 
-	 * @param id is an integer reference of incident
+	 * @param id is an integer reference of incident 
 	 */
 	public void deleteIncidentById(int id) {
 		for (int i = 0; i < incident.size(); i++) {
@@ -145,6 +145,15 @@ public class ServiceGroup {
 
 		}
 
+	}
+
+	@Override
+	public String toString() {
+		String inci = "";
+		for (int i = 0; i < incident.size(); i++) { 
+			inci = inci + incident.get(i).toString();
+		}
+		return "# " + serviceGroupName + "\n"+ inci;
 	}
 
 }

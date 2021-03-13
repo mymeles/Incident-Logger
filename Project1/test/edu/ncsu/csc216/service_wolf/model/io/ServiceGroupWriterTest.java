@@ -26,7 +26,7 @@ public class ServiceGroupWriterTest {
 	 * Array list message for incident 0
 	 */
 	private static final ArrayList<String> MESSAGES1 = new ArrayList<String>() {
-		/**
+		/** 
 		 * 
 		 */
 		private static final long serialVersionUID = 1L;
@@ -49,7 +49,7 @@ public class ServiceGroupWriterTest {
 	private static final ArrayList<String> MESSAGES2 = new ArrayList<String>() {
 		/**
 		 * 
-		 */
+		 */ 
 		private static final long serialVersionUID = 1L;
 
 		{
@@ -69,13 +69,16 @@ public class ServiceGroupWriterTest {
 	public void testWriteServiceGroupsToFile() {
 
 		ArrayList<ServiceGroup> serviceGroup = new ArrayList<ServiceGroup>();
-		ServiceGroup s = new ServiceGroup("CSC");
+		ServiceGroup s = new ServiceGroup("CSC IT");
 		s.addIncident(in);
 		s.addIncident(in1);
 
 		ServiceGroup s1 = new ServiceGroup("IETS");
 		s1.addIncident(in);
 		s1.addIncident(in1);
+		 
+		serviceGroup.add(s); 
+		serviceGroup.add(s1); 
 
 		try {
 			ServiceGroupWriter.writeServiceGroupsToFile("test-files/test-Incident1.txt", serviceGroup);
@@ -86,7 +89,7 @@ public class ServiceGroupWriterTest {
 		checkFiles("test-files/exp_i1.txt", "test-files/test-Incident1.txt");
 	}
 
-	/**
+	/** 
 	 * Helper method to compare two files for the same contents
 	 * 
 	 * @param expFile expected output

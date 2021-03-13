@@ -30,7 +30,7 @@ public class IncidentTest {
 	/**
 	 *  An integer id for test incident 
 	 */
-	private static final int ID = 2;
+	private static final int ID = 2; 
 	/**
 	 * A string state fot test incidnet  
 	 */
@@ -93,7 +93,7 @@ public class IncidentTest {
 		assertEquals(TITLE, in.getTitle()); 
 		assertEquals(CALLER, in.getCaller());
 		assertEquals(0, in.getId());
-		assertEquals("-Set up piazza for spring 2021\n", in.getIncidentLogMessages());
+		assertEquals("- Set up piazza for spring 2021\n", in.getIncidentLogMessages());
 
 		// test incident contructor with null title
 		Incident in1 = null;
@@ -169,7 +169,7 @@ public class IncidentTest {
 		assertEquals(REOPENCOUNT, in.getReopenCount());
 		assertEquals(OWNER, in.getOwner());
 		assertEquals(STATUSD, in.getStatusDetails());
-		assertEquals("-Set up piazza for Spring 2021\n-Canceled; not an NC State IT service\n",
+		assertEquals("- Set up piazza for Spring 2021\n- Canceled; not an NC State IT service\n",
 				in.getIncidentLogMessages());
 
 		Incident in1 = null;
@@ -202,7 +202,7 @@ public class IncidentTest {
 		assertEquals(REOPENCOUNT, in2.getReopenCount());
 		assertEquals(OWNER, in2.getOwner());
 		assertEquals(Incident.NO_STATUS, in2.getStatusDetails());
-		assertEquals("-Set up piazza for Spring 2021\n-Canceled; not an NC State IT service\n",
+		assertEquals("- Set up piazza for Spring 2021\n- Canceled; not an NC State IT service\n",
 				in2.getIncidentLogMessages());
 
 		// check Incalid new state
@@ -234,7 +234,7 @@ public class IncidentTest {
 		assertEquals(REOPENCOUNT, in4.getReopenCount());
 		assertEquals("James", in4.getOwner());
 		assertEquals(Incident.NO_STATUS, in4.getStatusDetails());
-		assertEquals("-Set up piazza for Spring 2021\n-Canceled; not an NC State IT service\n",
+		assertEquals("- Set up piazza for Spring 2021\n- Canceled; not an NC State IT service\n",
 				in2.getIncidentLogMessages());
 		// Test invalid
 		in4 = null;
@@ -293,10 +293,10 @@ public class IncidentTest {
 		assertEquals(REOPENCOUNT, in.getReopenCount());
 		assertEquals(OWNER, in.getOwner());
 		assertEquals(STATUSD, in.getStatusDetails());
-		assertEquals("-Set up piazza for Spring 2021\n-Canceled; not an NC State IT service\n",
+		assertEquals("- Set up piazza for Spring 2021\n- Canceled; not an NC State IT service\n",
 				in.getIncidentLogMessages());
-		assertEquals("* 2,Canceled,Piazza,sesmith5,0,Unowned,Not an Incident" + "\n" + "-Set up piazza for Spring 2021"
-				+ "\n" + "-" + "Canceled; not an NC State IT service\n", in.toString());
+		assertEquals("* 2,Canceled,Piazza,sesmith5,0,Unowned,Not an Incident\n" + "- Set up piazza for Spring 2021"
+				+ "\n" + "- Canceled; not an NC State IT service\n", in.toString());
 
 	}
 
@@ -310,14 +310,13 @@ public class IncidentTest {
 		assertEquals(TITLE, in.getTitle());
 		assertEquals(CALLER, in.getCaller());
 		assertEquals(0, in.getId());
-		assertEquals("-Set up piazza for spring 2021\n", in.getIncidentLogMessages());
+		assertEquals("- Set up piazza for spring 2021\n", in.getIncidentLogMessages());
 		System.out.print(in.getState());
 		commad = new Command(CommandValue.CANCEL, "Not an Incident", "not an NC State IT service");
 		in.update(commad);
-		in.setOwner(Incident.UNOWNED);
 		assertEquals(Incident.UNOWNED, in.getOwner());
 		assertEquals(Incident.CANCELED_NAME, in.getState());
-		assertEquals("-Set up piazza for spring 2021\n-not an NC State IT service\n", in.getIncidentLogMessages());
+		assertEquals("- Set up piazza for spring 2021\n- not an NC State IT service\n", in.getIncidentLogMessages());
 
 	}
 

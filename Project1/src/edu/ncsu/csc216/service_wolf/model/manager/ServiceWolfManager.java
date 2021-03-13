@@ -10,6 +10,7 @@ import java.util.ArrayList;
 import edu.ncsu.csc216.service_wolf.model.command.Command;
 import edu.ncsu.csc216.service_wolf.model.incident.Incident;
 import edu.ncsu.csc216.service_wolf.model.io.ServiceGroupWriter;
+import edu.ncsu.csc216.service_wolf.model.io.ServiceGroupsReader;
 import edu.ncsu.csc216.service_wolf.model.service_group.ServiceGroup;
 
 /**
@@ -27,7 +28,7 @@ public class ServiceWolfManager {
 	 */
 	private static ServiceWolfManager instance;
 	
-	
+	 
 	
 	/**
 	 *  A represerntation of service groups 
@@ -36,7 +37,7 @@ public class ServiceWolfManager {
 	
 	/**
 	 * the currentservice group 
-	 */
+	 */ 
 	private ServiceGroup currentServiceGroup; 
  
 	/**
@@ -68,7 +69,6 @@ public class ServiceWolfManager {
 	public void saveToFile(String fileName) {
 		try {
 			ServiceGroupWriter.writeServiceGroupsToFile(fileName, serviceGroups);
-
 		} catch (IOException e) {
 			System.out.println("The file cannot be saved");
 			e.printStackTrace();
@@ -83,7 +83,7 @@ public class ServiceWolfManager {
 	 * @param fileName location of a service file
 	 */
 	public void loadFromFile(String fileName) {
-		
+		serviceGroups = ServiceGroupsReader.readServiceGroupsFile(fileName);
 	}
 
 	/**
@@ -145,17 +145,23 @@ public class ServiceWolfManager {
 	 * @param filename is a string representaion of a file loaction to load service
 	 *                 groups
 	 */
-	public void loadServiceGroup(String filename) {
-		// implement load service group
+	public void loadServiceGroup(String serviceGroupName) {
+		// we are adding the given service group to  the current service group 
+		
+		for(int i =0; i < serviceGroups.size(); i++) {
+			 if((serviceGroups.get(i).getServiceGroupName()).equals(serviceGroupName)) {
+				 currentServiceGroup = serviceGroups.get(i);
+			 }
+		}
 	}
 
 	/**
-	 * retrives the service group name
+	 * retrives the service group name of the current service group 
 	 * 
 	 * @return a string value of a service group name
 	 */
 	public String getServiceGroupName() {
-		return null;
+		return currentServiceGroup.getServiceGroupName();
 	}
 
 	/**
@@ -180,7 +186,7 @@ public class ServiceWolfManager {
 	 * @param updateName a string value of upadte service group name
 	 */
 	public void editServiceGroup(String updateName) {
-		// impement edit service groups
+		currentServiceGroup.setServiceGroupName(updateName);
 	}
 
 	/**
