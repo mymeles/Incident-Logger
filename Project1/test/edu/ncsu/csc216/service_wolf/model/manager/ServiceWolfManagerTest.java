@@ -52,6 +52,7 @@ public class ServiceWolfManagerTest {
 //		manager.addIncidentToServiceGroup("jj", "jhasfdkjasy:", "asjhdgfakjh");
 //		
 //		manager.saveToFile("asjhdfaskjh");
+		fail();
 
 	}
 

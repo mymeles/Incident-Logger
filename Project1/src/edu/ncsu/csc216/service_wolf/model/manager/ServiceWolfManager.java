@@ -39,6 +39,9 @@ public class ServiceWolfManager {
 	 */
 	private ServiceGroup currentServiceGroup;
 	
+	/**
+	 * A string representaing ServiceGroup name 
+	 */
 	String name;
 
 	/**
@@ -155,6 +158,9 @@ public class ServiceWolfManager {
 	 */
 	public void addIncidentToServiceGroup(String title, String caller, String message) {
 		// impelement add incident to service group
+		
+		addServiceGroupToListByName(currentServiceGroup); 
+		return;
 	}
 
 	/**
@@ -219,6 +225,8 @@ public class ServiceWolfManager {
 				return sg1.getServiceGroupName().compareToIgnoreCase(s2.getServiceGroupName());
 			}
 		});
+		
+		
 
 	}
 
@@ -228,7 +236,7 @@ public class ServiceWolfManager {
 	 * @param servicegroup is a service group to add to list
 	 */
 	private void addServiceGroupToListByName(ServiceGroup servicegroup) {
-		//
+		return;
 	}
 
 	/**
