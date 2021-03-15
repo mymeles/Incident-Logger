@@ -229,12 +229,5 @@ public class ServiceWolfManagerTest {
 		fail("Not yet implemented"); // TODO
 	}
 
-	/**
-	 * Test method for resetmanager
-	 */
-	@Test
-	public void testResetManager() {
-		fail("Not yet implemented"); // TODO
-	}
-
+	
 }

@@ -53,7 +53,7 @@ public class ServiceGroupTest {
 	 */
 	private Incident in = new Incident(2, "Canceled", "Piazza", "sesmith5", 0, "Unowned", "Not an Incident", MESSAGES1);
 
-	/**
+	/** 
 	 * ArrayList Message for incident
 	 */
 	private static final ArrayList<String> MESSAGES2 = new ArrayList<String>() {
@@ -101,7 +101,7 @@ public class ServiceGroupTest {
 	@Before
 	public void setUp() throws Exception {
 		// Reset the counter at the beginning of every test.
-		Incident.setCounter(0);
+		Incident.setCounter(1);
 	}
 
 	/**
