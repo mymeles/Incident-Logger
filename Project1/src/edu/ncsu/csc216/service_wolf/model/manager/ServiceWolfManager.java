@@ -66,13 +66,9 @@ public class ServiceWolfManager {
 	 * @param fileName a location where the file is saved
 	 */
 	public void saveToFile(String fileName) {
-		try {
-			ServiceGroupWriter.writeServiceGroupsToFile(fileName, serviceGroups);
-		} catch (IOException e) {
-			System.out.println("The file cannot be saved");
-			e.printStackTrace();
-		}
 
+			ServiceGroupWriter.writeServiceGroupsToFile(fileName, serviceGroups);
+		
 	}
 
 	/**

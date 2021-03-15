@@ -1,6 +1,7 @@
 package edu.ncsu.csc216.service_wolf.model.io;
 
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.PrintStream;
 import java.util.ArrayList;
@@ -20,13 +21,20 @@ public class ServiceGroupWriter {
 	 * @param serviceGroup a list of service groups that are written in the file that is given
 	 * @throws IOExceptionIOException if Servicegroup can't not be written to the file given
 	 */
-	public static void writeServiceGroupsToFile(String fileName, ArrayList<ServiceGroup> serviceGroup) throws IOException{
-		PrintStream fileWriter = new PrintStream(new File(fileName));
-		for (int i = 0; i < serviceGroup.size(); i++) {
-			fileWriter.println(serviceGroup.get(i).toString().trim());
+	public static void writeServiceGroupsToFile(String fileName, ArrayList<ServiceGroup> serviceGroup) {
+		PrintStream fileWriter;
+		try {
+			fileWriter = new PrintStream(new File(fileName));
+			for (int i = 0; i < serviceGroup.size(); i++) {
+				fileWriter.println(serviceGroup.get(i).toString().trim());
+			}
+	  
+			fileWriter.close();
+		} catch (FileNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
-  
-		fileWriter.close();
+		
 
 	}
 

@@ -49,7 +49,7 @@ public class ServiceGroupWriterTest {
 	private static final ArrayList<String> MESSAGES2 = new ArrayList<String>() {
 		/**
 		 * 
-		 */ 
+		 */
 		private static final long serialVersionUID = 1L;
 
 		{
@@ -76,20 +76,16 @@ public class ServiceGroupWriterTest {
 		ServiceGroup s1 = new ServiceGroup("IETS");
 		s1.addIncident(in);
 		s1.addIncident(in1);
-		 
-		serviceGroup.add(s); 
-		serviceGroup.add(s1); 
 
-		try {
-			ServiceGroupWriter.writeServiceGroupsToFile("test-files/test-Incident1.txt", serviceGroup);
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
+		serviceGroup.add(s);
+		serviceGroup.add(s1);
+
+		ServiceGroupWriter.writeServiceGroupsToFile("test-files/test-Incident1.txt", serviceGroup);
 
 		checkFiles("test-files/exp_i1.txt", "test-files/test-Incident1.txt");
 	}
 
-	/** 
+	/**
 	 * Helper method to compare two files for the same contents
 	 * 
 	 * @param expFile expected output
