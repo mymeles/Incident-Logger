@@ -105,7 +105,7 @@ public class ServiceWolfManagerTest {
 
 		manager.deleteIncidentById(9);
 		assertEquals(2, manager.getIncidentsAsArray().length);
-
+ 
 		manager.deleteIncidentById(4);
 		assertEquals(1, manager.getIncidentsAsArray().length);
 

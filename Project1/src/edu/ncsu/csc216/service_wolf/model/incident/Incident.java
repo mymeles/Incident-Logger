@@ -59,7 +59,7 @@ public class Incident {
 	 * An inscident state representing onhold state
 	 */
 	private final IncidentState onHoldState = new OnHoldState();
-
+ 
 	/**
 	 * An incident state representing resolved state
 	 */
@@ -169,7 +169,7 @@ public class Incident {
 	/**
 	 * Counter for incident
 	 */
-	private static int counter = 0;
+	private static int counter = 1;
 
 	/**
 	 * Constructs a Incident from the provided title, caller, and message.The
@@ -187,14 +187,15 @@ public class Incident {
 	 */
 	public Incident(String title, String caller, String message) {
 
-		setId(Incident.counter);
-		Incident.incrementCounter();
+		//(Incident.counter);
 		setTitle(title);
 		setCaller(caller);
 		setOwner(UNOWNED);
 		setStatusDetails(NO_STATUS);
 		setState(NEW_NAME);
 		addMessageToIncidentLog(message);
+		this.incidentid = counter;
+		incrementCounter(); 
 
 	}
 
@@ -250,7 +251,7 @@ public class Incident {
 	 */
 	private void setId(int id) {
 
-		if (id < 0) {
+		if (id <= 0) {
 			throw new IllegalArgumentException("Incident cannot br created.");
 		}
 		this.incidentid = id;
@@ -454,7 +455,7 @@ public class Incident {
 	 * @param id the counter to set
 	 */
 	public static void setCounter(int id) {
-		counter = id;
+		counter = id; 
 	}
 
 	/**
@@ -489,11 +490,11 @@ public class Incident {
 	 * 
 	 * @throws UnsupportedOperationException if an invalid command is passed
 	 */
-	public void update(Command command) {
+	public void update(Command command) throws UnsupportedOperationException {
 		currentState.updateState(command);
 		addMessageToIncidentLog(command.getCommandMessage());
 	}
-
+ 
 	/**
 	 * Interface for states in the Incident State Pattern. All concrete incident
 	 * states must implement the IncidentState interface. The IncidentState
@@ -613,7 +614,7 @@ public class Incident {
 				break;
 			case CANCEL:
 				setStatusDetails(command.getCommandInformation());
-				setCaller(UNOWNED);
+				setOwner(UNOWNED);
 				currentState = canceledState;
 				break;
 			default:
@@ -659,6 +660,7 @@ public class Incident {
 			case INVESTIGATE:
 				setStatusDetails(NO_STATUS);
 				currentState = inProgressState;
+				break;
 			default: 
 				throw new UnsupportedOperationException();
 			}
@@ -701,11 +703,13 @@ public class Incident {
 			case REOPEN: 
 				setStatusDetails(NO_STATUS);
 				reopenCount++;
-				currentState = inProgressState;
+				currentState = inProgressState; 
+				break;
 			case CANCEL:
 				setStatusDetails(command.getCommandInformation());
 				setOwner(UNOWNED);
 				currentState = canceledState;
+				break;
 			default:
 				throw new UnsupportedOperationException();
 			}
@@ -746,7 +750,7 @@ public class Incident {
 		 *
 		 */
 		public void updateState(Command command) {
-				// 
+			
 		}
 
 		/**

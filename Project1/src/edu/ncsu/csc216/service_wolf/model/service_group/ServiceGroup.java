@@ -26,14 +26,14 @@ public class ServiceGroup {
 	/**
 	 * A List of incidents called incident
 	 */
-	ArrayList<Incident> incident = new ArrayList<Incident>();
+	ArrayList<Incident> incident;
 
 	/**
 	 * a constructor for ServiceGroup
 	 * 
 	 * @param serviceGroupName is a string value of the service group name
 	 */
-	public ServiceGroup(String serviceGroupName) {
+	public ServiceGroup(String serviceGroupName) { 
 
 		setServiceGroupName(serviceGroupName);
 		incident = new ArrayList<Incident>();
@@ -98,7 +98,7 @@ public class ServiceGroup {
 			break;
 		case "true-false":
 			 incident.add(incidents);
-			 setIncidentCounter();
+			 setIncidentCounter(); 
 			break;
 			default: 
 				throw new IllegalArgumentException("Incident cannot be created.");
@@ -115,7 +115,7 @@ public class ServiceGroup {
 	/**
 	 * a method that returns incdeints
 	 * 
-	 * @return a list of incidents
+	 * @return an arraylist of incidents
 	 */
 	public ArrayList<Incident> getIncidents() {
 		return incident;
@@ -163,9 +163,7 @@ public class ServiceGroup {
 		for (int i = 0; i < incident.size(); i++) {
 			if (id == incident.get(i).getId()) {
 				incident.remove(i);
-			} else {
-				return; 
-			}
+			}  
 
 		}
 

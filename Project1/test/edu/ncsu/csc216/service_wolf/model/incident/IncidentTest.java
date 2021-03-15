@@ -23,7 +23,7 @@ public class IncidentTest {
 	/**
 	 * A command for testing
 	 */
-	private Command commad;
+	private Command command;
 
 	// values to test the second constructor
 
@@ -79,7 +79,7 @@ public class IncidentTest {
 	@Before
 	public void setUp() throws Exception {
 		// Reset the counter at the beginning of every test.
-		Incident.setCounter(0);
+		Incident.setCounter(1);
 	}
 
 	/**
@@ -93,7 +93,8 @@ public class IncidentTest {
 		in = new Incident(TITLE, CALLER, "Set up piazza for spring 2021");
 		assertEquals(TITLE, in.getTitle());
 		assertEquals(CALLER, in.getCaller());
-		assertEquals(0, in.getId());
+		System.out.println(in.getId());
+		assertEquals(1, in.getId());
 		assertEquals("- Set up piazza for spring 2021\n", in.getIncidentLogMessages());
 
 		// test incident contructor with null title
@@ -245,7 +246,7 @@ public class IncidentTest {
 			in4 = new Incident(6, "In Progress", TITLE, CALLER, REOPENCOUNT, Incident.UNOWNED, Incident.NO_STATUS,
 					MESSAGES);
 			fail();
-		} catch (IllegalArgumentException e) { 
+		} catch (IllegalArgumentException e) {
 			assertNull(null, in4);
 			assertEquals("Incident cannot be created.", e.getMessage());
 		}
@@ -311,41 +312,151 @@ public class IncidentTest {
 		in = new Incident(TITLE, CALLER, "Set up piazza for spring 2021");
 		assertEquals(TITLE, in.getTitle());
 		assertEquals(CALLER, in.getCaller());
-		assertEquals(0, in.getId());
+		assertEquals(1, in.getId());
 		assertEquals("- Set up piazza for spring 2021\n", in.getIncidentLogMessages());
-		commad = new Command(CommandValue.CANCEL, "Not an Incident", "not an NC State IT service");
+		command = new Command(CommandValue.CANCEL, "Not an Incident", "not an NC State IT service");
 
-		in.update(commad);
+		in.update(command);
 		assertEquals(Incident.UNOWNED, in.getOwner());
 		assertEquals(Incident.CANCELED_NAME, in.getState());
 		assertEquals("- Set up piazza for spring 2021\n- not an NC State IT service\n", in.getIncidentLogMessages());
-		
-		in = null;
-		commad = null;
-		in = new Incident(TITLE, CALLER, "Set up piazza for spring 2021");
-		commad = new Command(CommandValue.ASSIGN, "James", "IN progress; have been assign an owner");
-		in.update(commad);
-		assertEquals("In Progress", in.getState()); 
-		assertEquals("James", in.getOwner());
-		assertEquals(CALLER, in.getCaller());
-		assertEquals(1, in.getId());
-		assertEquals("- Set up piazza for spring 2021\n- IN progress; have been assign an owner\n", in.getIncidentLogMessages());
 
-		
-		// Test invalid command for new state 
 		in = null;
-		commad = null;	
+		command = null;
+		in = new Incident(TITLE, CALLER, "Set up piazza for spring 2021");
+		command = new Command(CommandValue.ASSIGN, "James", "IN progress; have been assign an owner");
+		in.update(command);
+		assertEquals("In Progress", in.getState());
+		assertEquals("James", in.getOwner()); 
+		assertEquals(CALLER, in.getCaller());
+		assertEquals(2, in.getId());
+		assertEquals("- Set up piazza for spring 2021\n- IN progress; have been assign an owner\n",
+				in.getIncidentLogMessages());
+
+		// Test invalid command for new state
+		in = null;
+		command = null;
 		try {
 			in = new Incident(TITLE, CALLER, "Set up piazza for spring 2021");
-			commad = new Command(CommandValue.RESOLVE, "Not an Incident", "not an NC State IT service");
-			in.update(commad);
+			command = new Command(CommandValue.RESOLVE, "Not an Incident", "not an NC State IT service");
+			in.update(command);
 			fail();
-		} catch (UnsupportedOperationException e) { 
+		} catch (UnsupportedOperationException e) {
 			assertEquals(TITLE, in.getTitle());
-			assertEquals(2, in.getId());
+			assertEquals(3, in.getId());
 			assertEquals(CALLER, in.getCaller());
 		}
 
+		// testin in progress state
+		in = new Incident(TITLE, CALLER, "Set up piazza for spring 2021");
+		command = new Command(CommandValue.ASSIGN, "James", "needs imidiate attention");
+		in.update(command);
+		assertEquals("In Progress", in.getState());
+		assertEquals("James", in.getOwner());
+		assertEquals(CALLER, in.getCaller());
+		assertEquals(4, in.getId());
+		assertEquals("- Set up piazza for spring 2021\n- needs imidiate attention\n", in.getIncidentLogMessages());
+		command = null;
+
+		// Testing Assign command in progress state
+
+		command = new Command(CommandValue.ASSIGN, "James", "Notice: imidiate attention");
+		in.update(command);
+
+		assertEquals("In Progress", in.getState());
+		assertEquals("James", in.getOwner());
+		assertEquals(CALLER, in.getCaller());
+		assertEquals(4, in.getId());
+		assertEquals("- Set up piazza for spring 2021\n- needs imidiate attention\n- Notice: imidiate attention\n",
+				in.getIncidentLogMessages());
+
+		// testing inprogress state with HOLD command
+		command = null;
+		command = new Command(CommandValue.HOLD, "Awaiting Caller", "needs imidiate attention");
+		in.update(command);
+		assertEquals(Incident.ON_HOLD_NAME, in.getState());
+		assertEquals(Incident.HOLD_AWAITING_CALLER, in.getStatusDetails());
+		assertEquals("James", in.getOwner());
+		assertEquals(CALLER, in.getCaller());
+		assertEquals(4, in.getId());
+		assertEquals(
+				"- Set up piazza for spring 2021\n- needs imidiate attention\n- Notice: imidiate attention\n- needs imidiate attention\n",
+				in.getIncidentLogMessages());
+
+		command = null;
+		command = new Command(CommandValue.INVESTIGATE, null, "Needs to be in progress");
+		in.update(command);
+		assertEquals(Incident.IN_PROGRESS_NAME, in.getState());
+		assertEquals(Incident.NO_STATUS, in.getStatusDetails());
+		assertEquals("James", in.getOwner());
+		assertEquals(CALLER, in.getCaller());
+		assertEquals(4, in.getId());
+		assertEquals(
+				"- Set up piazza for spring 2021\n- needs imidiate attention\n- Notice: imidiate attention\n- needs imidiate attention\n- Needs to be in progress\n",
+				in.getIncidentLogMessages());
+
+		command = null;
+		command = new Command(CommandValue.RESOLVE, "Caller Closed", "Needs to be in progress");
+		in.update(command);
+		assertEquals(Incident.RESOLVED_NAME, in.getState());
+		assertEquals(Incident.RESOLUTION_CALLER_CLOSED, in.getStatusDetails());
+		assertEquals("James", in.getOwner());
+		assertEquals(CALLER, in.getCaller());
+		assertEquals(4, in.getId());
+		assertEquals(
+				"- Set up piazza for spring 2021\n- needs imidiate attention\n- Notice: imidiate attention\n- needs imidiate attention\n- Needs to be in progress\n"
+				+ "- Needs to be in progress\n",
+				in.getIncidentLogMessages());
+		
+		command = null;
+		command = new Command(CommandValue.REOPEN, null, "case reopened");
+		in.update(command);
+		assertEquals(Incident.IN_PROGRESS_NAME, in.getState());
+		assertEquals(Incident.NO_STATUS, in.getStatusDetails());
+		assertEquals(1, in.getReopenCount());
+		assertEquals("James", in.getOwner());
+		assertEquals(CALLER, in.getCaller());
+		assertEquals(4, in.getId());
+		assertEquals(
+				"- Set up piazza for spring 2021\n- needs imidiate attention\n- Notice: imidiate attention\n- needs imidiate attention\n- Needs to be in progress\n"
+				+ "- Needs to be in progress\n- case reopened\n",
+				in.getIncidentLogMessages());
+		
+		command = null;
+		command = new Command(CommandValue.CANCEL, "Duplicate", "Duplicate case");
+		in.update(command);
+		assertEquals(Incident.CANCELED_NAME, in.getState());
+		assertEquals(Incident.CANCELLATION_DUPLICATE, in.getStatusDetails());
+		assertEquals(1, in.getReopenCount());
+		assertEquals("Unowned", in.getOwner());
+		assertEquals(CALLER, in.getCaller());
+		assertEquals(4, in.getId());
+		assertEquals(
+				"- Set up piazza for spring 2021\n- needs imidiate attention\n- Notice: imidiate attention\n- needs imidiate attention\n- Needs to be in progress\n"
+				+ "- Needs to be in progress\n- case reopened\n- Duplicate case\n",
+				in.getIncidentLogMessages());
+		
+		// testing from resolve to Cancel 
+		in = null;
+		command = null;
+		in = new Incident(TITLE, CALLER, "Set up piazza for spring 2021");
+		command = new Command(CommandValue.ASSIGN, "James", "IN progress; have been assign an owner");
+		in.update(command);
+		command = null;
+		command = new Command(CommandValue.RESOLVE, "Workaround", "Waiting for a work around");
+		in.update(command);
+		command = null;
+		command = new Command(CommandValue.CANCEL, "Not an Incident", "It is not an incident");
+		in.update(command);
+		assertEquals(Incident.CANCELED_NAME, in.getState());
+		assertEquals("Unowned", in.getOwner()); 
+		assertEquals(CALLER, in.getCaller());
+		assertEquals(5, in.getId());
+		assertEquals("Not an Incident", in.getStatusDetails());
+		assertEquals("- Set up piazza for spring 2021\n- IN progress; have been assign an owner\n- Waiting for a work around\n- It is not an incident\n",
+				in.getIncidentLogMessages());
+		
+		
 	}
 
 }

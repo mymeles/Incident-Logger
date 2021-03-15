@@ -102,7 +102,7 @@ public class ServiceWolfGUI extends JFrame implements ActionListener {
 	/** Canceled panel - we only need one instance, so it's final. */
 	private final CanceledPanel pnlCanceled = new CanceledPanel();
 	/** Add Incident panel - we only need one instance, so it's final. */
-	private final AddIncidentPanel pnlAddIncident = new AddIncidentPanel();
+	private final AddIncidentPanel pnlAddIncident = new AddIncidentPanel(); 
 	/** Reference to CardLayout for panel.  Stacks all of the panels. */
 	private CardLayout cardLayout;
 	

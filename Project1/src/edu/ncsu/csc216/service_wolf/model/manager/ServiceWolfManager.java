@@ -38,9 +38,9 @@ public class ServiceWolfManager {
 	 * the currentservice group
 	 */
 	private ServiceGroup currentServiceGroup;
-	
+
 	/**
-	 * A string representaing ServiceGroup name 
+	 * A string representaing ServiceGroup name
 	 */
 	String name;
 
@@ -71,9 +71,10 @@ public class ServiceWolfManager {
 	 * @param fileName a location where the file is saved
 	 */
 	public void saveToFile(String fileName) {
-
+		if(currentServiceGroup == null) {
+			throw new IllegalArgumentException("Unable to save file.");
+		}
 		ServiceGroupWriter.writeServiceGroupsToFile(fileName, serviceGroups);
-
 	}
 
 	/**
@@ -84,7 +85,6 @@ public class ServiceWolfManager {
 	public void loadFromFile(String fileName) {
 
 		serviceGroups = ServiceGroupsReader.readServiceGroupsFile(fileName);
-		System.out.println("tsting file here now ;;;;;;" + serviceGroups.get(0).getServiceGroupName());
 		currentServiceGroup = serviceGroups.get(0);
 
 		Collections.sort(serviceGroups, new Comparator<ServiceGroup>() {
@@ -127,13 +127,13 @@ public class ServiceWolfManager {
 	}
 
 	/**
-	 * executes command on a given incident
+	 * executes command on the current incident by refrencinf to its incident
 	 * 
 	 * @param id      an integer refrencing incident
 	 * @param command is a command to execute
 	 */
 	public void executeCommand(int id, Command command) {
-		//
+		currentServiceGroup.getIncidentById(id).update(command);
 	}
 
 	/**
@@ -157,10 +157,8 @@ public class ServiceWolfManager {
 	 * @param message message of the incident
 	 */
 	public void addIncidentToServiceGroup(String title, String caller, String message) {
-		// impelement add incident to service group
-		
-		addServiceGroupToListByName(currentServiceGroup); 
-		return;
+		Incident i = new Incident(title, caller, message);
+		currentServiceGroup.addIncident(i);
 	}
 
 	/**
@@ -206,6 +204,7 @@ public class ServiceWolfManager {
 	 */
 	public void clearServiceGroups() {
 		serviceGroups = new ArrayList<ServiceGroup>();
+		currentServiceGroup = null;
 	}
 
 	/**
@@ -218,6 +217,7 @@ public class ServiceWolfManager {
 			throw new IllegalArgumentException("Invalid service group name.");
 		} else {
 			currentServiceGroup.setServiceGroupName(updateName);
+			loadServiceGroup(updateName);
 		}
 		Collections.sort(serviceGroups, new Comparator<ServiceGroup>() {
 			@Override
@@ -225,34 +225,45 @@ public class ServiceWolfManager {
 				return sg1.getServiceGroupName().compareToIgnoreCase(s2.getServiceGroupName());
 			}
 		});
-		
-		
 
 	}
 
-	/**
-	 * A method that adds service list to a list by name
-	 * 
-	 * @param servicegroup is a service group to add to list
-	 */
-	private void addServiceGroupToListByName(ServiceGroup servicegroup) {
-		return;
-	}
+//	/**
+//	 * A method that adds service list to a list by name
+//	 * 
+//	 * @param servicegroup is a service group to add to list
+//	 */
+//	private void addServiceGroupToListByName(ServiceGroup servicegroup) {
+//		return;
+//	}
 
 	/**
-	 * a method to add service groups
+	 * A method that takes in a String value for serviceName and creates a new
+	 * serviceGroup in the serviceGroup list
 	 * 
 	 * @param serviceGroupName a string value of the service group name
 	 */
 	public void addServiceGroup(String serviceGroupName) {
-		ServiceGroup addService = new ServiceGroup(serviceGroupName.trim());
-		serviceGroups.add(addService);
-	}
+		if (serviceGroupName == null || "".equals(serviceGroupName) || checkDuplicateServiceName(serviceGroupName)) {
+			throw new IllegalArgumentException("Invalid service group name.");
+		}
+		ServiceGroup addService = new ServiceGroup(serviceGroupName);
+		serviceGroups.add(addService); 
+		
+		Collections.sort(serviceGroups, new Comparator<ServiceGroup>() {
+			@Override
+			public int compare(ServiceGroup sg1, ServiceGroup s2) {
+				return sg1.getServiceGroupName().compareToIgnoreCase(s2.getServiceGroupName());
+			}
+		});
+	} 
 
 	/**
-	 * A method that checks for duplicate service3 groups
+	 * A method that checks for duplicate service groups in the service froup list
+	 * returns true if the name is duplicate and false if the name is not duplicate
 	 * 
 	 * @param sgName is the name of the service group
+	 * @return a value of boolean
 	 */
 	private boolean checkDuplicateServiceName(String sgName) {
 		for (int i = 0; i < serviceGroups.size(); i++) {
@@ -267,10 +278,20 @@ public class ServiceWolfManager {
 	 * A method to delet a service group
 	 */
 	public void deleteServiceGroup() {
+		if(currentServiceGroup ==  null) {
+			 throw new IllegalArgumentException("No service group selected.");
+		} else {
 		for (int i = 0; i < serviceGroups.size(); i++) {
 			if (currentServiceGroup.getServiceGroupName().equals(serviceGroups.get(i).getServiceGroupName())) {
 				serviceGroups.remove(i);
+				if (serviceGroups.size() > 0) {
+					currentServiceGroup = serviceGroups.get(0);
+				} else {
+					currentServiceGroup = null;
+
+				}
 			}
+		}
 		}
 	}
 
@@ -278,7 +299,7 @@ public class ServiceWolfManager {
 	 * A method to reset the incident manager for testing
 	 */
 	protected void resetManager() {
-		//
+		instance = null;
 	}
 
 }

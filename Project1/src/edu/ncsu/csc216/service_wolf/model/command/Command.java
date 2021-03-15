@@ -67,12 +67,12 @@ public class Command {
 			throw new IllegalArgumentException("These commands require an additional piece of information");
 		}
 
-		else if ((CommandValue.INVESTIGATE.equals(command) || CommandValue.REOPEN.equals(command))
+		else if ((CommandValue.INVESTIGATE.equals(command) || CommandValue.REOPEN.equals(command)) 
 				&& commandInformation != null) {
 			throw new IllegalArgumentException("These commands do NOT require an additional piece of information");
 		} else {
 			this.command = command; 
-			this.commandInformation = commandInformation; 
+			this.commandInformation = commandInformation;  
 			this.commandMessage = commandMessage; 
 		} 
 
