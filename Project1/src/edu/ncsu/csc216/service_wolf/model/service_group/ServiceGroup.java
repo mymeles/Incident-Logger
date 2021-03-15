@@ -65,9 +65,10 @@ public class ServiceGroup {
 	 */
 	public void setIncidentCounter() {
 		if (incident.size() == 0) {
-			Incident.setCounter(incident.get(0).getId() + 1);
-		} else
+			return;
+		} else {
 			Incident.setCounter(incident.get(incident.size() - 1).getId() + 1);
+		}
 	}
 
 	/**
