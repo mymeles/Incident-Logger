@@ -54,7 +54,7 @@ public class ServiceGroup {
 	 * @param serviceGroupName the serviceGroupName to set -setServiceGroupName
 	 */
 	public void setServiceGroupName(String serviceGroupName) {
-		if (serviceGroupName == null || ("").equals(serviceGroupName)) {
+		if (serviceGroupName == null || "".equals(serviceGroupName)) {
 			throw new IllegalArgumentException("Invalid service group name.");
 		}
 		this.serviceGroupName = serviceGroupName;

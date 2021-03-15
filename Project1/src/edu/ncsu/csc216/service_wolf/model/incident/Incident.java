@@ -293,20 +293,19 @@ public class Incident {
 			createState(!owner.equals(UNOWNED) && statusDetails.equals(NO_STATUS), inProgressState);
 			break;
 		case ON_HOLD_NAME:
-			createState(!(owner).equals(UNOWNED)
-					&& (((statusDetails).equals(HOLD_AWAITING_CALLER)) || ((statusDetails).equals(HOLD_AWAITING_CHANGE))
-							|| ((statusDetails).equals(HOLD_AWAITING_VENDOR))),
-					inProgressState);
+			createState(!owner.equals(UNOWNED)
+					&& ( statusDetails.equals(HOLD_AWAITING_CALLER) || statusDetails.equals(HOLD_AWAITING_CHANGE)
+			 				|| statusDetails.equals(HOLD_AWAITING_VENDOR)), inProgressState);
 			break;
-		case RESOLVED_NAME:
-			createState(!(owner).equals(UNOWNED) && (((statusDetails).equals(RESOLUTION_PERMANENTLY_SOLVED))
-					|| ((statusDetails).equals(RESOLUTION_WORKAROUND))
-					|| ((statusDetails).equals(RESOLUTION_CALLER_CLOSED))), resolvedState);
+		case RESOLVED_NAME: 
+			createState(!(owner).equals(UNOWNED) && ((statusDetails).equals(RESOLUTION_PERMANENTLY_SOLVED))
+					|| statusDetails.equals(RESOLUTION_WORKAROUND)
+					|| statusDetails.equals(RESOLUTION_CALLER_CLOSED), resolvedState);
 			break;
 		case CANCELED_NAME:
-			createState((owner).equals(UNOWNED) && ((statusDetails).equals(CANCELLATION_DUPLICATE))
-					|| ((statusDetails).equals(CANCELLATION_UNNECESSARY))
-					|| ((statusDetails).equals(CANCELLATION_NOT_AN_INCIDENT)), canceledState);
+			createState(owner.equals(UNOWNED) && statusDetails.equals(CANCELLATION_DUPLICATE) 
+					|| statusDetails.equals(CANCELLATION_UNNECESSARY)
+					|| statusDetails.equals(CANCELLATION_NOT_AN_INCIDENT), canceledState);
 			break;
 		default:
 			throw new IllegalArgumentException("Incident cannot be created.");
@@ -314,7 +313,7 @@ public class Incident {
 
 	}
 
-	/**
+	/** 
 	 * returns a string value of the incidents title
 	 * 
 	 * @return the title
@@ -331,11 +330,11 @@ public class Incident {
 	 * @throws if title is empty or
 	 */
 	private void setTitle(String title) {
-		if (title == null || ("").equals(title)) {
+		if (title == null || "".equals(title)) {
 			throw new IllegalArgumentException("Incident cannot be created.");
 		}
 		this.title = title;
-	}
+	} 
 
 	/**
 	 * retrives the caller name
@@ -352,7 +351,7 @@ public class Incident {
 	 * @param caller the caller to set
 	 */
 	private void setCaller(String caller) {
-		if (caller == null || ("").equals(caller)) {
+		if (caller == null || "".equals(caller)) {
 			throw new IllegalArgumentException("Incident cannot be created.");
 		}
 		this.caller = caller;
@@ -397,7 +396,7 @@ public class Incident {
 	 *             null
 	 */
 	private void setOwner(String owner) {
-		if (owner == null || ("").equals(owner)) {
+		if (owner == null || "".equals(owner)) {
 			throw new IllegalArgumentException("Incident cannot be created.");
 		}
 		this.owner = owner;
@@ -421,7 +420,7 @@ public class Incident {
 	 *             empty or null
 	 */
 	private void setStatusDetails(String statusDetails) {
-		if (statusDetails == null || ("").equals(statusDetails)) {
+		if (statusDetails == null || "".equals(statusDetails)) {
 			throw new IllegalArgumentException("Incident cannot be created.");
 		}
 		this.statusDetails = statusDetails;
@@ -434,7 +433,7 @@ public class Incident {
 	 * @return an integer reference of the log
 	 */
 	private int addMessageToIncidentLog(String message) {
-		if (message == null || ("").equals(message)) {
+		if (message == null || "".equals(message)) {
 			throw new IllegalArgumentException("Incident cannot be created.");
 		}
 		incidentLog.add(message);

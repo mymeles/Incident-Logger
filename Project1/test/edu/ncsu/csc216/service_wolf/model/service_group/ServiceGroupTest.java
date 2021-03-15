@@ -226,6 +226,8 @@ public class ServiceGroupTest {
 		serviceGroup.addIncident(in);
 		serviceGroup.addIncident(in2);
 		serviceGroup.deleteIncidentById(4);
+		assertEquals(3, serviceGroup.getIncidents().size());
+
 		assertEquals(2, serviceGroup.getIncidents().size());
 		assertEquals("New", serviceGroup.getIncidentById(3).getState());
 		serviceGroup.deleteIncidentById(2);

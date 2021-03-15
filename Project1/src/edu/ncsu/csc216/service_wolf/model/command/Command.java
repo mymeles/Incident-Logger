@@ -22,7 +22,7 @@ public class Command {
 	/**
 	 * A String representaion of command inforamtion
 	 */
-	private String commandInformation;
+	private String commandInformation; 
 
 	/** 
 	 * A string represetnation of command message
@@ -59,15 +59,15 @@ public class Command {
 
 		if (command == null) {
 			throw new IllegalArgumentException("A Command MUST have a CommandValue"); 
-		} else if (commandMessage == null || ("").equals(commandMessage)) {
+		} else if (commandMessage == null || "".equals(commandMessage)) {
 			throw new IllegalArgumentException("A Command MUST have a commandMessage");
 
-		} else if (((CommandValue.ASSIGN).equals(command) || (CommandValue.HOLD).equals(command) || (CommandValue.RESOLVE).equals(command) || 
-				(CommandValue.CANCEL).equals(command)) && (commandInformation == null || ("").equals(commandMessage))) {
+		} else if ((CommandValue.ASSIGN.equals(command) || CommandValue.HOLD.equals(command) || CommandValue.RESOLVE.equals(command) || 
+				CommandValue.CANCEL.equals(command)) && (commandInformation == null || "".equals(commandMessage))) {
 			throw new IllegalArgumentException("These commands require an additional piece of information");
 		}
 
-		else if (((CommandValue.INVESTIGATE).equals(command) || (CommandValue.REOPEN).equals(command))
+		else if ((CommandValue.INVESTIGATE.equals(command) || CommandValue.REOPEN.equals(command))
 				&& commandInformation != null) {
 			throw new IllegalArgumentException("These commands do NOT require an additional piece of information");
 		} else {

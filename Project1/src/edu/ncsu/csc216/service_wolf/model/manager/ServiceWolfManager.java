@@ -150,7 +150,7 @@ public class ServiceWolfManager {
 	 * @param title   title of the incident
 	 * @param caller  caller of the incident
 	 * @param message message of the incident
-	 */
+	 */ 
 	public void addIncidentToServiceGroup(String title, String caller, String message) {
 		// impelement add incident to service group
 	}
@@ -165,7 +165,7 @@ public class ServiceWolfManager {
 		// we are adding the given service group to the current service group
 
 		for (int i = 0; i < serviceGroups.size(); i++) {
-			if ((serviceGroups.get(i).getServiceGroupName()).equals(serviceGroupName)) {
+			if (serviceGroups.get(i).getServiceGroupName().equals(serviceGroupName)) {
 				currentServiceGroup = serviceGroups.get(i);
 			}
 		}
@@ -206,7 +206,7 @@ public class ServiceWolfManager {
 	 * @param updateName a string value of upadte service group name
 	 */
 	public void editServiceGroup(String updateName) {
-		if (updateName == null || ("").equals(updateName) || checkDuplicateServiceName(updateName)) {
+		if (updateName == null || "".equals(updateName) || checkDuplicateServiceName(updateName)) {
 			throw new IllegalArgumentException("Invalid service group name.");
 		} else {
 			currentServiceGroup.setServiceGroupName(updateName);

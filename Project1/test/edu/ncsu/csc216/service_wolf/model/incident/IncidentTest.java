@@ -332,7 +332,7 @@ public class IncidentTest {
 		assertEquals("- Set up piazza for spring 2021\n- IN progress; have been assign an owner\n", in.getIncidentLogMessages());
 
 		
-		// Test invalid command for new state
+		// Test invalid command for new state 
 		in = null;
 		commad = null;	
 		try {
