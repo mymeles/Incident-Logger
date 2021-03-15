@@ -33,7 +33,7 @@ public class ServiceGroup {
 	 * 
 	 * @param serviceGroupName is a string value of the service group name
 	 */
-	public ServiceGroup(String serviceGroupName) { 
+	public ServiceGroup(String serviceGroupName) {
 
 		setServiceGroupName(serviceGroupName);
 		incident = new ArrayList<Incident>();
@@ -64,15 +64,16 @@ public class ServiceGroup {
 	 * a method to set the incident counter
 	 */
 	public void setIncidentCounter() {
-		int lastIncidnet = incident.size() - 1;
-		int id = incident.get(lastIncidnet).getId();
-		Incident.setCounter(id + 1);
+		if (incident.size() == 0) {
+			Incident.setCounter(incident.get(0).getId());
+		} else
+			Incident.setCounter(incident.get(incident.size() - 1).getId() + 1);
 	}
 
 	/**
 	 * 
 	 * @param incidents is
-	 * @return a boolean 
+	 * @return a boolean
 	 */
 	private boolean helper(Incident incidents) {
 		for (int i = 0; i < incident.size(); i++) {
@@ -89,20 +90,20 @@ public class ServiceGroup {
 	 * @param incidents a representation of an incident
 	 */
 	public void addIncident(Incident incidents) {
-		// compring true and false staments to determine adding incidnet 
+		// compring true and false staments to determine adding incidnet
 		switch ((incident.size() > 0) + "-" + helper(incidents)) {
-		case "false-true": 
+		case "false-true":
 		case "false-false":
-			incident.add(incidents); 
+			incident.add(incidents);
 			setIncidentCounter();
 			break;
 		case "true-false":
-			 incident.add(incidents);
-			 setIncidentCounter(); 
+			incident.add(incidents);
+			setIncidentCounter();
 			break;
-			default: 
-				throw new IllegalArgumentException("Incident cannot be created.");
-		} 
+		default:
+			throw new IllegalArgumentException("Incident cannot be created.");
+		}
 		Collections.sort(incident, new Comparator<Incident>() {
 			@Override
 			public int compare(Incident i1, Incident i2) {
@@ -111,7 +112,6 @@ public class ServiceGroup {
 		});
 	}
 
-	
 	/**
 	 * a method that returns incdeints
 	 * 
@@ -163,7 +163,7 @@ public class ServiceGroup {
 		for (int i = 0; i < incident.size(); i++) {
 			if (id == incident.get(i).getId()) {
 				incident.remove(i);
-			}  
+			}
 
 		}
 
