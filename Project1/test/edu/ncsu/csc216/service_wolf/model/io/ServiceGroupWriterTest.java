@@ -72,18 +72,23 @@ public class ServiceGroupWriterTest {
 		ServiceGroup s = new ServiceGroup("CSC IT");
 		s.addIncident(in);
 		s.addIncident(in1);
+		assertEquals(2, s.getIncidents().size());
 
 		ServiceGroup s1 = new ServiceGroup("IETS");
 		s1.addIncident(in);
 		s1.addIncident(in1);
+		assertEquals(2, s1.getIncidents().size());
+
 
 		serviceGroup.add(s);
 		serviceGroup.add(s1);
+		assertEquals(2, serviceGroup.size());
+
 
 		ServiceGroupWriter.writeServiceGroupsToFile("test-files/test-Incident1.txt", serviceGroup);
 
 		checkFiles("test-files/exp_i1.txt", "test-files/test-Incident1.txt");
-	}
+	} 
 
 	/**
 	 * Helper method to compare two files for the same contents

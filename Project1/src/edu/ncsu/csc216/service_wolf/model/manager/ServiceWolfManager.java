@@ -38,12 +38,14 @@ public class ServiceWolfManager {
 	 * the currentservice group
 	 */
 	private ServiceGroup currentServiceGroup;
+	
+	String name;
 
 	/**
 	 * A constructor for Service wolf manager
 	 */
 	private ServiceWolfManager() {
-		String name = null;
+		name = null;
 		serviceGroups = new ArrayList<ServiceGroup>();
 
 	}
@@ -67,8 +69,8 @@ public class ServiceWolfManager {
 	 */
 	public void saveToFile(String fileName) {
 
-			ServiceGroupWriter.writeServiceGroupsToFile(fileName, serviceGroups);
-		
+		ServiceGroupWriter.writeServiceGroupsToFile(fileName, serviceGroups);
+
 	}
 
 	/**
@@ -128,7 +130,7 @@ public class ServiceWolfManager {
 	 * @param command is a command to execute
 	 */
 	public void executeCommand(int id, Command command) {
-
+		//
 	}
 
 	/**
@@ -138,19 +140,19 @@ public class ServiceWolfManager {
 	 */
 	public void deleteIncidentById(int id) {
 		for (int i = 0; i < currentServiceGroup.getIncidents().size(); i++) {
-			if (currentServiceGroup.getIncidents().get(i).getId() == id) { 
+			if (currentServiceGroup.getIncidents().get(i).getId() == id) {
 				currentServiceGroup.deleteIncidentById(id);
-				}
-		}  
-	} 
-   
+			}
+		}
+	}
+
 	/**
 	 * A method that adds incidents to service groups.
 	 * 
 	 * @param title   title of the incident
 	 * @param caller  caller of the incident
 	 * @param message message of the incident
-	 */ 
+	 */
 	public void addIncidentToServiceGroup(String title, String caller, String message) {
 		// impelement add incident to service group
 	}
@@ -210,7 +212,7 @@ public class ServiceWolfManager {
 			throw new IllegalArgumentException("Invalid service group name.");
 		} else {
 			currentServiceGroup.setServiceGroupName(updateName);
-			}
+		}
 		Collections.sort(serviceGroups, new Comparator<ServiceGroup>() {
 			@Override
 			public int compare(ServiceGroup sg1, ServiceGroup s2) {
@@ -226,7 +228,7 @@ public class ServiceWolfManager {
 	 * @param servicegroup is a service group to add to list
 	 */
 	private void addServiceGroupToListByName(ServiceGroup servicegroup) {
-
+		//
 	}
 
 	/**
@@ -265,10 +267,10 @@ public class ServiceWolfManager {
 	}
 
 	/**
-	 * A methos to reset the incident manager for testing
+	 * A method to reset the incident manager for testing
 	 */
 	protected void resetManager() {
-
+		//
 	}
 
 }
