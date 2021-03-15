@@ -750,7 +750,7 @@ public class Incident {
 		 *
 		 */
 		public void updateState(Command command) {
-			
+			//
 		}
 
 		/**
