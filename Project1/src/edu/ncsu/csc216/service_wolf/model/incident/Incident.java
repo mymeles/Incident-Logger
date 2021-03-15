@@ -186,7 +186,7 @@ public class Incident {
 	 * @throws IAE If any of the given parameters are null or empty string.
 	 */
 	public Incident(String title, String caller, String message) {
-	
+
 		setId(Incident.counter);
 		Incident.incrementCounter();
 		setTitle(title);
@@ -195,7 +195,6 @@ public class Incident {
 		setStatusDetails(NO_STATUS);
 		setState(NEW_NAME);
 		addMessageToIncidentLog(message);
-		
 
 	}
 
@@ -271,15 +270,13 @@ public class Incident {
 		return currentState.getStateName();
 	}
 
-	// helper method  for determinign  the incident state 
+	// helper method for determinign the incident state
 	private void createState(boolean condition, IncidentState state) {
 		if (condition) {
 			this.currentState = state;
 		} else {
-
 			throw new IllegalArgumentException("Incident cannot be created.");
 		}
-
 	}
 
 	/**
@@ -288,20 +285,33 @@ public class Incident {
 	 * @param state the incident state to set
 	 */
 	private void setState(String state) {
-		
-		if (state == null || ("".equals(state))) {
-			throw new IllegalArgumentException("Incident cannot be created.");
-		} else if (state.equals(NEW_NAME)) {
+		switch(state) {
+		case NEW_NAME:
 			createState(owner.equals(UNOWNED) && statusDetails.equals(NO_STATUS), newState);
-		} else if (state.equals(IN_PROGRESS_NAME)) {
+			break;
+		case IN_PROGRESS_NAME:
 			createState(!owner.equals(UNOWNED) && statusDetails.equals(NO_STATUS), inProgressState);
-		} else if (state.equals(ON_HOLD_NAME)) {
-			createState(!(owner).equals(UNOWNED) && (((statusDetails).equals(HOLD_AWAITING_CALLER)) || ((statusDetails).equals(HOLD_AWAITING_CHANGE)) || ((statusDetails).equals(HOLD_AWAITING_VENDOR))),	inProgressState);
-		} else if (state == RESOLVED_NAME) {
-			createState(!(owner).equals(UNOWNED) && (((statusDetails).equals(RESOLUTION_PERMANENTLY_SOLVED)) || ((statusDetails).equals(RESOLUTION_WORKAROUND))	|| ((statusDetails).equals(RESOLUTION_CALLER_CLOSED))), resolvedState);
-		} else if (state == CANCELED_NAME) {
-			createState((owner).equals(UNOWNED) && ((statusDetails).equals(CANCELLATION_DUPLICATE))	|| ((statusDetails).equals(CANCELLATION_UNNECESSARY))|| ((statusDetails).equals(CANCELLATION_NOT_AN_INCIDENT)), canceledState);
+			break;
+		case ON_HOLD_NAME:
+			createState(!(owner).equals(UNOWNED)
+					&& (((statusDetails).equals(HOLD_AWAITING_CALLER)) || ((statusDetails).equals(HOLD_AWAITING_CHANGE))
+							|| ((statusDetails).equals(HOLD_AWAITING_VENDOR))),
+					inProgressState);
+			break;
+		case RESOLVED_NAME:
+			createState(!(owner).equals(UNOWNED) && (((statusDetails).equals(RESOLUTION_PERMANENTLY_SOLVED))
+					|| ((statusDetails).equals(RESOLUTION_WORKAROUND))
+					|| ((statusDetails).equals(RESOLUTION_CALLER_CLOSED))), resolvedState);
+			break;
+		case CANCELED_NAME:
+			createState((owner).equals(UNOWNED) && ((statusDetails).equals(CANCELLATION_DUPLICATE))
+					|| ((statusDetails).equals(CANCELLATION_UNNECESSARY))
+					|| ((statusDetails).equals(CANCELLATION_NOT_AN_INCIDENT)), canceledState);
+			break;
+		default:
+			throw new IllegalArgumentException("Incident cannot be created.");
 		}
+
 	}
 
 	/**
@@ -539,20 +549,18 @@ public class Incident {
 		 */
 		public void updateState(Command command) {
 
-			if (command.getCommand() == CommandValue.ASSIGN || command.getCommand() == CommandValue.CANCEL) {
-				if (command.getCommand() == CommandValue.ASSIGN) {
-					currentState = inProgressState;
-					setStatusDetails(command.getCommandInformation());
-					setOwner(command.getCommandInformation()); // I have a question
-
-				}
-
-				else if (command.getCommand() == CommandValue.CANCEL) {
-					currentState = canceledState;
-					setStatusDetails(command.getCommandInformation());
-					setOwner(UNOWNED);
-				}
-			} else {
+			switch (command.getCommand()) {
+			case ASSIGN:
+				setStatusDetails(command.getCommandInformation());
+				setOwner(command.getCommandInformation()); 
+				currentState = inProgressState;
+				break;
+			case CANCEL: 
+				setStatusDetails(command.getCommandInformation());
+				setOwner(UNOWNED);
+				currentState = canceledState;
+				break; 
+			default:
 				throw new UnsupportedOperationException();
 			}
 		}
@@ -582,7 +590,7 @@ public class Incident {
 		 * Constructs InProgress State so it is implemneted in Incident interface
 		 */
 		private InProgressState() {
-			// TODO implement inprogress state
+
 		}
 
 		/**
@@ -591,31 +599,28 @@ public class Incident {
 		 * @param command is a Command
 		 */
 		public void updateState(Command command) {
-			if ((command.getCommand() != CommandValue.ASSIGN) || (command.getCommand() != CommandValue.RESOLVE)
-					|| (command.getCommand() != CommandValue.ASSIGN) || (command.getCommand() != CommandValue.CANCEL)) {
-				throw new UnsupportedOperationException();
-			}
-
-			if (command.getCommand() == CommandValue.ASSIGN) {
-				currentState = inProgressState;
+			switch (command.getCommand()) {
+			case ASSIGN:
 				setStatusDetails(command.getCommandInformation());
-			} else if (command.getCommand() == CommandValue.HOLD) {
+				currentState = inProgressState;
+				break;
+			case HOLD:
 				setStatusDetails(command.getCommandInformation());
 				currentState = onHoldState;
+				break;
+			case RESOLVE:
 				setStatusDetails(command.getCommandInformation());
-			}
-
-			else if (command.getCommand() == CommandValue.RESOLVE) {
 				currentState = resolvedState;
-				setStatusDetails(command.getCommandInformation());
-
-			} else if (command.getCommand() == CommandValue.CANCEL) {
-				currentState = canceledState;
+				break;
+			case CANCEL:
 				setStatusDetails(command.getCommandInformation());
 				setCaller(UNOWNED);
-			} else {
+				currentState = canceledState;
+				break;
+			default:
 				throw new UnsupportedOperationException();
 			}
+
 		}
 
 		/**
@@ -651,12 +656,12 @@ public class Incident {
 		 * @param command is a Command
 		 */
 		public void updateState(Command command) {
-			if (command.getCommand() != CommandValue.REOPEN || command.getCommand() != CommandValue.INVESTIGATE) {
-				throw new UnsupportedOperationException();
-			}
-			if (command.getCommand() == CommandValue.INVESTIGATE) {
-				currentState = inProgressState;
+			switch (command.getCommand()) {
+			case INVESTIGATE:
 				setStatusDetails(NO_STATUS);
+				currentState = inProgressState;
+			default: 
+				throw new UnsupportedOperationException();
 			}
 		}
 
@@ -693,21 +698,17 @@ public class Incident {
 		 * @param command is a Command
 		 */
 		public void updateState(Command command) {
-			if (command.getCommand() != CommandValue.REOPEN || command.getCommand() != CommandValue.CANCEL) {
-				throw new UnsupportedOperationException();
-			}
-
-			if (command.getCommand() == CommandValue.REOPEN) {
-				currentState = inProgressState;
+			switch (command.getCommand()) {
+			case REOPEN: 
+				setStatusDetails(NO_STATUS);
 				reopenCount++;
-
-			}
-
-			if (command.getCommand() == CommandValue.CANCEL) {
-
+				currentState = inProgressState;
+			case CANCEL:
 				setStatusDetails(command.getCommandInformation());
 				setOwner(UNOWNED);
 				currentState = canceledState;
+			default:
+				throw new UnsupportedOperationException();
 			}
 		}
 

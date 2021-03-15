@@ -3,9 +3,10 @@
  */
 package edu.ncsu.csc216.service_wolf.model.manager;
 
-
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 
 import edu.ncsu.csc216.service_wolf.model.command.Command;
 import edu.ncsu.csc216.service_wolf.model.incident.Incident;
@@ -24,28 +25,26 @@ import edu.ncsu.csc216.service_wolf.model.service_group.ServiceGroup;
 public class ServiceWolfManager {
 
 	/**
-	 * cretae an instance of servicewolf manager 
+	 * cretae an instance of servicewolf manager
 	 */
 	private static ServiceWolfManager instance;
-	
-	 
-	
+
 	/**
-	 *  A represerntation of service groups 
+	 * A represerntation of service groups
 	 */
 	private ArrayList<ServiceGroup> serviceGroups = new ArrayList<ServiceGroup>();
-	
+
 	/**
-	 * the currentservice group 
-	 */ 
-	private ServiceGroup currentServiceGroup; 
- 
+	 * the currentservice group
+	 */
+	private ServiceGroup currentServiceGroup;
+
 	/**
-	 * A constructor for Service wolf manager 
+	 * A constructor for Service wolf manager
 	 */
 	private ServiceWolfManager() {
-		String name = null; 
-		serviceGroups = new ArrayList<ServiceGroup>(); 
+		String name = null;
+		serviceGroups = new ArrayList<ServiceGroup>();
 
 	}
 
@@ -75,7 +74,6 @@ public class ServiceWolfManager {
 		}
 
 	}
-	
 
 	/**
 	 * Uses the ServiceGroupReader to read the given fileName.
@@ -83,7 +81,18 @@ public class ServiceWolfManager {
 	 * @param fileName location of a service file
 	 */
 	public void loadFromFile(String fileName) {
+
 		serviceGroups = ServiceGroupsReader.readServiceGroupsFile(fileName);
+		System.out.println("tsting file here now ;;;;;;" + serviceGroups.get(0).getServiceGroupName());
+		currentServiceGroup = serviceGroups.get(0);
+
+		Collections.sort(serviceGroups, new Comparator<ServiceGroup>() {
+			@Override
+			public int compare(ServiceGroup sg1, ServiceGroup s2) {
+				return sg1.getServiceGroupName().compareToIgnoreCase(s2.getServiceGroupName());
+			}
+		});
+
 	}
 
 	/**
@@ -92,7 +101,18 @@ public class ServiceWolfManager {
 	 * @return a 2D array string
 	 */
 	public String[][] getIncidentsAsArray() {
-		return null;
+		if (currentServiceGroup == null) {
+			return null;
+		} else {
+			String[][] list = new String[currentServiceGroup.getIncidents().size()][4];
+			for (int i = 0; i < currentServiceGroup.getIncidents().size(); i++) {
+				list[i][0] = Integer.toString(currentServiceGroup.getIncidents().get(i).getId());
+				list[i][2] = currentServiceGroup.getIncidents().get(i).getState();
+				list[i][2] = currentServiceGroup.getIncidents().get(i).getTitle();
+				list[i][2] = currentServiceGroup.getIncidents().get(i).getState();
+			}
+			return list;
+		}
 	}
 
 	/**
@@ -102,7 +122,7 @@ public class ServiceWolfManager {
 	 * @return an incident
 	 */
 	public Incident getIncidentById(int id) {
-		return null;
+		return currentServiceGroup.getIncidentById(id);
 	}
 
 	/**
@@ -112,22 +132,22 @@ public class ServiceWolfManager {
 	 * @param command is a command to execute
 	 */
 	public void executeCommand(int id, Command command) {
-		// implement execute ommand
+
 	}
 
 	/**
-	 * a method to delet an incident by index number
+	 * a method to delete an incident by index number
 	 * 
-	 * @param idx an integer that refrences incidents
+	 * @param id an integer that refrences incidents
 	 */
 	public void deleteIncidentById(int id) {
-		for(int i = 0; i < serviceGroups.size(); i++) {
-			if(id == serviceGroups.get(i).getIncidents().get(i).getId()){
-				serviceGroups.get(i).deleteIncidentById(id);
-			}
-		}
-	}
-
+		for (int i = 0; i < currentServiceGroup.getIncidents().size(); i++) {
+			if (currentServiceGroup.getIncidents().get(i).getId() == id) { 
+				currentServiceGroup.deleteIncidentById(id);
+				}
+		}  
+	} 
+   
 	/**
 	 * A method that adds incidents to service groups.
 	 * 
@@ -142,21 +162,21 @@ public class ServiceWolfManager {
 	/**
 	 * A method to load and read service groups from a given file name
 	 * 
-	 * @param filename is a string representaion of a file loaction to load service
-	 *                 groups
+	 * @param serviceGroupName is a string representaion of a file loaction to load
+	 *                         service groups
 	 */
 	public void loadServiceGroup(String serviceGroupName) {
-		// we are adding the given service group to  the current service group 
-		
-		for(int i =0; i < serviceGroups.size(); i++) {
-			 if((serviceGroups.get(i).getServiceGroupName()).equals(serviceGroupName)) {
-				 currentServiceGroup = serviceGroups.get(i);
-			 }
+		// we are adding the given service group to the current service group
+
+		for (int i = 0; i < serviceGroups.size(); i++) {
+			if ((serviceGroups.get(i).getServiceGroupName()).equals(serviceGroupName)) {
+				currentServiceGroup = serviceGroups.get(i);
+			}
 		}
 	}
 
 	/**
-	 * retrives the service group name of the current service group 
+	 * retrives the service group name of the current service group
 	 * 
 	 * @return a string value of a service group name
 	 */
@@ -170,14 +190,18 @@ public class ServiceWolfManager {
 	 * @return a single array of service Group list
 	 */
 	public String[] getServiceGroupList() {
-		return null;
+		String[] list = new String[serviceGroups.size()];
+		for (int i = 0; i < serviceGroups.size(); i++) {
+			list[i] = serviceGroups.get(i).getServiceGroupName();
+		}
+		return list;
 	}
 
 	/**
 	 * a method to clear a service group
 	 */
 	public void clearServiceGroups() {
-		// implement clear service groups
+		serviceGroups = new ArrayList<ServiceGroup>();
 	}
 
 	/**
@@ -186,7 +210,18 @@ public class ServiceWolfManager {
 	 * @param updateName a string value of upadte service group name
 	 */
 	public void editServiceGroup(String updateName) {
-		currentServiceGroup.setServiceGroupName(updateName);
+		if (updateName == null || ("").equals(updateName) || checkDuplicateServiceName(updateName)) {
+			throw new IllegalArgumentException("Invalid service group name.");
+		} else {
+			currentServiceGroup.setServiceGroupName(updateName);
+			}
+		Collections.sort(serviceGroups, new Comparator<ServiceGroup>() {
+			@Override
+			public int compare(ServiceGroup sg1, ServiceGroup s2) {
+				return sg1.getServiceGroupName().compareToIgnoreCase(s2.getServiceGroupName());
+			}
+		});
+
 	}
 
 	/**
@@ -204,7 +239,8 @@ public class ServiceWolfManager {
 	 * @param serviceGroupName a string value of the service group name
 	 */
 	public void addServiceGroup(String serviceGroupName) {
-		// impement add service group
+		ServiceGroup addService = new ServiceGroup(serviceGroupName.trim());
+		serviceGroups.add(addService);
 	}
 
 	/**
@@ -212,22 +248,31 @@ public class ServiceWolfManager {
 	 * 
 	 * @param sgName is the name of the service group
 	 */
-	private void checkDuplicateServiceName(String sgName) {
-		// impement check duplicate
+	private boolean checkDuplicateServiceName(String sgName) {
+		for (int i = 0; i < serviceGroups.size(); i++) {
+			if (serviceGroups.get(i).getServiceGroupName().equals(sgName)) {
+				return true;
+			}
+		}
+		return false;
 	}
 
 	/**
 	 * A method to delet a service group
 	 */
 	public void deleteServiceGroup() {
-		// implement check duplicate
+		for (int i = 0; i < serviceGroups.size(); i++) {
+			if (currentServiceGroup.getServiceGroupName().equals(serviceGroups.get(i).getServiceGroupName())) {
+				serviceGroups.remove(i);
+			}
+		}
 	}
 
 	/**
 	 * A methos to reset the incident manager for testing
 	 */
 	protected void resetManager() {
-		
+
 	}
 
 }

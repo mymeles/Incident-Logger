@@ -70,18 +70,39 @@ public class ServiceGroup {
 	}
 
 	/**
+	 * 
+	 * @param incidents is
+	 * @return a boolean 
+	 */
+	private boolean helper(Incident incidents) {
+		for (int i = 0; i < incident.size(); i++) {
+			if (incident.get(i).getId() == incidents.getId()) {
+				return true;
+			}
+		}
+		return false;
+	}
+
+	/**
 	 * a method to add incdient
 	 * 
 	 * @param incidents a representation of an incident
 	 */
 	public void addIncident(Incident incidents) {
-		for (int i = 0; i < incident.size(); i++) {
-			if (incident.get(i).getId() == incidents.getId()) {
+		// compring true and false staments to determine adding incidnet 
+		switch ((incident.size() > 0) + "-" + helper(incidents)) {
+		case "false-true": 
+		case "false-false":
+			incident.add(incidents); 
+			setIncidentCounter();
+			break;
+		case "true-false":
+			 incident.add(incidents);
+			 setIncidentCounter();
+			break;
+			default: 
 				throw new IllegalArgumentException("Incident cannot be created.");
-			}
-		}
-		incident.add(incidents);
-
+		} 
 		Collections.sort(incident, new Comparator<Incident>() {
 			@Override
 			public int compare(Incident i1, Incident i2) {
@@ -90,6 +111,7 @@ public class ServiceGroup {
 		});
 	}
 
+	
 	/**
 	 * a method that returns incdeints
 	 * 
@@ -102,7 +124,7 @@ public class ServiceGroup {
 	/**
 	 * a method that retrives incidents with the given index nmber
 	 * 
-	 * @param idx an integer referance of an incident
+	 * @param id an integer referance of an incident
 	 * @return an incident
 	 */
 	public Incident getIncidentById(int id) {
@@ -114,7 +136,7 @@ public class ServiceGroup {
 
 			}
 		}
-		return null; 
+		return null;
 	}
 
 	/**
@@ -135,12 +157,14 @@ public class ServiceGroup {
 	/**
 	 * A method to delete an incident by the passed parameter
 	 * 
-	 * @param id is an integer reference of incident 
+	 * @param id is an integer reference of incident
 	 */
 	public void deleteIncidentById(int id) {
 		for (int i = 0; i < incident.size(); i++) {
 			if (id == incident.get(i).getId()) {
 				incident.remove(i);
+			} else {
+				return; 
 			}
 
 		}
@@ -150,10 +174,10 @@ public class ServiceGroup {
 	@Override
 	public String toString() {
 		String inci = "";
-		for (int i = 0; i < incident.size(); i++) { 
+		for (int i = 0; i < incident.size(); i++) {
 			inci = inci + incident.get(i).toString();
 		}
-		return "# " + serviceGroupName + "\n"+ inci;
+		return "# " + serviceGroupName + "\n" + inci;
 	}
 
 }

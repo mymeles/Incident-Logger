@@ -8,22 +8,24 @@ import static org.junit.Assert.*;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.ArrayList;
 import java.util.Properties;
 
 import org.junit.Before;
 import org.junit.Test;
 
-
 import edu.ncsu.csc216.service_wolf.model.service_group.ServiceGroup;
 
 /**
  * A class to test ServiceWolfManager
+ * 
  * @author meles
  *
  */
 public class ServiceWolfManagerTest {
 
 	private ServiceWolfManager manager;
+
 	/**
 	 * Sets up the RegistrationManager and clears the data.
 	 * 
@@ -31,26 +33,26 @@ public class ServiceWolfManagerTest {
 	 */
 	@Before
 	public void setUp() throws Exception {
-	
+
 		manager = ServiceWolfManager.getInstance();
 		manager.resetManager();
 
-	} 
+	}
+
 	/**
 	 * Test method for saveTofile
 	 */
 	@Test
 	public void testSaveToFile() {
-		
-		ServiceGroup g2;
-		ServiceGroup g3; 
-		ServiceGroup g1; 
-		manager.addServiceGroup("CSC");
-		manager.addIncidentToServiceGroup("jj", "jhasfdkjasy:", "asjhdgfakjh");
-		
-		manager.saveToFile("asjhdfaskjh");
-		
-		
+
+//		ServiceGroup g2;
+//		ServiceGroup g3; 
+//		ServiceGroup g1; 
+//		manager.addServiceGroup("CSC");
+//		manager.addIncidentToServiceGroup("jj", "jhasfdkjasy:", "asjhdgfakjh");
+//		
+//		manager.saveToFile("asjhdfaskjh");
+
 	}
 
 	/**
@@ -58,7 +60,10 @@ public class ServiceWolfManagerTest {
 	 */
 	@Test
 	public void testLoadFromFile() {
-		fail("Not yet implemented"); // TODO
+		manager.loadFromFile("test-files/incidents3.txt");
+		assertEquals("OIT", manager.getServiceGroupName());
+		assertEquals(3, manager.getServiceGroupList().length);
+
 	}
 
 	/**
@@ -90,7 +95,21 @@ public class ServiceWolfManagerTest {
 	 */
 	@Test
 	public void testDeleteIncidentById() {
-		fail("Not yet implemented"); // TODO
+		manager.loadFromFile("test-files/incidents3.txt");
+		manager.loadServiceGroup("CSC IT");
+		assertEquals(4, manager.getIncidentsAsArray().length);
+
+		manager.deleteIncidentById(2);
+		assertEquals(3, manager.getIncidentsAsArray().length);
+
+		manager.deleteIncidentById(9);
+		assertEquals(2, manager.getIncidentsAsArray().length);
+
+		manager.deleteIncidentById(4);
+		assertEquals(1, manager.getIncidentsAsArray().length);
+
+		manager.deleteIncidentById(3);
+		assertEquals(0, manager.getIncidentsAsArray().length);
 	}
 
 	/**
@@ -106,7 +125,7 @@ public class ServiceWolfManagerTest {
 	 */
 	@Test
 	public void testLoadServiceGroup() {
-		fail("Not yet implemented"); // TODO
+		fail();
 	}
 
 	/**
@@ -114,7 +133,11 @@ public class ServiceWolfManagerTest {
 	 */
 	@Test
 	public void testGetServiceGroupName() {
-		fail("Not yet implemented"); // TODO
+		manager.loadFromFile("test-files/incidents3.txt");
+		assertEquals("OIT", manager.getServiceGroupName());
+		assertEquals(1, manager.getIncidentById(1).getId());
+		assertEquals("In Progress", manager.getIncidentById(1).getState());
+
 	}
 
 	/**
@@ -122,7 +145,13 @@ public class ServiceWolfManagerTest {
 	 */
 	@Test
 	public void testGetServiceGroupList() {
-		fail("Not yet implemented"); // TODO
+		manager.loadFromFile("test-files/incidents3.txt");
+		assertEquals(3, manager.getServiceGroupList().length);
+		String[] list = manager.getServiceGroupList();
+		assertEquals("CSC IT", list[0]);
+		assertEquals("ITECS", list[1]);
+		assertEquals("OIT", list[2]);
+
 	}
 
 	/**
@@ -130,7 +159,10 @@ public class ServiceWolfManagerTest {
 	 */
 	@Test
 	public void testClearServiceGroups() {
-		fail("Not yet implemented"); // TODO
+		manager.loadFromFile("test-files/incidents3.txt");
+		assertEquals(3, manager.getServiceGroupList().length);
+		manager.clearServiceGroups();
+		assertEquals(0, manager.getServiceGroupList().length);
 	}
 
 	/**
@@ -138,7 +170,46 @@ public class ServiceWolfManagerTest {
 	 */
 	@Test
 	public void testEditServiceGroup() {
-		fail("Not yet implemented"); // TODO
+		manager.loadFromFile("test-files/incidents3.txt");
+		assertEquals("OIT", manager.getServiceGroupName());
+		assertEquals(3, manager.getServiceGroupList().length);
+		manager.editServiceGroup("NCSU IT");
+		assertEquals("NCSU IT", manager.getServiceGroupName());
+		assertEquals(3, manager.getServiceGroupList().length);
+
+		// invalid name null
+		try {
+			manager.editServiceGroup(null);
+			fail();
+		} catch (IllegalArgumentException e) {
+			assertEquals("Invalid service group name.", e.getMessage());
+			assertEquals("NCSU IT", manager.getServiceGroupName());
+			assertEquals(3, manager.getServiceGroupList().length);
+
+		}
+
+		// invalid name null
+		try {
+			manager.editServiceGroup("NCSU IT");
+			fail();
+		} catch (IllegalArgumentException e) {
+			assertEquals("Invalid service group name.", e.getMessage());
+			assertEquals("NCSU IT", manager.getServiceGroupName());
+			assertEquals(3, manager.getServiceGroupList().length);
+
+		}
+
+		// invalid name null
+		try {
+			manager.editServiceGroup("");
+			fail();
+		} catch (IllegalArgumentException e) {
+			assertEquals("Invalid service group name.", e.getMessage());
+			assertEquals("NCSU IT", manager.getServiceGroupName());
+			assertEquals(3, manager.getServiceGroupList().length);
+
+		}
+
 	}
 
 	/**

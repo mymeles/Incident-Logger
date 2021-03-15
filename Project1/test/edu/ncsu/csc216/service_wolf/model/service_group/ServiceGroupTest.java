@@ -91,7 +91,7 @@ public class ServiceGroupTest {
 			add("Updated version of Checkstyle.");
 
 		}
-	};
+	}; 
 	
 	/**
 	 * a setup that sets the counter to zero for everytest 
@@ -109,9 +109,9 @@ public class ServiceGroupTest {
 			"Permanently Solved", MESSAGES3);
 
 	/**
-	 * Test method for serviceGroup
+	 * Test method for serviceGroup 
 	 */
-	@Test
+	@Test 
 	public void testServiceGroup() {
 		serviceGroup = new ServiceGroup("CSC IT");
 		assertEquals("CSC IT", serviceGroup.getServiceGroupName());
@@ -119,10 +119,10 @@ public class ServiceGroupTest {
 
 		serviceGroup = null;
 		try {
-			serviceGroup = new ServiceGroup("");
+			serviceGroup = new ServiceGroup(""); 
 		} catch (IllegalArgumentException e) {
 			assertNull(null, serviceGroup);
-			assertEquals("Invalid service group name.", e.getMessage());
+			assertEquals("Invalid service group name.", e.getMessage()); 
 		}
 		try {
 			serviceGroup = new ServiceGroup(null);
@@ -131,25 +131,23 @@ public class ServiceGroupTest {
 			assertEquals("Invalid service group name.", e.getMessage());
 		}
  
-	}
+	} 
 
 	/**
 	 * Test method for setIncidentCounter
 	 */
 	@Test
 	public void testSetIncidentcounter() {
-		serviceGroup = new ServiceGroup("CSC IT"); 
-		assertEquals(0, serviceGroup.getIncidents().size());
-		serviceGroup.addIncident(in1);
-		serviceGroup.addIncident(in);
-		serviceGroup.addIncident(in2);
-		assertEquals(3, serviceGroup.getIncidents().size());
-		serviceGroup.setIncidentCounter();  
+		ServiceGroup sg = null;
+		sg = new ServiceGroup("CSC IT"); 
+		assertEquals(0, sg.getIncidents().size());
+		sg.addIncident(in);  
+		sg.addIncident(in1);
+		sg.addIncident(in2);  
+		assertEquals(3, sg.getIncidents().size()); 
+		sg.setIncidentCounter();  
 		
-//		System.out.println("\n" + serviceGroup.getIncidents().get(0).getId());
-//		System.out.println("\n" + serviceGroup.getIncidents().get(1).getId());
-//	    System.out.println("\n" + serviceGroup.getIncidents().get(2).getId());
-//			
+		
 		Incident u = new Incident("title", "James", "Set up piazza for spring 2021");
 		assertEquals(5, u.getId());
 		assertEquals("title", u.getTitle());
@@ -158,12 +156,13 @@ public class ServiceGroupTest {
 		assertEquals("- Set up piazza for spring 2021\n", u.getIncidentLogMessages());
 		assertEquals("James", u.getCaller());
 	}
-
+ 
 	/**
 	 * Test method for addIncident
 	 */ 
 	@Test
 	public void testAddIncident() {
+		serviceGroup = null;
 		serviceGroup = new ServiceGroup("CSC IT");
 		assertEquals(0, serviceGroup.getIncidents().size());
 		serviceGroup.addIncident(in1);
@@ -175,9 +174,10 @@ public class ServiceGroupTest {
 		assertEquals(2, serviceGroup.getIncidents().get(0).getId());
 		assertEquals(3, serviceGroup.getIncidents().get(1).getId());
 		assertEquals(4, serviceGroup.getIncidents().get(2).getId());
-		
+				
 		try {
 			serviceGroup.addIncident(in1);
+			fail();
 		} catch(IllegalArgumentException e) {
 			assertEquals("Incident cannot be created.", e.getMessage());
 		}
@@ -192,7 +192,7 @@ public class ServiceGroupTest {
 		serviceGroup = new ServiceGroup("CSC IT");
 		assertEquals(0, serviceGroup.getIncidents().size());
 		serviceGroup.addIncident(in1);
-		serviceGroup.addIncident(in);
+		serviceGroup.addIncident(in); 
 		serviceGroup.addIncident(in2);
 		assertEquals(in1, serviceGroup.getIncidentById(3));
 		assertNull(null, serviceGroup.getIncidentById(9));
