@@ -131,7 +131,10 @@ public class ServiceWolfManager {
 	 * @param command is a command to execute
 	 */
 	public void executeCommand(int id, Command command) {
-		currentServiceGroup.getIncidentById(id).update(command);
+		if(currentServiceGroup == null) {
+			return; 
+		}
+		currentServiceGroup.executeCommand(id, command);
 	}
 
 	/**
