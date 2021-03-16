@@ -222,7 +222,7 @@ public class Incident {
 			String statusDetails, ArrayList<String> incidentLog) {
 
 		setId(id);
-		setTitle(title);
+		setTitle(title); 
 		setCaller(caller);
 		setReopenCount(reopenCount);
 		setOwner(owner);
@@ -299,9 +299,9 @@ public class Incident {
 					|| statusDetails.equals(HOLD_AWAITING_CHANGE) || statusDetails.equals(HOLD_AWAITING_VENDOR)),
 					inProgressState);
 			break;
-		case RESOLVED_NAME:
-			createState(!(owner).equals(UNOWNED) && ((statusDetails).equals(RESOLUTION_PERMANENTLY_SOLVED))
-					|| statusDetails.equals(RESOLUTION_WORKAROUND) || statusDetails.equals(RESOLUTION_CALLER_CLOSED),
+		case RESOLVED_NAME: 
+			createState(!(owner).equals(UNOWNED) && ((statusDetails).equals(RESOLUTION_PERMANENTLY_SOLVED)
+					|| statusDetails.equals(RESOLUTION_WORKAROUND) || statusDetails.equals(RESOLUTION_CALLER_CLOSED)),
 					resolvedState);
 			break;
 		case CANCELED_NAME:
