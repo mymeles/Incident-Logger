@@ -187,8 +187,7 @@ public class Incident {
 	 */
 	public Incident(String title, String caller, String message) {
 
-		//(Incident.counter);
-		setTitle(title);
+			setTitle(title);
 		setCaller(caller);
 		setOwner(UNOWNED);
 		setStatusDetails(NO_STATUS);
@@ -222,13 +221,17 @@ public class Incident {
 	public Incident(int id, String state, String title, String caller, int reopenCount, String owner,
 			String statusDetails, ArrayList<String> incidentLog) {
 
+		
 		setId(id);
 		setTitle(title);
 		setCaller(caller);
-		setReopenCount(reopenCount);
+		setReopenCount(reopenCount); 
 		setOwner(owner);
 		setStatusDetails(statusDetails);
 		this.incidentLog = incidentLog;
+		if(incidentLog.size() == 0) {
+			throw new IllegalArgumentException("Incident cannot br created.");
+		}
 		setState(state);
 	}
 
@@ -304,9 +307,9 @@ public class Incident {
 					|| statusDetails.equals(RESOLUTION_CALLER_CLOSED), resolvedState);
 			break;
 		case CANCELED_NAME:
-			createState(owner.equals(UNOWNED) && statusDetails.equals(CANCELLATION_DUPLICATE) 
+			createState(owner.equals(UNOWNED) && (statusDetails.equals(CANCELLATION_DUPLICATE) 
 					|| statusDetails.equals(CANCELLATION_UNNECESSARY)
-					|| statusDetails.equals(CANCELLATION_NOT_AN_INCIDENT), canceledState);
+					|| statusDetails.equals(CANCELLATION_NOT_AN_INCIDENT)), canceledState);
 			break;
 		default:
 			throw new IllegalArgumentException("Incident cannot be created.");
