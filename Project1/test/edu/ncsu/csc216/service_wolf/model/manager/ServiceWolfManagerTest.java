@@ -66,7 +66,7 @@ public class ServiceWolfManagerTest {
 	public void testLoadFromFile() {
 		manager.loadFromFile("test-files/incidents3.txt");
 		assertEquals("OIT", manager.getServiceGroupName());
-		assertEquals(3, manager.getServiceGroupList().length); 
+		assertEquals(3, manager.getServiceGroupList().length);
 		assertEquals("CSC IT", manager.getServiceGroupList()[0]);
 		assertEquals("ITECS", manager.getServiceGroupList()[1]);
 		assertEquals("OIT", manager.getServiceGroupList()[2]);
@@ -84,27 +84,26 @@ public class ServiceWolfManagerTest {
 		assertEquals("ITECS", manager.getServiceGroupList()[1]);
 		assertEquals("OIT", manager.getServiceGroupList()[2]);
 		assertEquals("CSC IT", manager.getServiceGroupName());
-		
-		//check if the ids of each incident that exit on current service are correct 
+
+		// check if the ids of each incident that exit on current service are correct
 		assertEquals("CSC IT", manager.getServiceGroupList()[0]);
 		assertEquals("2", manager.getIncidentsAsArray()[0][0]);
 		assertEquals("Canceled", manager.getIncidentsAsArray()[0][1]);
 		assertEquals("Piazza", manager.getIncidentsAsArray()[0][2]);
-		assertEquals("Not an Incident", manager.getIncidentsAsArray()[0][3]); 
-		
-		// chek for null current state 
+		assertEquals("Not an Incident", manager.getIncidentsAsArray()[0][3]);
+
+		// chek for null current state
 		manager.deleteIncidentById(2);
 		assertEquals(3, manager.getIncidentsAsArray().length);
-		
+
 		manager.deleteIncidentById(4);
-		assertEquals(2, manager.getIncidentsAsArray().length); 
-		
+		assertEquals(2, manager.getIncidentsAsArray().length);
+
 		manager.deleteIncidentById(3);
 		assertEquals(1, manager.getIncidentsAsArray().length);
-		
+
 		manager.deleteIncidentById(9);
 		assertEquals(0, manager.getIncidentsAsArray().length);
-
 
 	}
 
@@ -138,7 +137,7 @@ public class ServiceWolfManagerTest {
 
 		manager.deleteIncidentById(9);
 		assertEquals(2, manager.getIncidentsAsArray().length);
- 
+
 		manager.deleteIncidentById(4);
 		assertEquals(1, manager.getIncidentsAsArray().length);
 
@@ -189,10 +188,10 @@ public class ServiceWolfManagerTest {
 		assertEquals("CSC IT", list[0]);
 		assertEquals("ITECS", list[1]);
 		assertEquals("OIT", list[2]);
- 
+
 	}
 
-	/** 
+	/**
 	 * Test method for clearServiceGroup
 	 */
 	@Test
@@ -212,7 +211,7 @@ public class ServiceWolfManagerTest {
 		assertEquals("OIT", manager.getServiceGroupName());
 		assertEquals(3, manager.getServiceGroupList().length);
 		manager.editServiceGroup("NCSU IT");
-		assertEquals("NCSU IT", manager.getServiceGroupName()); 
+		assertEquals("NCSU IT", manager.getServiceGroupName());
 		assertEquals(3, manager.getServiceGroupList().length);
 
 		// invalid name null
@@ -248,8 +247,12 @@ public class ServiceWolfManagerTest {
 
 		}
 
+		manager.editServiceGroup("ServverGroup");
+		assertEquals("ServverGroup", manager.getServiceGroupName());
+		assertEquals(3, manager.getServiceGroupList().length);
+
 	}
- 
+
 	/**
 	 * Test method for addServiceGroup
 	 */
@@ -264,30 +267,29 @@ public class ServiceWolfManagerTest {
 	@Test
 	public void testDeleteServiceGroup() {
 		manager.loadFromFile("test-files/incidents1.txt");
-     	assertEquals(3, manager.getServiceGroupList().length);
+		assertEquals(3, manager.getServiceGroupList().length);
 		assertEquals("CSC IT", manager.getServiceGroupName());
-		
+
 		manager.deleteServiceGroup();
-		assertEquals(2, manager.getServiceGroupList().length); 
+		assertEquals(2, manager.getServiceGroupList().length);
 		assertEquals("ITECS", manager.getServiceGroupName());
-		
+
 		manager.deleteServiceGroup();
 		assertEquals(1, manager.getServiceGroupList().length);
 		assertEquals("OIT", manager.getServiceGroupName());
-		
+
 		manager.deleteServiceGroup();
 		assertEquals(0, manager.getServiceGroupList().length);
 		assertNull(null, manager.getServiceGroupName());
-		
+
 		try {
 			manager.deleteServiceGroup();
 			fail();
-		} catch(IllegalArgumentException e) {
+		} catch (IllegalArgumentException e) {
 			assertNull(null, manager.getServiceGroupName());
 			assertEquals("No service group selected.", e.getMessage());
 		}
 
 	}
 
-	
 }

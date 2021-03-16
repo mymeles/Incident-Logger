@@ -171,12 +171,16 @@ public class ServiceWolfManager {
 		// we are adding the given service group to the current service group
 
 		for (int i = 0; i < serviceGroups.size(); i++) {
-			if (serviceGroupName.equals(serviceGroups.get(i).getServiceGroupName())) {
+			if (currentServiceGroup.getServiceGroupName().equals(serviceGroups.get(i).getServiceGroupName())) {
 				currentServiceGroup = serviceGroups.get(i);
 				currentServiceGroup.setIncidentCounter();
+				break;
+			} else {
+				throw new IllegalArgumentException();
+ 
 			}
 		}
-	}
+	} 
 
 	/**
 	 * retrives the service group name of the current service group
@@ -208,7 +212,7 @@ public class ServiceWolfManager {
 	 * a method to clear a service group
 	 */
 	public void clearServiceGroups() {
-		serviceGroups = new ArrayList<ServiceGroup>();
+		serviceGroups = null;
 		currentServiceGroup = null;
 	}
 
@@ -222,13 +226,14 @@ public class ServiceWolfManager {
 			throw new IllegalArgumentException("Invalid service group name.");
 		}
 		currentServiceGroup.setServiceGroupName(updateName);
-		Collections.sort(serviceGroups, new Comparator<ServiceGroup>() {
+		loadServiceGroup(updateName);
+		Collections.sort(serviceGroups, new Comparator<ServiceGroup>() { 
+
 			@Override
 			public int compare(ServiceGroup sg1, ServiceGroup s2) {
 				return sg1.getServiceGroupName().compareToIgnoreCase(s2.getServiceGroupName());
 			}
 		});
-		loadServiceGroup(updateName);
 
 	}
 
