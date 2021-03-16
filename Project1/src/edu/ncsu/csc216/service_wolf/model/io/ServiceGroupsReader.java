@@ -73,8 +73,7 @@ public class ServiceGroupsReader {
 			String stringIncident = scan.next();
 			Incident in1 = processIncident(stringIncident); 
 			sg.addIncident(in1);
-		} scan.close();
-		
+		} scan.close(); 
 		return sg;
 
 	} 
@@ -99,7 +98,7 @@ public class ServiceGroupsReader {
 		int id = s.nextInt();  
 
 		String state = s.next();
-		String title = s.next();
+		String title = s.next(); 
 		String caller = s.next(); 
 		int reopen = s.nextInt(); 
 		String owner = s.next();

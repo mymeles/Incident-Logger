@@ -301,6 +301,11 @@ public class IncidentTest {
 		assertEquals("* 2,Canceled,Piazza,sesmith5,0,Unowned,Not an Incident\n" + "- Set up piazza for Spring 2021"
 				+ "\n" + "- Canceled; not an NC State IT service\n", in.toString());
 
+	} 
+	
+	@Test
+	public void testNewState(){
+		
 	}
 
 	/**

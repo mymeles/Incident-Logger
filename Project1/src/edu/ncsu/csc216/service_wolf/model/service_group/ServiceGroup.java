@@ -99,7 +99,7 @@ public class ServiceGroup {
 			setIncidentCounter();
 			break;
 		case "true-false":
-			incident.add(incidents);
+			incident.add(incidents); 
 			setIncidentCounter();
 			break;
 		default:
@@ -162,7 +162,7 @@ public class ServiceGroup {
 	 */
 	public void deleteIncidentById(int id) {
 		for (int i = 0; i < incident.size(); i++) {
-			if (id == incident.get(i).getId()) {
+			if (id == incident.get(i).getId()) { 
 				incident.remove(i);
 			}
 

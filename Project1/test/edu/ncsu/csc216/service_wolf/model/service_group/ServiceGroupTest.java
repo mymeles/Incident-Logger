@@ -219,7 +219,7 @@ public class ServiceGroupTest {
 	}
 
 	/**
-	 * Test method for deletIncidentById
+	 * Test method for deletIncidentById 
 	 */
 	@Test
 	public void testDeleteIncidentById() {
