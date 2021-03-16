@@ -91,7 +91,7 @@ public class ServiceWolfManagerTest {
 		
 		// chek for null current state 
 		manager.deleteIncidentById(2);
-		assertEquals(3, manager.getServiceGroupList().length);
+		assertEquals(3, manager.getIncidentsAsArray().length);
 		
 		manager.deleteIncidentById(4);
 		assertEquals(2, manager.getIncidentsAsArray().length); 
@@ -258,7 +258,30 @@ public class ServiceWolfManagerTest {
 	 */
 	@Test
 	public void testDeleteServiceGroup() {
-		fail("Not yet implemented"); // TODO
+		manager.loadFromFile("test-files/incidents1.txt");
+     	assertEquals(3, manager.getServiceGroupList().length);
+		assertEquals("CSC IT", manager.getServiceGroupName());
+		
+		manager.deleteServiceGroup();
+		assertEquals(2, manager.getServiceGroupList().length); 
+		assertEquals("ITECS", manager.getServiceGroupName());
+		
+		manager.deleteServiceGroup();
+		assertEquals(1, manager.getServiceGroupList().length);
+		assertEquals("OIT", manager.getServiceGroupName());
+		
+		manager.deleteServiceGroup();
+		assertEquals(0, manager.getServiceGroupList().length);
+		assertNull(null, manager.getIncidentsAsArray());
+		
+		try {
+			manager.deleteServiceGroup();
+			fail();
+		} catch(IllegalArgumentException e) {
+			assertNull(null, manager.getIncidentsAsArray());
+			assertEquals("No service group selected.", e.getMessage());
+		}
+
 	}
 
 	

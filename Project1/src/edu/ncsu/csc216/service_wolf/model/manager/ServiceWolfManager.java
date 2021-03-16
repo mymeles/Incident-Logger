@@ -3,7 +3,6 @@
  */
 package edu.ncsu.csc216.service_wolf.model.manager;
 
-
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
@@ -71,7 +70,7 @@ public class ServiceWolfManager {
 	 * @param fileName a location where the file is saved
 	 */
 	public void saveToFile(String fileName) {
-		if(currentServiceGroup == null) {
+		if (currentServiceGroup == null) {
 			throw new IllegalArgumentException("Unable to save file.");
 		}
 		ServiceGroupWriter.writeServiceGroupsToFile(fileName, serviceGroups);
@@ -86,15 +85,15 @@ public class ServiceWolfManager {
 
 		serviceGroups = ServiceGroupsReader.readServiceGroupsFile(fileName);
 		currentServiceGroup = serviceGroups.get(0);
+//
+//		Collections.sort(serviceGroups, new Comparator<ServiceGroup>() {
+//			@Override
+//			public int compare(ServiceGroup sg1, ServiceGroup s2) {
+//				return sg1.getServiceGroupName().compareToIgnoreCase(s2.getServiceGroupName());
+//			}
+//		});
 
-		Collections.sort(serviceGroups, new Comparator<ServiceGroup>() {
-			@Override
-			public int compare(ServiceGroup sg1, ServiceGroup s2) {
-				return sg1.getServiceGroupName().compareToIgnoreCase(s2.getServiceGroupName());
-			}
-		});
-
-	} 
+	}
 
 	/**
 	 * returns an array of incidents
@@ -103,7 +102,7 @@ public class ServiceWolfManager {
 	 */
 	public String[][] getIncidentsAsArray() {
 		if (currentServiceGroup == null) {
-			return null; 
+			return null;
 		} else {
 			String[][] list = new String[currentServiceGroup.getIncidents().size()][4];
 			for (int i = 0; i < currentServiceGroup.getIncidents().size(); i++) {
@@ -115,7 +114,7 @@ public class ServiceWolfManager {
 			return list;
 		}
 	}
- 
+
 	/**
 	 * A method the retrives an incident by a refernce id
 	 * 
@@ -142,8 +141,8 @@ public class ServiceWolfManager {
 	 * @param id an integer that refrences incidents
 	 */
 	public void deleteIncidentById(int id) {
-		// throw an exception 
-		
+		// throw an exception
+
 		for (int i = 0; i < currentServiceGroup.getIncidents().size(); i++) {
 			if (currentServiceGroup.getIncidents().get(i).getId() == id) {
 				currentServiceGroup.deleteIncidentById(id);
@@ -173,10 +172,10 @@ public class ServiceWolfManager {
 		// we are adding the given service group to the current service group
 
 		for (int i = 0; i < serviceGroups.size(); i++) {
-			if (serviceGroupName.equals(serviceGroups.get(i).getServiceGroupName())){
+			if (serviceGroupName.equals(serviceGroups.get(i).getServiceGroupName())) {
 				currentServiceGroup = serviceGroups.get(i);
 				currentServiceGroup.setIncidentCounter();
-			} 
+			}
 		}
 	}
 
@@ -218,7 +217,7 @@ public class ServiceWolfManager {
 	public void editServiceGroup(String updateName) {
 		if (updateName == null || "".equals(updateName) || checkDuplicateServiceName(updateName)) {
 			throw new IllegalArgumentException("Invalid service group name.");
-		} 
+		}
 		currentServiceGroup.setServiceGroupName(updateName);
 		Collections.sort(serviceGroups, new Comparator<ServiceGroup>() {
 			@Override
@@ -247,18 +246,18 @@ public class ServiceWolfManager {
 	 */
 	public void addServiceGroup(String serviceGroupName) {
 		if (serviceGroupName == null || "".equals(serviceGroupName) || checkDuplicateServiceName(serviceGroupName)) {
-			throw new IllegalArgumentException("Invalid service group name."); 
+			throw new IllegalArgumentException("Invalid service group name.");
 		}
 		ServiceGroup addService = new ServiceGroup(serviceGroupName);
-		serviceGroups.add(addService); 
-		
+		serviceGroups.add(addService);
+
 		Collections.sort(serviceGroups, new Comparator<ServiceGroup>() {
 			@Override
 			public int compare(ServiceGroup sg1, ServiceGroup s2) {
 				return sg1.getServiceGroupName().compareToIgnoreCase(s2.getServiceGroupName());
 			}
 		});
-	} 
+	}
 
 	/**
 	 * A method that checks for duplicate service groups in the service froup list
@@ -280,21 +279,21 @@ public class ServiceWolfManager {
 	 * A method to delet a service group
 	 */
 	public void deleteServiceGroup() {
-		if(currentServiceGroup ==  null) {
-			 throw new IllegalArgumentException("No service group selected.");
-		} else {
-		for (int i = 0; i < serviceGroups.size(); i++) {
-			if (currentServiceGroup.getServiceGroupName().equals(serviceGroups.get(i).getServiceGroupName())) {
-				serviceGroups.remove(i);
-				if (serviceGroups.size() > 0) {
-					currentServiceGroup = serviceGroups.get(0);
-				} else {
-					currentServiceGroup = null;
+		if (currentServiceGroup == null) {
+			throw new IllegalArgumentException("No service group selected.");
+		} else if (serviceGroups.size() == 1 || serviceGroups.size() == 0) {
+			serviceGroups.remove(0);
+			currentServiceGroup = null;
 
+		} else {
+			for (int i = 0; i < serviceGroups.size(); i++) {
+				if (currentServiceGroup.getServiceGroupName().equals(serviceGroups.get(i).getServiceGroupName())) {
+					serviceGroups.remove(i);
+					currentServiceGroup = serviceGroups.get(0);
 				}
 			}
 		}
-		}
+
 	}
 
 	/**
