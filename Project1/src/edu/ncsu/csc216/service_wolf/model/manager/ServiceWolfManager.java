@@ -110,7 +110,7 @@ public class ServiceWolfManager {
 				list[i][2] = currentServiceGroup.getIncidents().get(i).getTitle();
 				list[i][3] = currentServiceGroup.getIncidents().get(i).getStatusDetails();
 			}
-			return list;
+			return list; 
 		}
 	}
 
@@ -172,10 +172,11 @@ public class ServiceWolfManager {
 
 		for (int i = 0; i < serviceGroups.size(); i++) {
 			if (serviceGroups.get(i).getServiceGroupName().equals(serviceGroupName) ) {
-				System.out.println(serviceGroups.get(i).getServiceGroupName());
 				currentServiceGroup = serviceGroups.get(i);
 				currentServiceGroup.setIncidentCounter(); 
+				return;
 			} 
+			currentServiceGroup = null;
 		}
 	}
 
@@ -222,10 +223,10 @@ public class ServiceWolfManager {
 		if (updateName == null || "".equals(updateName) || checkDuplicateServiceName(updateName)) {
 			throw new IllegalArgumentException("Invalid service group name.");
 		}
-
+ 
 		ServiceGroup temp = currentServiceGroup;
 		System.out.println(currentServiceGroup.getServiceGroupName());
-		temp.setServiceGroupName(updateName); 
+		temp.setServiceGroupName(updateName.trim()); 
 		serviceGroups.add(temp);
 		System.out.println(serviceGroups.size());
 		loadServiceGroup(updateName);

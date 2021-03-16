@@ -210,9 +210,6 @@ public class ServiceWolfManagerTest {
 		assertEquals("OIT", manager.getServiceGroupName()); 
 		assertEquals(3, manager.getServiceGroupList().length);
 		manager.editServiceGroup("NCSU IT");
-		for(int i = 0; i < manager.getServiceGroupList().length; i++) {
-		System.out.println("testing name :" + manager.getServiceGroupList()[i]);
-		}
 		assertEquals("NCSU IT", manager.getServiceGroupName());
 		assertEquals(3, manager.getServiceGroupList().length);
 
