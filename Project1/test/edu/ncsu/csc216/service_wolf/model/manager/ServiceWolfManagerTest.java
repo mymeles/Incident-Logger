@@ -158,7 +158,9 @@ public class ServiceWolfManagerTest {
 	public void testLoadServiceGroup() {
 		manager.loadFromFile("test-files/incidents1.txt");
 		manager.loadServiceGroup("OIT");
-		System.out.println("testing : " + manager.getIncidentsAsArray()[0][1]);
+		assertEquals("1", manager.getIncidentsAsArray()[0][0]);
+		assertEquals("In Progress", manager.getIncidentsAsArray()[0][1]);
+
 	}
 
 	/**
