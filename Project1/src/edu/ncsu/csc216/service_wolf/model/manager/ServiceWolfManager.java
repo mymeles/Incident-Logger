@@ -143,13 +143,12 @@ public class ServiceWolfManager {
 	 * @param id an integer that refrences incidents
 	 */
 	public void deleteIncidentById(int id) {
-		// throw an exception
-		for (int i = 0; i < currentServiceGroup.getIncidents().size(); i++) {
-			if (currentServiceGroup.getIncidents().get(i).getId() == id) {
-				currentServiceGroup.deleteIncidentById(id);
-			}
+		
+		if(currentServiceGroup == null) {
+			return; 
 		}
-		return;
+		currentServiceGroup.deleteIncidentById(id);
+		
 	}
 
 	/**
