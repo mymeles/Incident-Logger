@@ -70,10 +70,15 @@ public class Command {
 		else if ((CommandValue.INVESTIGATE.equals(command) || CommandValue.REOPEN.equals(command)) 
 				&& commandInformation != null) {
 			throw new IllegalArgumentException("These commands do NOT require an additional piece of information");
-		} else {
+		} 
+		else if ((CommandValue.ASSIGN.equals(command) || CommandValue.CANCEL.equals(command) || CommandValue.HOLD.equals(command) || CommandValue.RESOLVE.equals(command)) 
+				&& commandInformation.equals("")) {
+			throw new IllegalArgumentException("These commands do NOT require an additional piece of information");
+		}
+		else {
 			this.command = command; 
 			this.commandInformation = commandInformation;  
-			this.commandMessage = commandMessage; 
+			this.commandMessage = commandMessage;  
 		} 
 
 	}

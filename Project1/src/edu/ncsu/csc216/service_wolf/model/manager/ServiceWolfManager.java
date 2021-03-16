@@ -82,9 +82,9 @@ public class ServiceWolfManager {
 	 */
 	public void loadFromFile(String fileName) {
 		try {
-		serviceGroups = ServiceGroupsReader.readServiceGroupsFile(fileName);
-		currentServiceGroup = serviceGroups.get(0);
-		} catch(IllegalArgumentException e) {
+			serviceGroups = ServiceGroupsReader.readServiceGroupsFile(fileName);
+			currentServiceGroup = serviceGroups.get(0);
+		} catch (IllegalArgumentException e) {
 			throw new IllegalArgumentException(e.getMessage());
 		}
 
@@ -112,7 +112,7 @@ public class ServiceWolfManager {
 				list[i][2] = currentServiceGroup.getIncidents().get(i).getTitle();
 				list[i][3] = currentServiceGroup.getIncidents().get(i).getStatusDetails();
 			}
-			return list; 
+			return list;
 		}
 	}
 
@@ -143,12 +143,12 @@ public class ServiceWolfManager {
 	 */
 	public void deleteIncidentById(int id) {
 		// throw an exception
-
 		for (int i = 0; i < currentServiceGroup.getIncidents().size(); i++) {
 			if (currentServiceGroup.getIncidents().get(i).getId() == id) {
 				currentServiceGroup.deleteIncidentById(id);
 			}
 		}
+		return;
 	}
 
 	/**
@@ -159,8 +159,12 @@ public class ServiceWolfManager {
 	 * @param message message of the incident
 	 */
 	public void addIncidentToServiceGroup(String title, String caller, String message) {
-		Incident i = new Incident(title, caller, message);
-		currentServiceGroup.addIncident(i);
+		try {
+			Incident i = new Incident(title, caller, message);
+			currentServiceGroup.addIncident(i);
+		} catch (IllegalArgumentException e) {
+			throw new IllegalArgumentException(e.getMessage());
+		}
 	}
 
 	/**
@@ -173,11 +177,11 @@ public class ServiceWolfManager {
 		// we are adding the given service group to the current service group
 
 		for (int i = 0; i < serviceGroups.size(); i++) {
-			if (serviceGroups.get(i).getServiceGroupName().equals(serviceGroupName) ) {
+			if (serviceGroups.get(i).getServiceGroupName().equals(serviceGroupName)) {
 				currentServiceGroup = serviceGroups.get(i);
-				currentServiceGroup.setIncidentCounter(); 
+				currentServiceGroup.setIncidentCounter();
 				return;
-			} 
+			}
 			currentServiceGroup = null;
 		}
 	}
@@ -225,20 +229,18 @@ public class ServiceWolfManager {
 		if (updateName == null || "".equals(updateName) || checkDuplicateServiceName(updateName)) {
 			throw new IllegalArgumentException("Invalid service group name.");
 		}
- 
+
 		ServiceGroup temp = currentServiceGroup;
 		System.out.println(currentServiceGroup.getServiceGroupName());
-		temp.setServiceGroupName(updateName.trim()); 
+		temp.setServiceGroupName(updateName.trim());
 		serviceGroups.add(temp);
 		System.out.println(serviceGroups.size());
 		loadServiceGroup(updateName);
 		serviceGroups.add(temp);
 		for (int i = 0; i < serviceGroups.size(); i++) {
 			if (currentServiceGroup.getServiceGroupName().equals(serviceGroups.get(i).getServiceGroupName())) {
-					serviceGroups.remove(i);
-					
+				serviceGroups.remove(i);
 
-				
 			}
 		}
 

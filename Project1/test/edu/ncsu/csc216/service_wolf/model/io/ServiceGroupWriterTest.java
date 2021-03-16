@@ -80,7 +80,7 @@ public class ServiceGroupWriterTest {
 		assertEquals(2, s1.getIncidents().size());
 
 
-		serviceGroup.add(s);
+		serviceGroup.add(s); 
 		serviceGroup.add(s1);
 		assertEquals(2, serviceGroup.size());
 

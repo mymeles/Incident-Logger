@@ -161,11 +161,11 @@ public class ServiceGroup {
 	 * @param id is an integer reference of incident
 	 */
 	public void deleteIncidentById(int id) {
-		for (int i = 0; i < incident.size(); i++) {
+		for (int i = 0; i < incident.size(); i++) { 
 			if (id == incident.get(i).getId()) { 
 				incident.remove(i);
 			}
-
+ 
 		}
 
 	}

@@ -1,9 +1,7 @@
 package edu.ncsu.csc216.service_wolf.model.command;
 
-import static edu.ncsu.csc216.service_wolf.model.command.Command.CommandValue.ASSIGN;
-import static edu.ncsu.csc216.service_wolf.model.command.Command.CommandValue.INVESTIGATE;
-import static edu.ncsu.csc216.service_wolf.model.command.Command.CommandValue.CANCEL;
-import static edu.ncsu.csc216.service_wolf.model.command.Command.CommandValue.RESOLVE;
+import static edu.ncsu.csc216.service_wolf.model.command.Command.CommandValue;
+
 import static org.junit.Assert.*;
 
 import org.junit.Test;
@@ -28,10 +26,10 @@ public class CommandTest {
 	 */
 	@Test
 	public void testCommand() {
-		Command c2 = new Command(ASSIGN, INFO, MESSAGE);
-		assertEquals(ASSIGN, c2.getCommand());
+		Command c2 = new Command(CommandValue.ASSIGN, INFO, MESSAGE);
+		assertEquals(CommandValue.ASSIGN, c2.getCommand());
 		
-		Command c1 = new Command(INVESTIGATE, null, MESSAGE);
+		Command c1 = new Command(CommandValue.INVESTIGATE, null, MESSAGE);
 		assertNull(null, c1.getCommandInformation());
 		
 		Command c3 = null;
@@ -45,7 +43,7 @@ public class CommandTest {
 		} 
 		
 		try {
-			 c3 = new Command(CANCEL, INFO, null);
+			 c3 = new Command(CommandValue.CANCEL, INFO, null);
 			fail();
 		} catch (IllegalArgumentException e) {
 			assertNull(null, c3);
@@ -53,7 +51,7 @@ public class CommandTest {
 		} 
 		
 		try { 
-			c3 = new Command(ASSIGN, null, MESSAGE);
+			c3 = new Command(CommandValue.ASSIGN, null, MESSAGE);
 			fail();
 		} catch (IllegalArgumentException e) { 
 			assertNull(null, c3);
@@ -61,7 +59,39 @@ public class CommandTest {
 		}
 		
 		try {  
-			c3 = new Command(INVESTIGATE, INFO, MESSAGE);
+			c3 = new Command(CommandValue.INVESTIGATE, INFO, MESSAGE);
+			fail();
+		} catch (IllegalArgumentException e) { 
+			assertNull(null, c3);
+			assertEquals("These commands do NOT require an additional piece of information", e.getMessage());
+		}
+		
+		try {  
+			c3 = new Command(CommandValue.ASSIGN, "", MESSAGE);
+			fail();
+		} catch (IllegalArgumentException e) { 
+			assertNull(null, c3);
+			assertEquals("These commands do NOT require an additional piece of information", e.getMessage());
+		}
+		
+		try {  
+			c3 = new Command(CommandValue.CANCEL, "", MESSAGE);
+			fail();
+		} catch (IllegalArgumentException e) { 
+			assertNull(null, c3);
+			assertEquals("These commands do NOT require an additional piece of information", e.getMessage());
+		} 
+		
+		try {  
+			c3 = new Command(CommandValue.HOLD, "", MESSAGE);
+			fail();
+		} catch (IllegalArgumentException e) { 
+			assertNull(null, c3);
+			assertEquals("These commands do NOT require an additional piece of information", e.getMessage());
+		}
+		
+		try {  
+			c3 = new Command(CommandValue.RESOLVE, "", MESSAGE);
 			fail();
 		} catch (IllegalArgumentException e) { 
 			assertNull(null, c3);
@@ -74,8 +104,8 @@ public class CommandTest {
 	 */
 	@Test
 	public void testGetCommand() {
-		Command c2 = new Command(ASSIGN, INFO, MESSAGE);
-		assertEquals(ASSIGN, c2.getCommand());
+		Command c2 = new Command(CommandValue.ASSIGN, INFO, MESSAGE);
+		assertEquals(CommandValue.ASSIGN, c2.getCommand());
 	}
 
 	/**
@@ -83,7 +113,7 @@ public class CommandTest {
 	 */
 	@Test
 	public void testGetCommandInformation() {
-		Command c2 = new Command(ASSIGN, INFO, MESSAGE);
+		Command c2 = new Command(CommandValue.ASSIGN, INFO, MESSAGE);
 		assertEquals(INFO, c2.getCommandInformation());
 	}
 
@@ -92,7 +122,7 @@ public class CommandTest {
 	 */
 	@Test
 	public void testGetCommandMessage() {
-		Command c2 = new Command(ASSIGN, INFO, MESSAGE);
+		Command c2 = new Command(CommandValue.ASSIGN, INFO, MESSAGE);
 		assertEquals(MESSAGE, c2.getCommandMessage());
 	}
 
