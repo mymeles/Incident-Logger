@@ -311,12 +311,13 @@ public class IncidentTest {
 		try {
 			command = new Command(CommandValue.ASSIGN, "James", "Message1");
 			in.update(command);
+			assertEquals("James", in.getOwner());
+			assertEquals("In Progress", in.getState()); 
 		} catch (UnsupportedOperationException e) {
 			fail();
 		}
-		in.update(command);
-		assertEquals("James", in.getOwner());
-		assertEquals("In Progress", in.getState());
+		
+		
  
 		try {
 			command = new Command(CommandValue.HOLD, Incident.HOLD_AWAITING_CALLER, "Message2");
@@ -347,9 +348,31 @@ public class IncidentTest {
 			assertEquals(Incident.ON_HOLD_NAME, in.getState());
 			assertEquals("James", in.getOwner());
 		} catch (UnsupportedOperationException e) {
+			fail(e.getMessage()); 
+		}
+		
+		in = null;
+		command = null;
+		in = new Incident(TITLE, CALLER, "Set up piazza for spring 2021");
+		assertEquals("New", in.getState());
+		try {
+			command = new Command(CommandValue.ASSIGN, "James", "Message1");
+			in.update(command);
+			assertEquals("James", in.getOwner());
+			assertEquals("In Progress", in.getState());
+		} catch (UnsupportedOperationException e) {
 			fail(e.getMessage());
 		}
-
+		
+		try {
+			command = new Command(CommandValue.HOLD, Incident.HOLD_AWAITING_CALLER, "Message2");
+			in.update(command);
+			assertEquals(Incident.HOLD_AWAITING_CALLER, in.getStatusDetails());
+			assertEquals(Incident.ON_HOLD_NAME, in.getState());
+			assertEquals("James", in.getOwner());
+		} catch (UnsupportedOperationException e) {
+			fail(e.getMessage()); 
+		}
 	}
 
 	/**

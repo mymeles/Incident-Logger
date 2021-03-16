@@ -187,7 +187,7 @@ public class Incident {
 	 */
 	public Incident(String title, String caller, String message) {
 
-			setTitle(title);
+		setTitle(title);
 		setCaller(caller);
 		setOwner(UNOWNED);
 		setStatusDetails(NO_STATUS);
@@ -554,7 +554,10 @@ public class Incident {
 
 			switch (command.getCommand()) {
 			case ASSIGN:
+				setOwner(command.getCommandInformation());
 				setStatusDetails(NO_STATUS);
+				currentState = inProgressState;
+				break;
 			case CANCEL: 
 				setStatusDetails(command.getCommandInformation());
 				setOwner(UNOWNED);
