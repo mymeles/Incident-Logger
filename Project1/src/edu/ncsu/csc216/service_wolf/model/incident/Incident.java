@@ -605,7 +605,7 @@ public class Incident {
 			switch (command.getCommand()) {
 			case ASSIGN:
 				setOwner(command.getCommandInformation());
-				setStatusDetails(command.getCommandInformation());
+				setStatusDetails(NO_STATUS); 
 				currentState = inProgressState;
 				break;
 			case HOLD:

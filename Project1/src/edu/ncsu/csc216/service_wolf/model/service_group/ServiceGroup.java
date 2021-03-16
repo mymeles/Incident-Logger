@@ -99,7 +99,7 @@ public class ServiceGroup {
 			setIncidentCounter();
 			break;
 		case "true-false":
-			incident.add(incidents); 
+			incident.add(incidents);
 			setIncidentCounter();
 			break;
 		default:
@@ -147,12 +147,15 @@ public class ServiceGroup {
 	 * @param command is a command for incident
 	 */
 	public void executeCommand(int id, Command command) {
-		for (int i = 0; i < incident.size(); i++) {
-			if (incident.get(i).getId() == id) {
-				incident.get(i).update(command);
+		try {
+			for (int i = 0; i < incident.size(); i++) {
+				if (incident.get(i).getId() == id) {
+					incident.get(i).update(command);
+				}
 			}
+		} catch (UnsupportedOperationException e) {
+			e.printStackTrace();
 		}
-
 	}
 
 	/**
@@ -161,11 +164,11 @@ public class ServiceGroup {
 	 * @param id is an integer reference of incident
 	 */
 	public void deleteIncidentById(int id) {
-		for (int i = 0; i < incident.size(); i++) { 
-			if (id == incident.get(i).getId()) { 
+		for (int i = 0; i < incident.size(); i++) {
+			if (id == incident.get(i).getId()) {
 				incident.remove(i);
 			}
- 
+
 		}
 
 	}
