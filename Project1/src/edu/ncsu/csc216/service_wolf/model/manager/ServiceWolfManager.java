@@ -91,7 +91,7 @@ public class ServiceWolfManager {
 			public int compare(ServiceGroup sg1, ServiceGroup s2) {
 				return sg1.getServiceGroupName().compareToIgnoreCase(s2.getServiceGroupName());
 			}
-		}); 
+		});
 	}
 
 	/**
@@ -184,7 +184,11 @@ public class ServiceWolfManager {
 	 * @return a string value of a service group name
 	 */
 	public String getServiceGroupName() {
-		return currentServiceGroup.getServiceGroupName();
+		if (currentServiceGroup == null) {
+			return null;
+		} else {
+			return currentServiceGroup.getServiceGroupName();
+		}
 	}
 
 	/**
