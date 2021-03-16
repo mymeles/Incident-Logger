@@ -278,7 +278,7 @@ public class ServiceWolfManagerTest {
 		assertEquals("OIT", manager.getServiceGroupName());
 
 		manager.deleteServiceGroup();
-		assertEquals(0, manager.getServiceGroupList().length);
+		assertNull(null, manager.getServiceGroupList());
 		assertNull(null, manager.getServiceGroupName());
 
 		try {

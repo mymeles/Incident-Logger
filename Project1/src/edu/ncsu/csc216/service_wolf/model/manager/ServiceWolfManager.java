@@ -131,6 +131,7 @@ public class ServiceWolfManager {
 	 * @param command is a command to execute
 	 */
 	public void executeCommand(int id, Command command) {
+		// needs a lot of work 
 		currentServiceGroup.getIncidentById(id).update(command);
 	}
 
@@ -203,13 +204,17 @@ public class ServiceWolfManager {
 	 * @return a single array of service Group list
 	 */
 	public String[] getServiceGroupList() {
+	// no sure it a good idea to add the code below this comment 
+		if(serviceGroups.size() == 0) {
+			return null;
+		}
 		String[] list = new String[serviceGroups.size()];
 		for (int i = 0; i < serviceGroups.size(); i++) {
 			list[i] = serviceGroups.get(i).getServiceGroupName();
 		}
 		return list;
 	}
-
+ 
 	/**
 	 * a method to clear a service group
 	 */
