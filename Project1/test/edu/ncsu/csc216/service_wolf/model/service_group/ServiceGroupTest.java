@@ -249,7 +249,7 @@ public class ServiceGroupTest {
 	 */
 	@Test
 	public void testDeleteIncidentById() {
-		serviceGroup = null;
+		serviceGroup = null; 
 		serviceGroup = new ServiceGroup("CSC IT");
 		assertEquals(0, serviceGroup.getIncidents().size());
 		serviceGroup.addIncident(in1);

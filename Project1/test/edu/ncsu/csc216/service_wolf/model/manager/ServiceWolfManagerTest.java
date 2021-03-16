@@ -270,7 +270,7 @@ public class ServiceWolfManagerTest {
 		assertEquals("CSC IT", manager.getServiceGroupName());
 
 		manager.deleteServiceGroup();
-		assertEquals(2, manager.getServiceGroupList().length);
+		assertEquals(2, manager.getServiceGroupList().length); 
 		assertEquals("ITECS", manager.getServiceGroupName());
 
 		manager.deleteServiceGroup();

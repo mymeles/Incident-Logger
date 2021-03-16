@@ -69,7 +69,7 @@ public class ServiceWolfManager {
 	 * @param fileName a location where the file is saved
 	 */
 	public void saveToFile(String fileName) {
-
+       // checiks for incidents and cutrent 
 		ServiceGroupWriter.writeServiceGroupsToFile(fileName, serviceGroups);
 	}
 
@@ -159,11 +159,15 @@ public class ServiceWolfManager {
 	 * @param message message of the incident
 	 */
 	public void addIncidentToServiceGroup(String title, String caller, String message) {
-		try {
+		if(currentServiceGroup == null ) {
+			throw new IllegalArgumentException("Incident cannot be created.");
+		}
+		try { 
 			Incident i = new Incident(title, caller, message);
+			currentServiceGroup.setIncidentCounter();
 			currentServiceGroup.addIncident(i);
 		} catch (IllegalArgumentException e) {
-			throw new IllegalArgumentException(e.getMessage());
+			throw new IllegalArgumentException("Incident cannot be created.");
 		}
 	}
 
