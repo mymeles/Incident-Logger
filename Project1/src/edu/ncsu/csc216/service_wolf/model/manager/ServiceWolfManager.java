@@ -69,7 +69,7 @@ public class ServiceWolfManager {
 	 * @param fileName a location where the file is saved
 	 */
 	public void saveToFile(String fileName) {
-		
+
 		ServiceGroupWriter.writeServiceGroupsToFile(fileName, serviceGroups);
 	}
 
@@ -131,7 +131,6 @@ public class ServiceWolfManager {
 	 * @param command is a command to execute
 	 */
 	public void executeCommand(int id, Command command) {
-		// needs a lot of work 
 		currentServiceGroup.getIncidentById(id).update(command);
 	}
 
@@ -174,15 +173,17 @@ public class ServiceWolfManager {
 	 */
 	public void loadServiceGroup(String serviceGroupName) {
 		// we are adding the given service group to the current service group
-
-		for (int i = 0; i < serviceGroups.size(); i++) {
-			if (serviceGroups.get(i).getServiceGroupName().equals(serviceGroupName)) {
-				currentServiceGroup = serviceGroups.get(i);
-				currentServiceGroup.setIncidentCounter();
-				return;
+		if (serviceGroups.size() > 0) {
+			for (int i = 0; i < serviceGroups.size(); i++) {
+				if (serviceGroups.get(i).getServiceGroupName().equals(serviceGroupName)) {
+					currentServiceGroup = serviceGroups.get(i);
+					currentServiceGroup.setIncidentCounter();
+					return;
+				}
 			}
-			currentServiceGroup = null;
 		}
+		throw new IllegalArgumentException("");
+
 	}
 
 	/**
@@ -204,17 +205,14 @@ public class ServiceWolfManager {
 	 * @return a single array of service Group list
 	 */
 	public String[] getServiceGroupList() {
-	// no sure it a good idea to add the code below this comment 
-		if(serviceGroups.size() == 0) {
-			return null;
-		}
+
 		String[] list = new String[serviceGroups.size()];
 		for (int i = 0; i < serviceGroups.size(); i++) {
 			list[i] = serviceGroups.get(i).getServiceGroupName();
 		}
 		return list;
 	}
- 
+
 	/**
 	 * a method to clear a service group
 	 */
@@ -234,12 +232,9 @@ public class ServiceWolfManager {
 		}
 
 		ServiceGroup temp = currentServiceGroup;
-		System.out.println(currentServiceGroup.getServiceGroupName());
 		temp.setServiceGroupName(updateName.trim());
 		serviceGroups.add(temp);
-		System.out.println(serviceGroups.size());
 		loadServiceGroup(updateName);
-		serviceGroups.add(temp);
 		for (int i = 0; i < serviceGroups.size(); i++) {
 			if (currentServiceGroup.getServiceGroupName().equals(serviceGroups.get(i).getServiceGroupName())) {
 				serviceGroups.remove(i);
@@ -257,14 +252,6 @@ public class ServiceWolfManager {
 
 	}
 
-//	/**
-//	 * A method that adds service list to a list by name
-//	 * 
-//	 * @param servicegroup is a service group to add to list
-//	 */
-//	private void addServiceGroupToListByName(ServiceGroup servicegroup) {
-//		return;
-//	}
 
 	/**
 	 * A method that takes in a String value for serviceName and creates a new
