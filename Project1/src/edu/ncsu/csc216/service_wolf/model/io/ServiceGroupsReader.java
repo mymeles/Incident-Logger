@@ -54,9 +54,7 @@ public class ServiceGroupsReader {
 			
 		} catch (FileNotFoundException e) {
 			throw new IllegalArgumentException("Unable to load file.");
-		} catch (NoSuchElementException e) {
-			throw new IllegalArgumentException(e.getMessage());
-		}
+		} 
 		return serviceg;
 		
 	}
@@ -123,6 +121,8 @@ public class ServiceGroupsReader {
 			Incident i = new Incident(id, state, title, caller, reopen, owner, status, message);
 			return i;
 		} catch (IllegalArgumentException e) {
+			throw new IllegalArgumentException("Unable to load file.");
+		} catch (NoSuchElementException e) {
 			throw new IllegalArgumentException("Unable to load file.");
 		}
 	}
