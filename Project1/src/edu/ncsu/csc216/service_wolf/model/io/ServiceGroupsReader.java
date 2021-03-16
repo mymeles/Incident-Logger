@@ -36,24 +36,23 @@ public class ServiceGroupsReader {
 			while (fileReader.hasNext()) {
 				str += fileReader.nextLine() + "\n";
 			}
-
-			Scanner scan = new Scanner(str);
-			scan.useDelimiter("\\r?\\n?[#]");
-
-			while (scan.hasNext()) {
-				String service = scan.next();
-				ServiceGroup sg1 = processServiceGroup(service);
-
-				serviceg.add(sg1);
- 
-			}
-			scan.close(); 
-			
 		} catch (FileNotFoundException e) {
-			throw new IllegalArgumentException("Unable to load file.");
-		} 
+			e.printStackTrace();
+		}
+
+		Scanner scan = new Scanner(str);
+		scan.useDelimiter("\\r?\\n?[#]");
+
+		while (scan.hasNext()) {
+			String service = scan.next();
+			ServiceGroup sg1 = processServiceGroup(service);
+
+			serviceg.add(sg1);
+
+		}
+		scan.close();
 		return serviceg;
-		
+
 	}
 
 	/**
@@ -63,7 +62,7 @@ public class ServiceGroupsReader {
 	 * @return the ServiceGroup object based on file contents
 	 */
 	private static ServiceGroup processServiceGroup(String service) {
-		try {
+
 		ServiceGroup sg = null;
 		Scanner scan = new Scanner(service);
 		scan.useDelimiter("\\r?\\n?[*]");
@@ -76,9 +75,6 @@ public class ServiceGroupsReader {
 		}
 		scan.close();
 		return sg;
-		} catch (IllegalArgumentException e) {
-			throw new IllegalArgumentException("Unable to load file.");
-		}
 
 	}
 
@@ -100,7 +96,7 @@ public class ServiceGroupsReader {
 			s.useDelimiter(",");
 			int id = s.nextInt();
 
-			String state = s.next(); 
+			String state = s.next();
 			String title = s.next();
 			String caller = s.next();
 			int reopen = s.nextInt();
