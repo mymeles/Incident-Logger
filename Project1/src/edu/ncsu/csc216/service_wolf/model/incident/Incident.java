@@ -222,7 +222,7 @@ public class Incident {
 			String statusDetails, ArrayList<String> incidentLog) {
 
 		setId(id);
-		setTitle(title); 
+		setTitle(title);
 		setCaller(caller);
 		setReopenCount(reopenCount);
 		setOwner(owner);
@@ -287,7 +287,7 @@ public class Incident {
 	 * @param state the incident state to set
 	 */
 	private void setState(String state) {
-		switch (state) { 
+		switch (state) {
 		case NEW_NAME:
 			createState(owner.equals(UNOWNED) && statusDetails.equals(NO_STATUS), newState);
 			break;
@@ -299,17 +299,19 @@ public class Incident {
 					|| statusDetails.equals(HOLD_AWAITING_CHANGE) || statusDetails.equals(HOLD_AWAITING_VENDOR)),
 					onHoldState);
 			break;
-		case RESOLVED_NAME: 
+		case RESOLVED_NAME:
 			createState(!(owner).equals(UNOWNED) && ((statusDetails).equals(RESOLUTION_PERMANENTLY_SOLVED)
 					|| statusDetails.equals(RESOLUTION_WORKAROUND) || statusDetails.equals(RESOLUTION_CALLER_CLOSED)),
 					resolvedState);
 			break;
 		case CANCELED_NAME:
-			createState(owner.equals(UNOWNED) 
-					&& statusDetails.equals(CANCELLATION_DUPLICATE) || statusDetails.equals(CANCELLATION_UNNECESSARY)
-							|| statusDetails.equals(CANCELLATION_NOT_AN_INCIDENT),
-					canceledState); 
-			break; 
+			if ((!owner.equals(UNOWNED)) 
+					|| !(statusDetails.equals(CANCELLATION_DUPLICATE) || statusDetails.equals(CANCELLATION_UNNECESSARY)
+							|| statusDetails.equals(CANCELLATION_NOT_AN_INCIDENT))) {
+				throw new IllegalArgumentException("Incident cannot be created.");
+			}
+			this.currentState = canceledState;
+			break;
 		default:
 			throw new IllegalArgumentException("Incident cannot be created.");
 		}
@@ -604,7 +606,7 @@ public class Incident {
 			switch (command.getCommand()) {
 			case ASSIGN:
 				setOwner(command.getCommandInformation());
-				setStatusDetails(NO_STATUS); 
+				setStatusDetails(NO_STATUS);
 				currentState = inProgressState;
 				break;
 			case HOLD:
@@ -647,10 +649,10 @@ public class Incident {
 	public class OnHoldState implements IncidentState {
 
 		/**
-		 *OnHold state constructor 
+		 * OnHold state constructor
 		 */
 		private OnHoldState() {
-			
+
 		}
 
 		/**
@@ -661,10 +663,10 @@ public class Incident {
 		public void updateState(Command command) {
 			switch (command.getCommand()) {
 			case INVESTIGATE:
-				setStatusDetails(NO_STATUS); 
-				currentState = inProgressState;  
+				setStatusDetails(NO_STATUS);
+				currentState = inProgressState;
 				break;
-			default: 
+			default:
 				throw new UnsupportedOperationException();
 			}
 		}
@@ -743,7 +745,7 @@ public class Incident {
 		 * Constructs cancled state so it is implemneted in Incident interface
 		 */
 		private CanceledState() {
-			// creats an incdient with valid infomation 
+			// creats an incdient with valid infomation
 
 		}
 
@@ -754,16 +756,16 @@ public class Incident {
 		 *
 		 */
 		public void updateState(Command command) {
-			switch(command.getCommand()) { 
-			case ASSIGN: 
+			switch (command.getCommand()) {
+			case ASSIGN:
 			case CANCEL:
 			case REOPEN:
 			case INVESTIGATE:
 			case HOLD:
 			case RESOLVE:
-				throw new UnsupportedOperationException();			
+				throw new UnsupportedOperationException();
 			default:
-				break; 
+				break;
 			}
 		}
 
