@@ -157,7 +157,7 @@ public class ServiceGroupTest {
 		assertEquals("- Set up piazza for spring 2021\n", u.getIncidentLogMessages());
 		assertEquals("James", u.getCaller());
 	}
-
+ 
 	/**
 	 * Test method for addIncident
 	 */

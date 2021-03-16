@@ -305,7 +305,7 @@ public class IncidentTest {
 	
 	@Test
 	public void testNewState(){
-		//
+		fail();
 	}
 
 	/**
