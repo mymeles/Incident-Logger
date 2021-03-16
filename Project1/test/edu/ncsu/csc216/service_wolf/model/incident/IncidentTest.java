@@ -312,13 +312,11 @@ public class IncidentTest {
 			command = new Command(CommandValue.ASSIGN, "James", "Message1");
 			in.update(command);
 			assertEquals("James", in.getOwner());
-			assertEquals("In Progress", in.getState()); 
+			assertEquals("In Progress", in.getState());
 		} catch (UnsupportedOperationException e) {
 			fail();
 		}
-		
-		
- 
+
 		try {
 			command = new Command(CommandValue.HOLD, Incident.HOLD_AWAITING_CALLER, "Message2");
 			in.update(command);
@@ -327,7 +325,7 @@ public class IncidentTest {
 		} catch (UnsupportedOperationException e) {
 			fail(e.getMessage());
 		}
-		
+
 		in = null;
 		command = null;
 		in = new Incident(TITLE, CALLER, "Set up piazza for spring 2021");
@@ -340,7 +338,7 @@ public class IncidentTest {
 		} catch (UnsupportedOperationException e) {
 			fail(e.getMessage());
 		}
-		
+
 		try {
 			command = new Command(CommandValue.HOLD, Incident.HOLD_AWAITING_CHANGE, "Message2");
 			in.update(command);
@@ -348,9 +346,9 @@ public class IncidentTest {
 			assertEquals(Incident.ON_HOLD_NAME, in.getState());
 			assertEquals("James", in.getOwner());
 		} catch (UnsupportedOperationException e) {
-			fail(e.getMessage()); 
+			fail(e.getMessage());
 		}
-		
+
 		in = null;
 		command = null;
 		in = new Incident(TITLE, CALLER, "Set up piazza for spring 2021");
@@ -363,7 +361,7 @@ public class IncidentTest {
 		} catch (UnsupportedOperationException e) {
 			fail(e.getMessage());
 		}
-		
+
 		try {
 			command = new Command(CommandValue.HOLD, Incident.HOLD_AWAITING_CALLER, "Message2");
 			in.update(command);
@@ -371,9 +369,9 @@ public class IncidentTest {
 			assertEquals(Incident.ON_HOLD_NAME, in.getState());
 			assertEquals("James", in.getOwner());
 		} catch (UnsupportedOperationException e) {
-			fail(e.getMessage()); 
+			fail(e.getMessage());
 		}
-		
+
 		in = null;
 		command = null;
 		in = new Incident(TITLE, CALLER, "Set up piazza for spring 2021");
@@ -386,7 +384,7 @@ public class IncidentTest {
 		} catch (UnsupportedOperationException e) {
 			fail(e.getMessage());
 		}
-		
+
 		try {
 			command = new Command(CommandValue.HOLD, Incident.HOLD_AWAITING_VENDOR, "Message2");
 			in.update(command);
@@ -394,10 +392,9 @@ public class IncidentTest {
 			assertEquals(Incident.ON_HOLD_NAME, in.getState());
 			assertEquals("James", in.getOwner());
 		} catch (UnsupportedOperationException e) {
-			fail(e.getMessage()); 
+			fail(e.getMessage());
 		}
 	}
-	
 
 	/**
 	 * A test Method for update
@@ -510,7 +507,7 @@ public class IncidentTest {
 		assertEquals(Incident.IN_PROGRESS_NAME, in.getState());
 		assertEquals(Incident.NO_STATUS, in.getStatusDetails());
 		assertEquals(1, in.getReopenCount());
-		assertEquals("James", in.getOwner());  
+		assertEquals("James", in.getOwner());
 		assertEquals(CALLER, in.getCaller());
 		assertEquals(4, in.getId());
 		assertEquals(
@@ -536,7 +533,7 @@ public class IncidentTest {
 		in = null;
 		command = null;
 		in = new Incident(TITLE, CALLER, "Set up piazza for spring 2021");
-		command = new Command(CommandValue.ASSIGN, "James", "IN progress; have been assign an owner"); 
+		command = new Command(CommandValue.ASSIGN, "James", "IN progress; have been assign an owner");
 		in.update(command);
 		command = null;
 		command = new Command(CommandValue.RESOLVE, "Workaround", "Waiting for a work around");
@@ -553,6 +550,20 @@ public class IncidentTest {
 				"- Set up piazza for spring 2021\n- IN progress; have been assign an owner\n- Waiting for a work around\n- It is not an incident\n",
 				in.getIncidentLogMessages());
 
+		try {
+			command = null;
+			command = new Command(CommandValue.CANCEL, "Workaround", "Waiting for a work around");
+			in.update(command);
+			fail();
+		} catch (UnsupportedOperationException e) {
+			assertEquals(Incident.CANCELED_NAME, in.getState());
+			assertEquals("Unowned", in.getOwner());
+			assertEquals(CALLER, in.getCaller());
+			assertEquals(5, in.getId());
+			assertEquals("Not an Incident", in.getStatusDetails());
+			assertEquals(
+					"- Set up piazza for spring 2021\n- IN progress; have been assign an owner\n- Waiting for a work around\n- It is not an incident\n",
+					in.getIncidentLogMessages());
+		}
 	}
-
 }
