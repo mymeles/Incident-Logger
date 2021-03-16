@@ -82,9 +82,12 @@ public class ServiceWolfManager {
 	 * @param fileName location of a service file
 	 */
 	public void loadFromFile(String fileName) {
-
+		try {
 		serviceGroups = ServiceGroupsReader.readServiceGroupsFile(fileName);
 		currentServiceGroup = serviceGroups.get(0);
+		} catch(IllegalArgumentException e) {
+			throw new IllegalArgumentException(e.getMessage());
+		}
 
 		Collections.sort(serviceGroups, new Comparator<ServiceGroup>() {
 			@Override
