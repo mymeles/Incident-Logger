@@ -47,7 +47,7 @@ public class ServiceWolfManager {
 	 * A constructor for Service wolf manager
 	 */
 	private ServiceWolfManager() {
-		name = null;
+		name = currentServiceGroup.getServiceGroupName();
 		serviceGroups = new ArrayList<ServiceGroup>();
 
 	}
