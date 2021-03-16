@@ -301,11 +301,55 @@ public class IncidentTest {
 		assertEquals("* 2,Canceled,Piazza,sesmith5,0,Unowned,Not an Incident\n" + "- Set up piazza for Spring 2021"
 				+ "\n" + "- Canceled; not an NC State IT service\n", in.toString());
 
-	} 
-	
+	}
+
 	@Test
-	public void testNewState(){
-		fail();
+	public void testProgressState() {
+		Incident in = null;
+		in = new Incident(TITLE, CALLER, "Set up piazza for spring 2021");
+		assertEquals("New", in.getState());
+		try {
+			command = new Command(CommandValue.ASSIGN, "James", "Message1");
+			in.update(command);
+		} catch (UnsupportedOperationException e) {
+			fail();
+		}
+		in.update(command);
+		assertEquals("James", in.getOwner());
+		assertEquals("In Progress", in.getState());
+ 
+		try {
+			command = new Command(CommandValue.HOLD, Incident.HOLD_AWAITING_CALLER, "Message2");
+			in.update(command);
+			assertEquals(Incident.HOLD_AWAITING_CALLER, in.getStatusDetails());
+			assertEquals(Incident.ON_HOLD_NAME, in.getState());
+		} catch (UnsupportedOperationException e) {
+			fail(e.getMessage());
+		}
+		
+		in = null;
+		command = null;
+		in = new Incident(TITLE, CALLER, "Set up piazza for spring 2021");
+		assertEquals("New", in.getState());
+		try {
+			command = new Command(CommandValue.ASSIGN, "James", "Message1");
+			in.update(command);
+			assertEquals("James", in.getOwner());
+			assertEquals("In Progress", in.getState());
+		} catch (UnsupportedOperationException e) {
+			fail(e.getMessage());
+		}
+		
+		try {
+			command = new Command(CommandValue.HOLD, Incident.HOLD_AWAITING_CHANGE, "Message2");
+			in.update(command);
+			assertEquals(Incident.HOLD_AWAITING_CHANGE, in.getStatusDetails());
+			assertEquals(Incident.ON_HOLD_NAME, in.getState());
+			assertEquals("James", in.getOwner());
+		} catch (UnsupportedOperationException e) {
+			fail(e.getMessage());
+		}
+
 	}
 
 	/**
@@ -332,7 +376,7 @@ public class IncidentTest {
 		command = new Command(CommandValue.ASSIGN, "James", "IN progress; have been assign an owner");
 		in.update(command);
 		assertEquals("In Progress", in.getState());
-		assertEquals("James", in.getOwner()); 
+		assertEquals("James", in.getOwner());
 		assertEquals(CALLER, in.getCaller());
 		assertEquals(2, in.getId());
 		assertEquals("- Set up piazza for spring 2021\n- IN progress; have been assign an owner\n",
@@ -410,9 +454,9 @@ public class IncidentTest {
 		assertEquals(4, in.getId());
 		assertEquals(
 				"- Set up piazza for spring 2021\n- needs imidiate attention\n- Notice: imidiate attention\n- needs imidiate attention\n- Needs to be in progress\n"
-				+ "- Needs to be in progress\n",
+						+ "- Needs to be in progress\n",
 				in.getIncidentLogMessages());
-		
+
 		command = null;
 		command = new Command(CommandValue.REOPEN, null, "case reopened");
 		in.update(command);
@@ -424,9 +468,9 @@ public class IncidentTest {
 		assertEquals(4, in.getId());
 		assertEquals(
 				"- Set up piazza for spring 2021\n- needs imidiate attention\n- Notice: imidiate attention\n- needs imidiate attention\n- Needs to be in progress\n"
-				+ "- Needs to be in progress\n- case reopened\n",
+						+ "- Needs to be in progress\n- case reopened\n",
 				in.getIncidentLogMessages());
-		
+
 		command = null;
 		command = new Command(CommandValue.CANCEL, "Duplicate", "Duplicate case");
 		in.update(command);
@@ -438,10 +482,10 @@ public class IncidentTest {
 		assertEquals(4, in.getId());
 		assertEquals(
 				"- Set up piazza for spring 2021\n- needs imidiate attention\n- Notice: imidiate attention\n- needs imidiate attention\n- Needs to be in progress\n"
-				+ "- Needs to be in progress\n- case reopened\n- Duplicate case\n",
+						+ "- Needs to be in progress\n- case reopened\n- Duplicate case\n",
 				in.getIncidentLogMessages());
-		
-		// testing from resolve to Cancel 
+
+		// testing from resolve to Cancel
 		in = null;
 		command = null;
 		in = new Incident(TITLE, CALLER, "Set up piazza for spring 2021");
@@ -454,14 +498,14 @@ public class IncidentTest {
 		command = new Command(CommandValue.CANCEL, "Not an Incident", "It is not an incident");
 		in.update(command);
 		assertEquals(Incident.CANCELED_NAME, in.getState());
-		assertEquals("Unowned", in.getOwner()); 
+		assertEquals("Unowned", in.getOwner());
 		assertEquals(CALLER, in.getCaller());
 		assertEquals(5, in.getId());
 		assertEquals("Not an Incident", in.getStatusDetails());
-		assertEquals("- Set up piazza for spring 2021\n- IN progress; have been assign an owner\n- Waiting for a work around\n- It is not an incident\n",
+		assertEquals(
+				"- Set up piazza for spring 2021\n- IN progress; have been assign an owner\n- Waiting for a work around\n- It is not an incident\n",
 				in.getIncidentLogMessages());
-		
-		
+
 	}
 
 }

@@ -37,9 +37,9 @@ public class ServiceGroupsReader {
 				str += fileReader.nextLine() + "\n";
 			}
 
-//			if (str.charAt(0) != '#') {
-//		 		throw new IllegalArgumentException("Unable to load file.");
-//			}
+			if (str.charAt(0) != '#') {
+				throw new IllegalArgumentException("Unable to load file.");
+			}
 			Scanner scan = new Scanner(str);
 			scan.useDelimiter("\\r?\\n?[#]");
 
@@ -48,15 +48,16 @@ public class ServiceGroupsReader {
 				ServiceGroup sg1 = processServiceGroup(service);
 
 				serviceg.add(sg1);
-
+ 
 			}
-			scan.close();
-			return serviceg;
+			scan.close(); 
+			
 		} catch (FileNotFoundException e) {
 			throw new IllegalArgumentException("Unable to load file.");
 		} catch (NoSuchElementException e) {
-			throw new IllegalArgumentException("Unable to load file.");
+			throw new IllegalArgumentException(e.getMessage());
 		}
+		return serviceg;
 		
 	}
 
