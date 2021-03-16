@@ -115,7 +115,7 @@ public class ServiceGroup {
 
 	/**
 	 * a method that returns incdeints
-	 * 
+	 *  
 	 * @return an arraylist of incidents
 	 */
 	public ArrayList<Incident> getIncidents() {
@@ -154,7 +154,8 @@ public class ServiceGroup {
 				}
 			}
 		} catch (UnsupportedOperationException e) {
-			//
+			throw new UnsupportedOperationException();
+			
 		}
 	}
 

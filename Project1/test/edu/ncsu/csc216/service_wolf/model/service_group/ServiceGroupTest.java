@@ -152,7 +152,7 @@ public class ServiceGroupTest {
 
 		Incident u = new Incident("title", "James", "Set up piazza for spring 2021");
 		assertEquals(5, u.getId());
-		assertEquals("title", u.getTitle()); 
+		assertEquals("title", u.getTitle());
 		assertEquals("New", u.getState());
 		assertEquals(Incident.NO_STATUS, u.getStatusDetails());
 		assertEquals("- Set up piazza for spring 2021\n", u.getIncidentLogMessages());
@@ -222,34 +222,11 @@ public class ServiceGroupTest {
 	}
 
 	/**
-	 * Test method for executeCommand
-	 */
-	@Test
-	public void testExecuteCommand1() {
-		serviceGroup = null;
-		ArrayList<ServiceGroup> s = new ArrayList<ServiceGroup>();
-		s = ServiceGroupsReader.readServiceGroupsFile("test-files/incidents1.txt");
-		assertEquals("ITECS", s.get(1).getServiceGroupName());
-
-		Command commad1 = new Command(CommandValue.INVESTIGATE, null, "message1");
-		serviceGroup = s.get(1);
-		System.out.println("printintg incidnet string" + serviceGroup.getIncidents().get(0).toString());
-		System.out.println("printintg incidnet string      " + serviceGroup.getIncidents().get(0).getStatusDetails());
-		System.out.println("printintg incidnet string      " + serviceGroup.getIncidents().get(0).getState());
-		serviceGroup.executeCommand(7, commad1);
-		System.out.println("printintg incidnet string" + serviceGroup.getIncidents().get(0).toString());
-		System.out.println("printintg incidnet string      " + serviceGroup.getIncidents().get(0).getStatusDetails());
- 
-		assertEquals("No status", serviceGroup.getIncidentById(1).getStatusDetails());
-
-	}
-
-	/**
 	 * Test method for deletIncidentById
 	 */
 	@Test
 	public void testDeleteIncidentById() {
-		serviceGroup = null; 
+		serviceGroup = null;
 		serviceGroup = new ServiceGroup("CSC IT");
 		assertEquals(0, serviceGroup.getIncidents().size());
 		serviceGroup.addIncident(in1);
