@@ -86,12 +86,12 @@ public class ServiceWolfManager {
 		serviceGroups = ServiceGroupsReader.readServiceGroupsFile(fileName);
 		currentServiceGroup = serviceGroups.get(0);
 
-//		Collections.sort(serviceGroups, new Comparator<ServiceGroup>() {
-//			@Override
-//			public int compare(ServiceGroup sg1, ServiceGroup s2) {
-//				return sg1.getServiceGroupName().compareToIgnoreCase(s2.getServiceGroupName());
-//			}
-//		}); 
+		Collections.sort(serviceGroups, new Comparator<ServiceGroup>() {
+			@Override
+			public int compare(ServiceGroup sg1, ServiceGroup s2) {
+				return sg1.getServiceGroupName().compareToIgnoreCase(s2.getServiceGroupName());
+			}
+		}); 
 	}
 
 	/**
@@ -250,12 +250,12 @@ public class ServiceWolfManager {
 		ServiceGroup addService = new ServiceGroup(serviceGroupName);
 		serviceGroups.add(addService);
 
-		Collections.sort(serviceGroups, new Comparator<ServiceGroup>() {
-			@Override
-			public int compare(ServiceGroup sg1, ServiceGroup s2) {
-				return sg1.getServiceGroupName().compareToIgnoreCase(s2.getServiceGroupName());
-			}
-		});
+//		Collections.sort(serviceGroups, new Comparator<ServiceGroup>() {
+//			@Override
+//			public int compare(ServiceGroup sg1, ServiceGroup s2) {
+//				return sg1.getServiceGroupName().compareToIgnoreCase(s2.getServiceGroupName());
+//			}
+//		});
 	}
 
 	/**
