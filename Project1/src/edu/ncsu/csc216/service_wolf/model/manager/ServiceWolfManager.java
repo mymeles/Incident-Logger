@@ -171,16 +171,13 @@ public class ServiceWolfManager {
 		// we are adding the given service group to the current service group
 
 		for (int i = 0; i < serviceGroups.size(); i++) {
-			if (currentServiceGroup.getServiceGroupName().equals(serviceGroups.get(i).getServiceGroupName())) {
+			if (serviceGroups.get(i).getServiceGroupName().equals(serviceGroupName) ) {
+				System.out.println(serviceGroups.get(i).getServiceGroupName());
 				currentServiceGroup = serviceGroups.get(i);
-				currentServiceGroup.setIncidentCounter();
-				break;
-			} else {
-				throw new IllegalArgumentException();
- 
-			}
+				currentServiceGroup.setIncidentCounter(); 
+			} 
 		}
-	} 
+	}
 
 	/**
 	 * retrives the service group name of the current service group
@@ -225,9 +222,24 @@ public class ServiceWolfManager {
 		if (updateName == null || "".equals(updateName) || checkDuplicateServiceName(updateName)) {
 			throw new IllegalArgumentException("Invalid service group name.");
 		}
-		currentServiceGroup.setServiceGroupName(updateName);
+
+		ServiceGroup temp = currentServiceGroup;
+		System.out.println(currentServiceGroup.getServiceGroupName());
+		temp.setServiceGroupName(updateName); 
+		serviceGroups.add(temp);
+		System.out.println(serviceGroups.size());
 		loadServiceGroup(updateName);
-		Collections.sort(serviceGroups, new Comparator<ServiceGroup>() { 
+		serviceGroups.add(temp);
+		for (int i = 0; i < serviceGroups.size(); i++) {
+			if (currentServiceGroup.getServiceGroupName().equals(serviceGroups.get(i).getServiceGroupName())) {
+					serviceGroups.remove(i);
+					
+
+				
+			}
+		}
+
+		Collections.sort(serviceGroups, new Comparator<ServiceGroup>() {
 
 			@Override
 			public int compare(ServiceGroup sg1, ServiceGroup s2) {

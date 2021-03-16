@@ -128,8 +128,7 @@ public class ServiceWolfManagerTest {
 	 */
 	@Test
 	public void testDeleteIncidentById() {
-		manager.loadFromFile("test-files/incidents1.txt");
-		manager.loadServiceGroup("CSC IT");
+		manager.loadFromFile("test-files/incidents1.txt"); 
 		assertEquals(4, manager.getIncidentsAsArray().length);
 
 		manager.deleteIncidentById(2);
@@ -199,7 +198,7 @@ public class ServiceWolfManagerTest {
 		manager.loadFromFile("test-files/incidents3.txt");
 		assertEquals(3, manager.getServiceGroupList().length);
 		manager.clearServiceGroups();
-		assertEquals(0, manager.getServiceGroupList().length);
+		assertNull(null, manager.getServiceGroupName());
 	}
 
 	/**
@@ -208,13 +207,16 @@ public class ServiceWolfManagerTest {
 	@Test
 	public void testEditServiceGroup() {
 		manager.loadFromFile("test-files/incidents3.txt");
-		assertEquals("OIT", manager.getServiceGroupName());
+		assertEquals("OIT", manager.getServiceGroupName()); 
 		assertEquals(3, manager.getServiceGroupList().length);
 		manager.editServiceGroup("NCSU IT");
+		for(int i = 0; i < manager.getServiceGroupList().length; i++) {
+		System.out.println("testing name :" + manager.getServiceGroupList()[i]);
+		}
 		assertEquals("NCSU IT", manager.getServiceGroupName());
 		assertEquals(3, manager.getServiceGroupList().length);
 
-		// invalid name null
+		// invalid name null 
 		try {
 			manager.editServiceGroup(null);
 			fail();
