@@ -105,7 +105,7 @@ public class ServiceGroupsReaderTest {
 			fail();
 		} catch (IllegalArgumentException e) {
 			assertNull(null, sg);
-			assertEquals("Unable to load file.", e.getMessage());
+			assertEquals("Unable to load file.", e.getMessage()); 
 		}
 
 		// testing with negative reopen count

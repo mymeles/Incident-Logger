@@ -227,10 +227,9 @@ public class Incident {
 		setReopenCount(reopenCount);
 		setOwner(owner);
 		setStatusDetails(statusDetails);
-		this.incidentLog = incidentLog;
-		if (incidentLog.size() == 0) {
+		if (incidentLog.size() == 0)
 			throw new IllegalArgumentException("Incident cannot br created.");
-		}
+		this.incidentLog = incidentLog;
 		setState(state);
 	}
 
