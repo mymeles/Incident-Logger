@@ -604,6 +604,7 @@ public class Incident {
 		public void updateState(Command command) {
 			switch (command.getCommand()) {
 			case ASSIGN:
+				setOwner(command.getCommandInformation());
 				setStatusDetails(command.getCommandInformation());
 				currentState = inProgressState;
 				break;
@@ -755,7 +756,7 @@ public class Incident {
 		 */
 		public void updateState(Command command) {
 			switch(command.getCommand()) {
-			case ASSIGN:
+			case ASSIGN: 
 			case CANCEL:
 			case REOPEN:
 			case INVESTIGATE:
