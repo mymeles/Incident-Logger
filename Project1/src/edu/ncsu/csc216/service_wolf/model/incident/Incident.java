@@ -297,7 +297,7 @@ public class Incident {
 		case ON_HOLD_NAME:
 			createState(!owner.equals(UNOWNED) && (statusDetails.equals(HOLD_AWAITING_CALLER)
 					|| statusDetails.equals(HOLD_AWAITING_CHANGE) || statusDetails.equals(HOLD_AWAITING_VENDOR)),
-					onHoldState); 
+					onHoldState);
 			break;
 		case RESOLVED_NAME: 
 			createState(!(owner).equals(UNOWNED) && ((statusDetails).equals(RESOLUTION_PERMANENTLY_SOLVED)
@@ -306,10 +306,10 @@ public class Incident {
 			break;
 		case CANCELED_NAME:
 			createState(owner.equals(UNOWNED) 
-					&& (statusDetails.equals(CANCELLATION_DUPLICATE) || statusDetails.equals(CANCELLATION_UNNECESSARY)
-							|| statusDetails.equals(CANCELLATION_NOT_AN_INCIDENT)),
-					canceledState);
-			break;
+					&& statusDetails.equals(CANCELLATION_DUPLICATE) || statusDetails.equals(CANCELLATION_UNNECESSARY)
+							|| statusDetails.equals(CANCELLATION_NOT_AN_INCIDENT),
+					canceledState); 
+			break; 
 		default:
 			throw new IllegalArgumentException("Incident cannot be created.");
 		}

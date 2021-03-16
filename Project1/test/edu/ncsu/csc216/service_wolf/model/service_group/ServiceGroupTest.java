@@ -239,7 +239,7 @@ public class ServiceGroupTest {
 		serviceGroup.executeCommand(7, commad1);
 		System.out.println("printintg incidnet string" + serviceGroup.getIncidents().get(0).toString());
 		System.out.println("printintg incidnet string      " + serviceGroup.getIncidents().get(0).getStatusDetails());
-
+ 
 		assertEquals("No status", serviceGroup.getIncidentById(1).getStatusDetails());
 
 	}
