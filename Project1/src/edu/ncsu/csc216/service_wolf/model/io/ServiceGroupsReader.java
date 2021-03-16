@@ -37,9 +37,9 @@ public class ServiceGroupsReader {
 				str += fileReader.nextLine() + "\n";
 			}
 
-			if (str.charAt(0) != '#') {
-				throw new IllegalArgumentException("Unable to load file.");
-			}
+//			if (str.charAt(0) != '#') {
+//		 		throw new IllegalArgumentException("Unable to load file.");
+//			}
 			Scanner scan = new Scanner(str);
 			scan.useDelimiter("\\r?\\n?[#]");
 
