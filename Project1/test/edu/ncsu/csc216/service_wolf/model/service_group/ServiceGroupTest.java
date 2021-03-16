@@ -13,6 +13,7 @@ import org.junit.Test;
 import edu.ncsu.csc216.service_wolf.model.command.Command;
 import edu.ncsu.csc216.service_wolf.model.command.Command.CommandValue;
 import edu.ncsu.csc216.service_wolf.model.incident.Incident;
+import edu.ncsu.csc216.service_wolf.model.io.ServiceGroupsReader;
 
 /**
  * A test class for SeriviceGroup
@@ -53,7 +54,7 @@ public class ServiceGroupTest {
 	 */
 	private Incident in = new Incident(2, "Canceled", "Piazza", "sesmith5", 0, "Unowned", "Not an Incident", MESSAGES1);
 
-	/** 
+	/**
 	 * ArrayList Message for incident
 	 */
 	private static final ArrayList<String> MESSAGES2 = new ArrayList<String>() {
@@ -151,13 +152,13 @@ public class ServiceGroupTest {
 
 		Incident u = new Incident("title", "James", "Set up piazza for spring 2021");
 		assertEquals(5, u.getId());
-		assertEquals("title", u.getTitle());
+		assertEquals("title", u.getTitle()); 
 		assertEquals("New", u.getState());
 		assertEquals(Incident.NO_STATUS, u.getStatusDetails());
 		assertEquals("- Set up piazza for spring 2021\n", u.getIncidentLogMessages());
 		assertEquals("James", u.getCaller());
 	}
- 
+
 	/**
 	 * Test method for addIncident
 	 */
@@ -216,10 +217,35 @@ public class ServiceGroupTest {
 		serviceGroup.executeCommand(3, commad);
 		assertEquals("Canceled", serviceGroup.getIncidentById(3).getState());
 		assertEquals("Unowned", serviceGroup.getIncidentById(3).getOwner());
+
+		ServiceGroupsReader.readServiceGroupsFile("test-files/incidnets1.txt");
 	}
 
 	/**
-	 * Test method for deletIncidentById 
+	 * Test method for executeCommand
+	 */
+	@Test
+	public void testExecuteCommand1() {
+		serviceGroup = null;
+		ArrayList<ServiceGroup> s = new ArrayList<ServiceGroup>();
+		s = ServiceGroupsReader.readServiceGroupsFile("test-files/incidents1.txt");
+		assertEquals("ITECS", s.get(1).getServiceGroupName());
+
+		Command commad1 = new Command(CommandValue.INVESTIGATE, null, "message1");
+		serviceGroup = s.get(1);
+		System.out.println("printintg incidnet string" + serviceGroup.getIncidents().get(0).toString());
+		System.out.println("printintg incidnet string      " + serviceGroup.getIncidents().get(0).getStatusDetails());
+		System.out.println("printintg incidnet string      " + serviceGroup.getIncidents().get(0).getState());
+		serviceGroup.executeCommand(7, commad1);
+		System.out.println("printintg incidnet string" + serviceGroup.getIncidents().get(0).toString());
+		System.out.println("printintg incidnet string      " + serviceGroup.getIncidents().get(0).getStatusDetails());
+
+		assertEquals("No status", serviceGroup.getIncidentById(1).getStatusDetails());
+
+	}
+
+	/**
+	 * Test method for deletIncidentById
 	 */
 	@Test
 	public void testDeleteIncidentById() {

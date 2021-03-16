@@ -543,7 +543,7 @@ public class IncidentTest {
 		in.update(command);
 		assertEquals(Incident.CANCELED_NAME, in.getState());
 		assertEquals("Unowned", in.getOwner());
-		assertEquals(CALLER, in.getCaller());
+		assertEquals(CALLER, in.getCaller()); 
 		assertEquals(5, in.getId());
 		assertEquals("Not an Incident", in.getStatusDetails());
 		assertEquals(

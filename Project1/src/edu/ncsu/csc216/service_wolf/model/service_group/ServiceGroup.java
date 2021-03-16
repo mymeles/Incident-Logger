@@ -150,11 +150,11 @@ public class ServiceGroup {
 		try {
 			for (int i = 0; i < incident.size(); i++) {
 				if (incident.get(i).getId() == id) {
-					incident.get(i).update(command);
+					incident.get(i).update(command); 
 				}
 			}
 		} catch (UnsupportedOperationException e) {
-			e.printStackTrace();
+			//
 		}
 	}
 

@@ -36,8 +36,8 @@ public class ServiceGroupsReader {
 			while (fileReader.hasNext()) {
 				str += fileReader.nextLine() + "\n";
 			}
-		} catch (FileNotFoundException e) {
-			e.printStackTrace();
+		} catch (FileNotFoundException e) { 
+			//e.printStackTrace();
 		}
 
 		Scanner scan = new Scanner(str);
