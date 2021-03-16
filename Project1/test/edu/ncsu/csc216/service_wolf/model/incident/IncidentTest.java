@@ -373,7 +373,31 @@ public class IncidentTest {
 		} catch (UnsupportedOperationException e) {
 			fail(e.getMessage()); 
 		}
+		
+		in = null;
+		command = null;
+		in = new Incident(TITLE, CALLER, "Set up piazza for spring 2021");
+		assertEquals("New", in.getState());
+		try {
+			command = new Command(CommandValue.ASSIGN, "James", "Message1");
+			in.update(command);
+			assertEquals("James", in.getOwner());
+			assertEquals("In Progress", in.getState());
+		} catch (UnsupportedOperationException e) {
+			fail(e.getMessage());
+		}
+		
+		try {
+			command = new Command(CommandValue.HOLD, Incident.HOLD_AWAITING_VENDOR, "Message2");
+			in.update(command);
+			assertEquals(Incident.HOLD_AWAITING_VENDOR, in.getStatusDetails());
+			assertEquals(Incident.ON_HOLD_NAME, in.getState());
+			assertEquals("James", in.getOwner());
+		} catch (UnsupportedOperationException e) {
+			fail(e.getMessage()); 
+		}
 	}
+	
 
 	/**
 	 * A test Method for update
@@ -486,7 +510,7 @@ public class IncidentTest {
 		assertEquals(Incident.IN_PROGRESS_NAME, in.getState());
 		assertEquals(Incident.NO_STATUS, in.getStatusDetails());
 		assertEquals(1, in.getReopenCount());
-		assertEquals("James", in.getOwner());
+		assertEquals("James", in.getOwner());  
 		assertEquals(CALLER, in.getCaller());
 		assertEquals(4, in.getId());
 		assertEquals(
@@ -512,7 +536,7 @@ public class IncidentTest {
 		in = null;
 		command = null;
 		in = new Incident(TITLE, CALLER, "Set up piazza for spring 2021");
-		command = new Command(CommandValue.ASSIGN, "James", "IN progress; have been assign an owner");
+		command = new Command(CommandValue.ASSIGN, "James", "IN progress; have been assign an owner"); 
 		in.update(command);
 		command = null;
 		command = new Command(CommandValue.RESOLVE, "Workaround", "Waiting for a work around");
