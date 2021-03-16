@@ -650,7 +650,7 @@ public class Incident {
 		 * Constructs OnHold State so it is implemneted in Incident interface
 		 */
 		private OnHoldState() {
-
+			
 		}
 
 		/**

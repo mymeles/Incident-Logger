@@ -69,9 +69,7 @@ public class ServiceWolfManager {
 	 * @param fileName a location where the file is saved
 	 */
 	public void saveToFile(String fileName) {
-		if (currentServiceGroup == null) {
-			throw new IllegalArgumentException("Unable to save file.");
-		}
+		
 		ServiceGroupWriter.writeServiceGroupsToFile(fileName, serviceGroups);
 	}
 
