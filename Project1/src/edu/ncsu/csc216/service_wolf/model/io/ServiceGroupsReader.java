@@ -40,15 +40,14 @@ public class ServiceGroupsReader {
 			}
 
 			if (str.trim().charAt(0) != '#') {
-				throw new FileNotFoundException(); 
+				return serviceg; 
 			}
 		} catch (FileNotFoundException e) { 
 			throw new IllegalArgumentException("Unable to load file."); 
-
 		}
 
 		Scanner scan = new Scanner(str);
-		scan.useDelimiter("\\r?\\n?[#]");
+		scan.useDelimiter("\\r?\\n?[#]"); 
 
 		while (scan.hasNext()) {
 			try {

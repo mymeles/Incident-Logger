@@ -294,12 +294,9 @@ public class Incident {
 	 * 
 	 * @param state the incident state to set
 	 */
-	private void setState(String state) {
+	private void setState(String state) { 
 		if (state == null || "".equals(state))
 			throw new IllegalArgumentException("Incident cannot be created.");
-
-		boolean cstate = (statusDetails.equals(CANCELLATION_DUPLICATE) || statusDetails.equals(CANCELLATION_UNNECESSARY)
-				|| statusDetails.equals(CANCELLATION_NOT_AN_INCIDENT));
 
 		switch (state) {
 		case NEW_NAME:
@@ -314,13 +311,13 @@ public class Incident {
 					onHoldState);
 			break;
 		case RESOLVED_NAME:
-
 			createState(!owner.equals(UNOWNED) && (statusDetails.equals(RESOLUTION_PERMANENTLY_SOLVED)
 					|| statusDetails.equals(RESOLUTION_WORKAROUND) || statusDetails.equals(RESOLUTION_CALLER_CLOSED)),
 					resolvedState);
 			break;
 		case CANCELED_NAME:
-			createState(owner.equals(UNOWNED) && cstate, canceledState);
+			createState(owner.equals(UNOWNED) && (statusDetails.equals(CANCELLATION_DUPLICATE) || statusDetails.equals(CANCELLATION_UNNECESSARY)
+					|| statusDetails.equals(CANCELLATION_NOT_AN_INCIDENT) || statusDetails.equals(CANCELLATION_CALLER_CANCELLED)), canceledState);
 			break;
 		default:
 			throw new IllegalArgumentException("Incident cannot be created.");

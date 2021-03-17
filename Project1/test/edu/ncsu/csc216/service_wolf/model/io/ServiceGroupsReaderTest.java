@@ -46,20 +46,15 @@ public class ServiceGroupsReaderTest {
 
 		sg = null;
 
-		try {
-			sg = ServiceGroupsReader.readServiceGroupsFile("test-files/incidents4.txt");
-			fail();
-		} catch (IllegalArgumentException e) {
-			assertNull(null, sg);
-			assertEquals("Unable to load file.", e.getMessage());
-		}
+		sg = ServiceGroupsReader.readServiceGroupsFile("test-files/incidents4.txt");
+		assertEquals(0, sg.size());
 
 		// testing a file with missing id
 		try {
 			sg = ServiceGroupsReader.readServiceGroupsFile("test-files/incidents5.txt");
 			fail();
 		} catch (IllegalArgumentException e) {
-			assertNull(null, sg);
+			assertEquals(0, sg.size());
 			assertEquals("Unable to load file.", e.getMessage());
 		}
 
@@ -68,7 +63,7 @@ public class ServiceGroupsReaderTest {
 			sg = ServiceGroupsReader.readServiceGroupsFile("test-files/incidents6.txt");
 			fail();
 		} catch (IllegalArgumentException e) {
-			assertNull(null, sg);
+			assertEquals(0, sg.size());
 			assertEquals("Unable to load file.", e.getMessage());
 		}
 
@@ -77,7 +72,7 @@ public class ServiceGroupsReaderTest {
 			sg = ServiceGroupsReader.readServiceGroupsFile("test-files/incidents7.txt");
 			fail();
 		} catch (IllegalArgumentException e) {
-			assertNull(null, sg);
+			assertEquals(0, sg.size());
 			assertEquals("Unable to load file.", e.getMessage());
 		}
 
@@ -86,7 +81,7 @@ public class ServiceGroupsReaderTest {
 			sg = ServiceGroupsReader.readServiceGroupsFile("test-files/incidents8.txt");
 			fail();
 		} catch (IllegalArgumentException e) {
-			assertNull(null, sg);
+			assertEquals(0, sg.size());
 			assertEquals("Unable to load file.", e.getMessage());
 		}
 
@@ -95,7 +90,7 @@ public class ServiceGroupsReaderTest {
 			sg = ServiceGroupsReader.readServiceGroupsFile("test-files/incidents9.txt");
 			fail();
 		} catch (IllegalArgumentException e) {
-			assertNull(null, sg);
+			assertEquals(0, sg.size());
 			assertEquals("Unable to load file.", e.getMessage());
 		}
 
@@ -104,8 +99,8 @@ public class ServiceGroupsReaderTest {
 			sg = ServiceGroupsReader.readServiceGroupsFile("test-files/incidents10.txt");
 			fail();
 		} catch (IllegalArgumentException e) {
-			assertNull(null, sg);
-			assertEquals("Unable to load file.", e.getMessage()); 
+			assertEquals(0, sg.size());
+			assertEquals("Unable to load file.", e.getMessage());
 		}
 
 		// testing with negative reopen count
@@ -113,7 +108,7 @@ public class ServiceGroupsReaderTest {
 			sg = ServiceGroupsReader.readServiceGroupsFile("test-files/incidents11.txt");
 			fail();
 		} catch (IllegalArgumentException e) {
-			assertNull(null, sg);
+			assertEquals(0, sg.size());
 			assertEquals("Unable to load file.", e.getMessage());
 		}
 
@@ -122,7 +117,7 @@ public class ServiceGroupsReaderTest {
 			sg = ServiceGroupsReader.readServiceGroupsFile("test-files/incidents12.txt");
 			fail();
 		} catch (IllegalArgumentException e) {
-			assertNull(null, sg);
+			assertEquals(0, sg.size());
 			assertEquals("Unable to load file.", e.getMessage());
 		}
 
@@ -131,7 +126,7 @@ public class ServiceGroupsReaderTest {
 			sg = ServiceGroupsReader.readServiceGroupsFile("test-files/incidents13.txt");
 			fail();
 		} catch (IllegalArgumentException e) {
-			assertNull(null, sg);
+			assertEquals(0, sg.size());
 			assertEquals("Unable to load file.", e.getMessage());
 		}
 
@@ -140,7 +135,7 @@ public class ServiceGroupsReaderTest {
 			sg = ServiceGroupsReader.readServiceGroupsFile("test-files/incidents14.txt");
 			fail();
 		} catch (IllegalArgumentException e) {
-			assertNull(null, sg);
+			assertEquals(0, sg.size());
 			assertEquals("Unable to load file.", e.getMessage());
 		}
 
@@ -149,7 +144,7 @@ public class ServiceGroupsReaderTest {
 			sg = ServiceGroupsReader.readServiceGroupsFile("test-files/incidents15.txt");
 			fail();
 		} catch (IllegalArgumentException e) {
-			assertNull(null, sg);
+			assertEquals(0, sg.size());
 			assertEquals("Unable to load file.", e.getMessage());
 		}
 
@@ -158,7 +153,7 @@ public class ServiceGroupsReaderTest {
 			sg = ServiceGroupsReader.readServiceGroupsFile("test-files/incidents16.txt");
 			fail();
 		} catch (IllegalArgumentException e) {
-			assertNull(null, sg);
+			assertEquals(0, sg.size());
 			assertEquals("Unable to load file.", e.getMessage());
 		}
 
@@ -167,7 +162,7 @@ public class ServiceGroupsReaderTest {
 			sg = ServiceGroupsReader.readServiceGroupsFile("test-files/incidents17.txt");
 			fail();
 		} catch (IllegalArgumentException e) {
-			assertNull(null, sg);
+			assertEquals(0, sg.size());
 			assertEquals("Unable to load file.", e.getMessage());
 		}
 
@@ -176,7 +171,7 @@ public class ServiceGroupsReaderTest {
 			sg = ServiceGroupsReader.readServiceGroupsFile("test-files/incidents18.txt");
 			fail();
 		} catch (IllegalArgumentException e) {
-			assertNull(null, sg);
+			assertEquals(0, sg.size());
 			assertEquals("Unable to load file.", e.getMessage());
 		}
 
@@ -185,7 +180,7 @@ public class ServiceGroupsReaderTest {
 			sg = ServiceGroupsReader.readServiceGroupsFile("test-files/incidents19.txt");
 			fail();
 		} catch (IllegalArgumentException e) {
-			assertNull(null, sg);
+			assertEquals(0, sg.size());
 			assertEquals("Unable to load file.", e.getMessage());
 		}
 
@@ -194,7 +189,7 @@ public class ServiceGroupsReaderTest {
 			sg = ServiceGroupsReader.readServiceGroupsFile("test-files/incidents20.txt");
 			fail();
 		} catch (IllegalArgumentException e) {
-			assertNull(null, sg);
+			assertEquals(0, sg.size());
 			assertEquals("Unable to load file.", e.getMessage());
 		}
 
@@ -203,7 +198,7 @@ public class ServiceGroupsReaderTest {
 			sg = ServiceGroupsReader.readServiceGroupsFile("test-files/incidents21.txt");
 			fail();
 		} catch (IllegalArgumentException e) {
-			assertNull(null, sg);
+			assertEquals(0, sg.size());
 			assertEquals("Unable to load file.", e.getMessage());
 		}
 
@@ -212,7 +207,7 @@ public class ServiceGroupsReaderTest {
 			sg = ServiceGroupsReader.readServiceGroupsFile("test-files/incidents22.txt");
 			fail();
 		} catch (IllegalArgumentException e) {
-			assertNull(null, sg);
+			assertEquals(0, sg.size());
 			assertEquals("Unable to load file.", e.getMessage());
 		}
 
@@ -221,7 +216,7 @@ public class ServiceGroupsReaderTest {
 			sg = ServiceGroupsReader.readServiceGroupsFile("test-files/incidents23.txt");
 			fail();
 		} catch (IllegalArgumentException e) {
-			assertNull(null, sg);
+			assertEquals(0, sg.size());
 			assertEquals("Unable to load file.", e.getMessage());
 		}
 
@@ -230,7 +225,7 @@ public class ServiceGroupsReaderTest {
 			sg = ServiceGroupsReader.readServiceGroupsFile("test-files/incidents24.txt");
 			fail();
 		} catch (IllegalArgumentException e) {
-			assertNull(null, sg);
+			assertEquals(0, sg.size());
 			assertEquals("Unable to load file.", e.getMessage());
 		}
 
@@ -239,7 +234,7 @@ public class ServiceGroupsReaderTest {
 			sg = ServiceGroupsReader.readServiceGroupsFile("test-files/incidents25.txt");
 			fail();
 		} catch (IllegalArgumentException e) {
-			assertNull(null, sg);
+			assertEquals(0, sg.size());
 			assertEquals("Unable to load file.", e.getMessage());
 		}
 
@@ -248,7 +243,7 @@ public class ServiceGroupsReaderTest {
 			sg = ServiceGroupsReader.readServiceGroupsFile("test-files/incidents26.txt");
 			fail();
 		} catch (IllegalArgumentException e) {
-			assertNull(null, sg);
+			assertEquals(0, sg.size());
 			assertEquals("Unable to load file.", e.getMessage());
 		}
 
@@ -257,7 +252,7 @@ public class ServiceGroupsReaderTest {
 			sg = ServiceGroupsReader.readServiceGroupsFile("test-files/incidents27.txt");
 			fail();
 		} catch (IllegalArgumentException e) {
-			assertNull(null, sg);
+			assertEquals(0, sg.size());
 			assertEquals("Unable to load file.", e.getMessage());
 		}
 
