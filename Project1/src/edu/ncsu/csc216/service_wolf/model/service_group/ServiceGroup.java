@@ -97,7 +97,7 @@ public class ServiceGroup {
 		if (incident.size() < 0 || helper(incidents))
 			throw new IllegalArgumentException("Incident cannot be created.");
 		// add it at thge correct place
-		incident.add(incidents); // sort it
+		incident.add(incidents); // sort it 
 		setIncidentCounter(); 
 
 //		// compring true and false staments to determine adding incidnet

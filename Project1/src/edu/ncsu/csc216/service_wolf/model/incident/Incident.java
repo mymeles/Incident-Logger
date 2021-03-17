@@ -242,7 +242,7 @@ public class Incident {
 	/**
 	 * Retrives the unique vallue of incident id
 	 * 
-	 * @return an integer of Id 
+	 * @return an integer of Id
 	 */
 	public int getId() {
 		return incidentid;
@@ -283,8 +283,9 @@ public class Incident {
 		if (condition) {
 			this.currentState = state;
 			return;
+		} else {
+			throw new IllegalArgumentException("Incident cannot be created.");
 		}
-		throw new IllegalArgumentException("Incident cannot be created.");
 
 	}
 
@@ -297,8 +298,8 @@ public class Incident {
 		if (state == null || "".equals(state))
 			throw new IllegalArgumentException("Incident cannot be created.");
 
-		boolean cstate = statusDetails.equals(CANCELLATION_DUPLICATE) || statusDetails.equals(CANCELLATION_UNNECESSARY)
-				|| statusDetails.equals(CANCELLATION_NOT_AN_INCIDENT);
+		boolean cstate = (statusDetails.equals(CANCELLATION_DUPLICATE) || statusDetails.equals(CANCELLATION_UNNECESSARY)
+				|| statusDetails.equals(CANCELLATION_NOT_AN_INCIDENT));
 
 		switch (state) {
 		case NEW_NAME:
@@ -314,11 +315,10 @@ public class Incident {
 			break;
 		case RESOLVED_NAME:
 
-		 createState(!owner.equals(UNOWNED) &&
-		 (statusDetails.equals(RESOLUTION_PERMANENTLY_SOLVED)
+			createState(!owner.equals(UNOWNED) && (statusDetails.equals(RESOLUTION_PERMANENTLY_SOLVED)
 					|| statusDetails.equals(RESOLUTION_WORKAROUND) || statusDetails.equals(RESOLUTION_CALLER_CLOSED)),
 					resolvedState);
-		 break;
+			break;
 		case CANCELED_NAME:
 			createState(owner.equals(UNOWNED) && cstate, canceledState);
 			break;
