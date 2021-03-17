@@ -227,7 +227,7 @@ public class Incident {
 		setReopenCount(reopenCount);
 		setOwner(owner);
 		setStatusDetails(statusDetails);
-		if (incidentLog.size() == 0)
+		if (incidentLog.size() < 1 || incidentLog == null )
 			throw new IllegalArgumentException("Incident cannot br created.");
 		this.incidentLog = incidentLog;
 		setState(state);
@@ -758,7 +758,7 @@ public class Incident {
 		public void updateState(Command command) {
 			switch (command.getCommand()) {
 			case ASSIGN:
-			case CANCEL:
+			case CANCEL: 
 			case REOPEN:
 			case INVESTIGATE:
 			case HOLD:

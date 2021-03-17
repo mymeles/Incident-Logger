@@ -40,7 +40,7 @@ public class ServiceGroupsReader {
 			}
 
 			if (str.trim().charAt(0) != '#') {
-				throw new IllegalArgumentException("Unable to load file.");
+				throw new IllegalArgumentException("Unable to load file."); 
 			}
 		} catch (FileNotFoundException e) {
 			throw new IllegalArgumentException("Unable to load file.");

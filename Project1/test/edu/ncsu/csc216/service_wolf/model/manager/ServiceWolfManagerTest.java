@@ -14,6 +14,8 @@ import java.util.Properties;
 import org.junit.Before;
 import org.junit.Test;
 
+import edu.ncsu.csc216.service_wolf.model.command.Command;
+import edu.ncsu.csc216.service_wolf.model.command.Command.CommandValue;
 import edu.ncsu.csc216.service_wolf.model.incident.Incident;
 import edu.ncsu.csc216.service_wolf.model.service_group.ServiceGroup;
 
@@ -50,7 +52,7 @@ public class ServiceWolfManagerTest {
 	public void testSaveToFile() {
 		manager.addServiceGroup("one");
 		assertEquals(1, manager.getServiceGroupList().length);
-		
+
 		// adding incidnet one
 		manager.addIncidentToServiceGroup("title1", "caller1", "message1");
 		assertEquals("1", manager.getIncidentsAsArray()[0][0]);
@@ -58,34 +60,21 @@ public class ServiceWolfManagerTest {
 		assertEquals("title1", manager.getIncidentsAsArray()[0][2]);
 		assertEquals("No Status", manager.getIncidentsAsArray()[0][3]);
 
-		// ading incident two 
+		// ading incident two
 		manager.addIncidentToServiceGroup("title2", "caller2", "message2");
 		assertEquals("2", manager.getIncidentsAsArray()[1][0]);
 		assertEquals("New", manager.getIncidentsAsArray()[1][1]);
 		assertEquals("title2", manager.getIncidentsAsArray()[1][2]);
 		assertEquals("No Status", manager.getIncidentsAsArray()[1][3]);
-	
-		// adding incdient three 
+
+		// adding incdient three
 		manager.addIncidentToServiceGroup("title3", "caller3", "message3");
 		assertEquals("3", manager.getIncidentsAsArray()[2][0]);
 		assertEquals("New", manager.getIncidentsAsArray()[2][1]);
 		assertEquals("title3", manager.getIncidentsAsArray()[2][2]);
-		assertEquals("No Status", manager.getIncidentsAsArray()[2][3]); 
+		assertEquals("No Status", manager.getIncidentsAsArray()[2][3]);
 
-		assertEquals(3, manager.getIncidentsAsArray().length);
-
-		manager.addServiceGroup("two");
-		assertEquals(2, manager.getServiceGroupList().length);
-
-		manager.addIncidentToServiceGroup("title1", "caller1", "message1");
-		manager.addIncidentToServiceGroup("title2", "caller2", "message2");
-		manager.addIncidentToServiceGroup("title3", "caller4", "message3");
-
-		manager.addServiceGroup("tree");
-		assertEquals(3, manager.getServiceGroupList().length);
-		manager.addIncidentToServiceGroup("title1", "caller1", "message1");
-		manager.addIncidentToServiceGroup("title2", "caller2", "message2");
-		manager.addIncidentToServiceGroup("title3", "caller4", "message3");
+		manager.loadFromFile("test-files/incidents1.txt");
 
 	}
 
@@ -142,7 +131,43 @@ public class ServiceWolfManagerTest {
 	 */
 	@Test
 	public void testExecuteCommand() {
-		fail("Not yet implemented"); // TODO
+		manager.loadFromFile("test-files/incidents1.txt");
+		assertEquals("2", manager.getIncidentsAsArray()[0][0]);
+		assertEquals("Canceled", manager.getIncidentsAsArray()[0][1]);
+		assertEquals("Piazza", manager.getIncidentsAsArray()[0][2]);
+		assertEquals("Not an Incident", manager.getIncidentsAsArray()[0][3]);
+
+		try {
+			Command cd = new Command(CommandValue.ASSIGN, "james", "Message1");
+			manager.executeCommand(2, cd);
+			fail();
+		} catch (UnsupportedOperationException e) {
+			assertEquals("2", manager.getIncidentsAsArray()[0][0]);
+			assertEquals("Canceled", manager.getIncidentsAsArray()[0][1]);
+			assertEquals("Piazza", manager.getIncidentsAsArray()[0][2]);
+			assertEquals("Permanently Solved", manager.getIncidentsAsArray()[0][3]);
+		}
+	
+		// assign command from resolved to open 
+		assertEquals("", manager.getIncidentsAsArray()[0][0]);
+		assertEquals("Resolved", manager.getIncidentsAsArray()[0][1]);
+		assertEquals("Set up Jenkins VMs", manager.getIncidentsAsArray()[0][2]);
+		assertEquals("Not an Incident", manager.getIncidentsAsArray()[0][3]);
+	
+		
+		
+		try {
+			Command cd = new Command(CommandValue.CANCEL, "james", "Message1");
+			manager.executeCommand(2, cd);
+			fail();
+		} catch (UnsupportedOperationException e) {
+			assertEquals("2", manager.getIncidentsAsArray()[0][0]);
+			assertEquals("Canceled", manager.getIncidentsAsArray()[0][1]);
+			assertEquals("Piazza", manager.getIncidentsAsArray()[0][2]);
+			assertEquals("Not an Incident", manager.getIncidentsAsArray()[0][3]);
+		}
+		
+		
 	}
 
 	/**
@@ -220,11 +245,11 @@ public class ServiceWolfManagerTest {
 		manager.loadFromFile("test-files/incidents3.txt");
 		assertEquals(3, manager.getServiceGroupList().length);
 		manager.clearServiceGroups();
-		assertNull(null, manager.getServiceGroupList());
+		assertEquals(0, manager.getServiceGroupList().length);
 		assertNull(null, manager.getServiceGroupName());
 	}
 
-	/** 
+	/**
 	 * Test method for editServiceGroup
 	 */
 	@Test
@@ -346,7 +371,6 @@ public class ServiceWolfManagerTest {
 			assertNull(null, manager.getServiceGroupName());
 			assertEquals("No service group selected.", e.getMessage());
 		}
-		
 
 	}
 

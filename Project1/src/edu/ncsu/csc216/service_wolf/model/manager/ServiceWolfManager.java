@@ -288,7 +288,6 @@ public class ServiceWolfManager {
 		}
 		ServiceGroup addService = new ServiceGroup(serviceGroupName);
 		serviceGroups.add(addService);
-
 		loadServiceGroup(serviceGroupName);
 
 		// need to write the file to ht
