@@ -203,8 +203,8 @@ public class ServiceWolfManager {
 		} else {
 			return currentServiceGroup.getServiceGroupName();
 		}
-	}
-
+	} 
+ 
 	/**
 	 * Retrives a 1D array of service group list
 	 * 
@@ -227,6 +227,7 @@ public class ServiceWolfManager {
 	 */
 	public void clearServiceGroups() {
 		serviceGroups = new ArrayList<ServiceGroup>();
+		currentServiceGroup = null;
 		}
 
 	/**
@@ -311,7 +312,7 @@ public class ServiceWolfManager {
 			for (int i = 0; i < serviceGroups.size(); i++) {
 				if (currentServiceGroup.getServiceGroupName().equals(serviceGroups.get(i).getServiceGroupName())) {
 					serviceGroups.remove(i);
-					currentServiceGroup = serviceGroups.get(0);
+					currentServiceGroup = serviceGroups.get(i-1);
 					return;
 				}
 			}

@@ -45,6 +45,9 @@ public class ServiceGroup {
 	 * @return the serviceGroupName
 	 */
 	public String getServiceGroupName() {
+		if (serviceGroupName == null) {
+			return null;
+		}
 		return serviceGroupName;
 	}
 
@@ -115,7 +118,7 @@ public class ServiceGroup {
 
 	/**
 	 * a method that returns incdeints
-	 *  
+	 * 
 	 * @return an arraylist of incidents
 	 */
 	public ArrayList<Incident> getIncidents() {
@@ -147,15 +150,15 @@ public class ServiceGroup {
 	 * @param command is a command for incident
 	 */
 	public void executeCommand(int id, Command command) {
-		try { 
+		try {
 			for (int i = 0; i < incident.size(); i++) {
 				if (incident.get(i).getId() == id) {
-					incident.get(i).update(command); 
+					incident.get(i).update(command);
 				}
 			}
 		} catch (UnsupportedOperationException e) {
 			throw new UnsupportedOperationException();
-			
+
 		}
 	}
 

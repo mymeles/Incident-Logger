@@ -47,43 +47,42 @@ public class ServiceWolfManagerTest {
 	 * Test method for saveTofile
 	 */
 	@Test
-	public void testSaveToFile() { 
+	public void testSaveToFile() {
 		manager.addServiceGroup("one");
 		assertEquals(1, manager.getServiceGroupList().length);
-		
+
 		manager.addIncidentToServiceGroup("title1", "caller1", "message1");
-		assertEquals("2", manager.getIncidentsAsArray()[0][0]);  
+		assertEquals("2", manager.getIncidentsAsArray()[0][0]);
 		assertEquals("New", manager.getIncidentsAsArray()[0][1]);
 		assertEquals("title1", manager.getIncidentsAsArray()[0][2]);
 		assertEquals("No Status", manager.getIncidentsAsArray()[0][3]);
-		
+
 		manager.addIncidentToServiceGroup("title2", "caller2", "message2");
-		assertEquals("2", manager.getIncidentsAsArray()[0][0]); 
+		assertEquals("2", manager.getIncidentsAsArray()[0][0]);
 		assertEquals("New", manager.getIncidentsAsArray()[0][1]);
 		assertEquals("title2", manager.getIncidentsAsArray()[0][2]);
 		assertEquals("No Status", manager.getIncidentsAsArray()[0][3]);
 		manager.addIncidentToServiceGroup("title3", "caller3", "message3");
-		assertEquals("3", manager.getIncidentsAsArray()[0][0]); 
+		assertEquals("3", manager.getIncidentsAsArray()[0][0]);
 		assertEquals("New", manager.getIncidentsAsArray()[0][1]);
 		assertEquals("title3", manager.getIncidentsAsArray()[0][2]);
 		assertEquals("No Status", manager.getIncidentsAsArray()[0][3]);
 		manager.addIncidentToServiceGroup("title2", "caller2", "message2");
-		assertEquals(3, manager.getIncidentsAsArray().length); 
-		
-		manager.addServiceGroup("two"); 
+		assertEquals(3, manager.getIncidentsAsArray().length);
+
+		manager.addServiceGroup("two");
 		assertEquals(2, manager.getServiceGroupList().length);
-		
+
 		manager.addIncidentToServiceGroup("title1", "caller1", "message1");
 		manager.addIncidentToServiceGroup("title2", "caller2", "message2");
 		manager.addIncidentToServiceGroup("title3", "caller4", "message3");
-		
+
 		manager.addServiceGroup("tree");
 		assertEquals(3, manager.getServiceGroupList().length);
 		manager.addIncidentToServiceGroup("title1", "caller1", "message1");
 		manager.addIncidentToServiceGroup("title2", "caller2", "message2");
 		manager.addIncidentToServiceGroup("title3", "caller4", "message3");
 
-		
 	}
 
 	/**
@@ -133,7 +132,6 @@ public class ServiceWolfManagerTest {
 		assertEquals(0, manager.getIncidentsAsArray().length);
 
 	}
-
 
 	/**
 	 * Test method for executecommand
@@ -218,10 +216,11 @@ public class ServiceWolfManagerTest {
 		manager.loadFromFile("test-files/incidents3.txt");
 		assertEquals(3, manager.getServiceGroupList().length);
 		manager.clearServiceGroups();
+		assertNull(null, manager.getServiceGroupList());
 		assertNull(null, manager.getServiceGroupName());
 	}
 
-	/**
+	/** 
 	 * Test method for editServiceGroup
 	 */
 	@Test
@@ -280,7 +279,7 @@ public class ServiceWolfManagerTest {
 		manager.loadFromFile("test-files/incidents1.txt");
 		assertEquals(3, manager.getServiceGroupList().length);
 		assertEquals("CSC IT", manager.getServiceGroupName());
-	
+
 		try {
 			manager.addServiceGroup(null);
 			fail();
@@ -298,9 +297,8 @@ public class ServiceWolfManagerTest {
 			assertEquals("Invalid service group name.", e.getMessage());
 			assertEquals(3, manager.getServiceGroupList().length);
 			assertEquals("CSC IT", manager.getServiceGroupName());
- 
+
 		}
-		
 
 		try {
 			manager.addServiceGroup("CSC IT");
@@ -309,13 +307,11 @@ public class ServiceWolfManagerTest {
 			assertEquals("Invalid service group name.", e.getMessage());
 			assertEquals(3, manager.getServiceGroupList().length);
 			assertEquals("CSC IT", manager.getServiceGroupName());
- 		}
-		
+		}
+
 		manager.addServiceGroup("serverGroup");
 		assertEquals(4, manager.getServiceGroupList().length);
 		assertEquals("serverGroup", manager.getServiceGroupName());
-
-
 
 	}
 
@@ -336,16 +332,14 @@ public class ServiceWolfManagerTest {
 		assertEquals(1, manager.getServiceGroupList().length);
 		assertEquals("OIT", manager.getServiceGroupName());
 
-		manager.deleteServiceGroup();
-		assertNull(null, manager.getServiceGroupName());
-
 		try {
 			manager.deleteServiceGroup();
 			fail();
 		} catch (IllegalArgumentException e) {
-			assertNull(null, manager.getServiceGroupName());
+
 			assertEquals("No service group selected.", e.getMessage());
 		}
+		assertNull(null, manager.getServiceGroupList().length);
 
 	}
 
