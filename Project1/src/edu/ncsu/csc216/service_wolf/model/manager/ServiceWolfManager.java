@@ -72,6 +72,7 @@ public class ServiceWolfManager {
 			throw new IllegalArgumentException("“Unable to save file.”");
 		}
 		ServiceGroupWriter.writeServiceGroupsToFile(fileName, serviceGroups);
+		loadFromFile(fileName);
 	}
 
 	/**
@@ -122,8 +123,8 @@ public class ServiceWolfManager {
 	 * @return an incident
 	 */
 	public Incident getIncidentById(int id) {
-		
-		if(currentServiceGroup == null) {
+
+		if (currentServiceGroup == null) {
 			return null;
 		}
 		return currentServiceGroup.getIncidentById(id);
@@ -206,8 +207,8 @@ public class ServiceWolfManager {
 		} else {
 			return currentServiceGroup.getServiceGroupName();
 		}
-	} 
- 
+	}
+
 	/**
 	 * Retrives a 1D array of service group list
 	 * 
@@ -226,8 +227,8 @@ public class ServiceWolfManager {
 	 */
 	public void clearServiceGroups() {
 		serviceGroups = new ArrayList<ServiceGroup>();
-		currentServiceGroup = null; 
-		}
+		currentServiceGroup = null;
+	}
 
 	/**
 	 * A method to edit service group of thier name
@@ -300,13 +301,19 @@ public class ServiceWolfManager {
 		return false;
 	}
 
-	/** 
+	/**
 	 * A method to delet a service group
 	 */
 	public void deleteServiceGroup() {
 		if (currentServiceGroup == null) {
 			throw new IllegalArgumentException("No service group selected.");
 		}
+
+		else if (serviceGroups.size() == 1) {
+			serviceGroups.remove(0);
+			currentServiceGroup = null;
+		}
+
 		if (serviceGroups.size() > 0) {
 			for (int i = 0; i < serviceGroups.size(); i++) {
 				if (currentServiceGroup.getServiceGroupName().equals(serviceGroups.get(i).getServiceGroupName())) {
@@ -316,7 +323,7 @@ public class ServiceWolfManager {
 				}
 			}
 		}
-		currentServiceGroup = null;
+
 	}
 
 	/**

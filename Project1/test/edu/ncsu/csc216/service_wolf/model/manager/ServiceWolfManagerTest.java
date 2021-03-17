@@ -337,15 +337,16 @@ public class ServiceWolfManagerTest {
 		manager.deleteServiceGroup();
 		assertEquals(1, manager.getServiceGroupList().length);
 		assertEquals("OIT", manager.getServiceGroupName());
+		manager.deleteServiceGroup();
 
 		try {
 			manager.deleteServiceGroup();
 			fail();
 		} catch (IllegalArgumentException e) {
-
+			assertNull(null, manager.getServiceGroupName());
 			assertEquals("No service group selected.", e.getMessage());
 		}
-		assertNull(null, manager.getServiceGroupList().length);
+		
 
 	}
 
