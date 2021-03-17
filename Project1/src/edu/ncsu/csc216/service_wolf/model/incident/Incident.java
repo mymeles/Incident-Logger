@@ -11,7 +11,7 @@ import edu.ncsu.csc216.service_wolf.model.command.Command.CommandValue;
 /**
  * A class that represents an incident that is Mannaged
  * 
- * @author Meles Meles 
+ * @author Meles Meles
  *
  */
 public class Incident {
@@ -227,12 +227,15 @@ public class Incident {
 		setReopenCount(reopenCount);
 		setOwner(owner);
 		setStatusDetails(statusDetails);
-		this.incidentLog = incidentLog;
-		if (incidentLog.size() < 1 || incidentLog == null )
-			throw new IllegalArgumentException("Incident cannot br created.");
-		this.incidentLog = incidentLog;
+
+		if (incidentLog.isEmpty() || incidentLog == null) {
+			throw new IllegalArgumentException("Incident cannot be created.");
+		} else {
+			this.incidentLog = incidentLog;
+
+		}
 		setState(state);
-	} 
+	}
 
 	/**
 	 * Retrives the unique vallue of incident id
@@ -276,20 +279,20 @@ public class Incident {
 	// helper method for determinign the incident state
 	private void createState(boolean condition, IncidentState state) {
 		if (condition) {
-			this.currentState = state; 
+			this.currentState = state;
 			return;
 		} else {
 			throw new IllegalArgumentException("Incident cannot be created.");
 		}
-	} 
+	}
 
 	/**
 	 * sets the incidets state from the passesd parameter
 	 * 
 	 * @param state the incident state to set
 	 */
-	private void setState(String state) { 
-		if(state == null || "".equals(state))
+	private void setState(String state) {
+		if (state == null || "".equals(state))
 			throw new IllegalArgumentException("Incident cannot be created.");
 
 		boolean cstate = statusDetails.equals(CANCELLATION_DUPLICATE) || statusDetails.equals(CANCELLATION_UNNECESSARY)
@@ -313,8 +316,14 @@ public class Incident {
 					resolvedState);
 			break;
 		case CANCELED_NAME:
-			createState(owner.equals(UNOWNED) && cstate, canceledState);
+			if (!owner.equals(UNOWNED)) {
+				throw new IllegalArgumentException("Incident cannot be created.");
+			}
+			else if(cstate) {
+				this.currentState = canceledState; 
+			}
 			break;
+	
 		default:
 			throw new IllegalArgumentException("Incident cannot be created.");
 		}
