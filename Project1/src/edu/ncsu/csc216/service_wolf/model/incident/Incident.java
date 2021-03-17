@@ -289,6 +289,9 @@ public class Incident {
 	 * @param state the incident state to set
 	 */
 	private void setState(String state) {
+		if(state == null || "".equals(state))
+			throw new IllegalArgumentException("Incident cannot be created.");
+
 		boolean cstate = statusDetails.equals(CANCELLATION_DUPLICATE) || statusDetails.equals(CANCELLATION_UNNECESSARY)
 				|| statusDetails.equals(CANCELLATION_NOT_AN_INCIDENT);
 

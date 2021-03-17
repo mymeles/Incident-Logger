@@ -106,7 +106,7 @@ public class ServiceGroup {
 //		case "false-false":
 //			incident.add(incidents);
 //			setIncidentCounter();
-//			break;
+//			break; 
 //		case "true-false":
 //			incident.add(incidents);
 //			setIncidentCounter();
