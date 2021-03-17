@@ -276,6 +276,8 @@ public class ServiceWolfManagerTest {
 	 */
 	@Test
 	public void testAddServiceGroup() {
+		assertNull(null, manager.getServiceGroupName());
+
 		manager.loadFromFile("test-files/incidents1.txt");
 		assertEquals(3, manager.getServiceGroupList().length);
 		assertEquals("CSC IT", manager.getServiceGroupName());

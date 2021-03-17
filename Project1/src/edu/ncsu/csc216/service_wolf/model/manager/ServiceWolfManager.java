@@ -31,8 +31,7 @@ public class ServiceWolfManager {
 	/**
 	 * A represerntation of service groups
 	 */
-	private ArrayList<ServiceGroup> serviceGroups = new ArrayList<ServiceGroup>();
-
+	private ArrayList<ServiceGroup> serviceGroups = null;
 	/**
 	 * the currentservice group
 	 */
@@ -227,7 +226,7 @@ public class ServiceWolfManager {
 	 */
 	public void clearServiceGroups() {
 		serviceGroups = new ArrayList<ServiceGroup>();
-		currentServiceGroup = null;
+		currentServiceGroup = null; 
 		}
 
 	/**
