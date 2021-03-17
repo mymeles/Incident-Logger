@@ -70,7 +70,7 @@ public class ServiceWolfManagerTest {
 		assertEquals("3", manager.getIncidentsAsArray()[2][0]);
 		assertEquals("New", manager.getIncidentsAsArray()[2][1]);
 		assertEquals("title3", manager.getIncidentsAsArray()[2][2]);
-		assertEquals("No Status", manager.getIncidentsAsArray()[2][3]);
+		assertEquals("No Status", manager.getIncidentsAsArray()[2][3]); 
 
 		assertEquals(3, manager.getIncidentsAsArray().length);
 
