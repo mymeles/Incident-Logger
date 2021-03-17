@@ -241,7 +241,7 @@ public class ServiceWolfManager {
 		}
 
 		if (currentServiceGroup == null)
-			return;
+			throw new IllegalArgumentException("Invalid service group");
 
 		ServiceGroup temp = currentServiceGroup;
 		temp.setServiceGroupName(updateName.trim());
