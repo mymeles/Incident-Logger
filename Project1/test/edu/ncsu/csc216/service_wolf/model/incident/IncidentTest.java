@@ -215,7 +215,7 @@ public class IncidentTest {
 			assertNull(null, in3);
 			assertEquals("Incident cannot be created.", e.getMessage());
 		}
-		
+
 		Incident in0 = null;
 		try {
 			in0 = new Incident(4, "New", TITLE, CALLER, REOPENCOUNT, "Unowned", "No Status", null);
@@ -276,7 +276,17 @@ public class IncidentTest {
 		// testing valid cancel state constructor
 		Incident in6 = new Incident(40, "Canceled", "title40", "caller40", 1, "Unowned", "Not an Incident", MESSAGES);
 		assertEquals("Canceled", in6.getState());
-		//System.out.println(in6.toString());
+		// System.out.println(in6.toString());
+
+		Incident in7 = null;
+		try {
+			in7 = new Incident(1, "Resolved", "title", "caller", 0, "Unowned", "Caller Closed", MESSAGES);
+			fail();
+		} catch (IllegalArgumentException e) {
+			assertNull(null, in7);
+			assertEquals("Incident cannot be created.", e.getMessage());
+		}
+
 	}
 
 	/**
@@ -547,7 +557,7 @@ public class IncidentTest {
 				"- Set up piazza for spring 2021\n- IN progress; have been assign an owner\n- Waiting for a work around\n- It is not an incident\n",
 				in.getIncidentLogMessages());
 
-		try { 
+		try {
 			command = null;
 			command = new Command(CommandValue.CANCEL, "Workaround", "Waiting for a work around");
 			in.update(command);
@@ -564,5 +574,4 @@ public class IncidentTest {
 		}
 	}
 
-	
 }

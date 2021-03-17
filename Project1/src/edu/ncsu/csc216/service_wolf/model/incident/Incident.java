@@ -232,9 +232,9 @@ public class Incident {
 	}
 
 	private void setLog(ArrayList<String> incidentLog) {
-		if (incidentLog == null) 
+		if (incidentLog == null)
 			throw new IllegalArgumentException("Incident cannot be created.");
-		if (incidentLog.isEmpty()) 
+		if (incidentLog.isEmpty())
 			throw new IllegalArgumentException("Incident cannot be created.");
 		this.incidentLog = incidentLog;
 	}
@@ -242,7 +242,7 @@ public class Incident {
 	/**
 	 * Retrives the unique vallue of incident id
 	 * 
-	 * @return an integer of Id
+	 * @return an integer of Id 
 	 */
 	public int getId() {
 		return incidentid;
@@ -285,7 +285,7 @@ public class Incident {
 			return;
 		}
 		throw new IllegalArgumentException("Incident cannot be created.");
-	
+
 	}
 
 	/**
@@ -313,10 +313,12 @@ public class Incident {
 					onHoldState);
 			break;
 		case RESOLVED_NAME:
-			createState(!owner.equals(UNOWNED) && (statusDetails).equals(RESOLUTION_PERMANENTLY_SOLVED)
-					|| statusDetails.equals(RESOLUTION_WORKAROUND) || statusDetails.equals(RESOLUTION_CALLER_CLOSED),
+
+		 createState(!owner.equals(UNOWNED) &&
+		 (statusDetails.equals(RESOLUTION_PERMANENTLY_SOLVED)
+					|| statusDetails.equals(RESOLUTION_WORKAROUND) || statusDetails.equals(RESOLUTION_CALLER_CLOSED)),
 					resolvedState);
-			break;
+		 break;
 		case CANCELED_NAME:
 			createState(owner.equals(UNOWNED) && cstate, canceledState);
 			break;
