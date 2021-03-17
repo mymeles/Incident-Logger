@@ -85,6 +85,13 @@ public class ServiceWolfManager {
 			try {
 				serviceGroups = ServiceGroupsReader.readServiceGroupsFile(fileName);
 				currentServiceGroup = serviceGroups.get(0);
+				Collections.sort(serviceGroups, new Comparator<ServiceGroup>() {
+					@Override
+					public int compare(ServiceGroup sg1, ServiceGroup s2) {
+						return sg1.getServiceGroupName().compareToIgnoreCase(s2.getServiceGroupName());
+					}
+				});
+				return;
 			} catch (IllegalArgumentException e) {
 				throw new IllegalArgumentException(e.getMessage());
 			}
@@ -92,16 +99,18 @@ public class ServiceWolfManager {
 		try {
 			serviceGroups = ServiceGroupsReader.readServiceGroupsFile(fileName);
 			serviceGroups.add(currentServiceGroup);
+			currentServiceGroup = serviceGroups.get(0); 
+			Collections.sort(serviceGroups, new Comparator<ServiceGroup>() {
+				@Override
+				public int compare(ServiceGroup sg1, ServiceGroup s2) {
+					return sg1.getServiceGroupName().compareToIgnoreCase(s2.getServiceGroupName());
+				}
+			});
 		} catch (IllegalArgumentException e) {
 			throw new IllegalArgumentException(e.getMessage());
 		}
 
-		Collections.sort(serviceGroups, new Comparator<ServiceGroup>() {
-			@Override
-			public int compare(ServiceGroup sg1, ServiceGroup s2) {
-				return sg1.getServiceGroupName().compareToIgnoreCase(s2.getServiceGroupName());
-			}
-		});
+		
 	}
 
 	/**

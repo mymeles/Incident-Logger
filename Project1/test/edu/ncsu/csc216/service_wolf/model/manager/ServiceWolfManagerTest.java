@@ -78,7 +78,7 @@ public class ServiceWolfManagerTest {
 		assertEquals(4, manager.getServiceGroupList().length);
 
 	}
-
+ 
 	/**
 	 * Test method for loadFromFile
 	 */
@@ -279,7 +279,9 @@ public class ServiceWolfManagerTest {
 	public void testEditServiceGroup() {
 		manager.loadFromFile("test-files/incidents3.txt");
 		assertEquals("OIT", manager.getServiceGroupName());
+
 		assertEquals(3, manager.getServiceGroupList().length);
+		
 		manager.editServiceGroup("NCSU IT");
 		assertEquals("NCSU IT", manager.getServiceGroupName());
 		assertEquals(3, manager.getServiceGroupList().length);
