@@ -273,12 +273,12 @@ public class ServiceWolfManager {
 
 		// need to write the file to ht
 
-//		Collections.sort(serviceGroups, new Comparator<ServiceGroup>() {
-//			@Override
-//			public int compare(ServiceGroup sg1, ServiceGroup s2) {
-//				return sg1.getServiceGroupName().compareToIgnoreCase(s2.getServiceGroupName());
-//			}
-//		});
+		Collections.sort(serviceGroups, new Comparator<ServiceGroup>() {
+			@Override
+			public int compare(ServiceGroup sg1, ServiceGroup s2) {
+				return sg1.getServiceGroupName().compareToIgnoreCase(s2.getServiceGroupName());
+			}
+		});
 	}
 
 	/**
