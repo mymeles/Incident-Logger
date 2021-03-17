@@ -171,7 +171,7 @@ public class ServiceGroupTest {
 		serviceGroup.addIncident(in);
 		serviceGroup.addIncident(in2);
 		assertEquals(3, serviceGroup.getIncidents().size());
-
+ 
 		// make sure it is added in order
 		assertEquals(2, serviceGroup.getIncidents().get(0).getId());
 		assertEquals(3, serviceGroup.getIncidents().get(1).getId());

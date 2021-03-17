@@ -47,7 +47,7 @@ public class ServiceWolfManagerTest {
 	 */
 	@Test
 	public void testSaveToFile() {
- 
+
 //		ServiceGroup g2;
 //		ServiceGroup g3; 
 //		ServiceGroup g1; 
@@ -128,7 +128,7 @@ public class ServiceWolfManagerTest {
 	 */
 	@Test
 	public void testDeleteIncidentById() {
-		manager.loadFromFile("test-files/incidents1.txt"); 
+		manager.loadFromFile("test-files/incidents1.txt");
 		assertEquals(4, manager.getIncidentsAsArray().length);
 
 		manager.deleteIncidentById(2);
@@ -207,13 +207,13 @@ public class ServiceWolfManagerTest {
 	@Test
 	public void testEditServiceGroup() {
 		manager.loadFromFile("test-files/incidents3.txt");
-		assertEquals("OIT", manager.getServiceGroupName()); 
+		assertEquals("OIT", manager.getServiceGroupName());
 		assertEquals(3, manager.getServiceGroupList().length);
 		manager.editServiceGroup("NCSU IT");
 		assertEquals("NCSU IT", manager.getServiceGroupName());
 		assertEquals(3, manager.getServiceGroupList().length);
 
-		// invalid name null 
+		// invalid name null
 		try {
 			manager.editServiceGroup(null);
 			fail();
@@ -257,7 +257,46 @@ public class ServiceWolfManagerTest {
 	 */
 	@Test
 	public void testAddServiceGroup() {
-		fail("Not yet implemented"); // TODO
+		manager.loadFromFile("test-files/incidents1.txt");
+		assertEquals(3, manager.getServiceGroupList().length);
+		assertEquals("CSC IT", manager.getServiceGroupName());
+	
+		try {
+			manager.addServiceGroup(null);
+			fail();
+		} catch (IllegalArgumentException e) {
+			assertEquals("Invalid service group name.", e.getMessage());
+			assertEquals(3, manager.getServiceGroupList().length);
+			assertEquals("CSC IT", manager.getServiceGroupName());
+
+		}
+
+		try {
+			manager.addServiceGroup("");
+			fail();
+		} catch (IllegalArgumentException e) {
+			assertEquals("Invalid service group name.", e.getMessage());
+			assertEquals(3, manager.getServiceGroupList().length);
+			assertEquals("CSC IT", manager.getServiceGroupName());
+
+		}
+		
+
+		try {
+			manager.addServiceGroup("CSC IT");
+			fail();
+		} catch (IllegalArgumentException e) {
+			assertEquals("Invalid service group name.", e.getMessage());
+			assertEquals(3, manager.getServiceGroupList().length);
+			assertEquals("CSC IT", manager.getServiceGroupName());
+ 		}
+		
+		manager.addServiceGroup("serverGroup");
+		assertEquals(4, manager.getServiceGroupList().length);
+		assertEquals("serverGroup", manager.getServiceGroupName());
+
+
+
 	}
 
 	/**
@@ -270,7 +309,7 @@ public class ServiceWolfManagerTest {
 		assertEquals("CSC IT", manager.getServiceGroupName());
 
 		manager.deleteServiceGroup();
-		assertEquals(2, manager.getServiceGroupList().length); 
+		assertEquals(2, manager.getServiceGroupList().length);
 		assertEquals("ITECS", manager.getServiceGroupName());
 
 		manager.deleteServiceGroup();
@@ -278,7 +317,6 @@ public class ServiceWolfManagerTest {
 		assertEquals("OIT", manager.getServiceGroupName());
 
 		manager.deleteServiceGroup();
-		assertNull(null, manager.getServiceGroupList());
 		assertNull(null, manager.getServiceGroupName());
 
 		try {

@@ -267,7 +267,8 @@ public class ServiceWolfManager {
 			throw new IllegalArgumentException("Invalid service group name.");
 		}
 		ServiceGroup addService = new ServiceGroup(serviceGroupName);
-		serviceGroups.add(addService);
+		serviceGroups.add(addService);  
+		loadServiceGroup(serviceGroupName);
 
 //		Collections.sort(serviceGroups, new Comparator<ServiceGroup>() {
 //			@Override
