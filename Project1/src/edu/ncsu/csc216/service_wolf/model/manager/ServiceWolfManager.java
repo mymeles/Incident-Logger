@@ -227,8 +227,7 @@ public class ServiceWolfManager {
 	 */
 	public void clearServiceGroups() {
 		serviceGroups = new ArrayList<ServiceGroup>();
-		currentServiceGroup = null;
-	}
+		}
 
 	/**
 	 * A method to edit service group of thier name
@@ -308,11 +307,13 @@ public class ServiceWolfManager {
 		if (currentServiceGroup == null) {
 			throw new IllegalArgumentException("No service group selected.");
 		}
-		for (int i = 0; i < serviceGroups.size(); i++) {
-			if (currentServiceGroup.getServiceGroupName().equals(serviceGroups.get(i).getServiceGroupName())) {
-				serviceGroups.remove(i);
-				currentServiceGroup = serviceGroups.get(0);
-				return;
+		if (serviceGroups.size() > 0) {
+			for (int i = 0; i < serviceGroups.size(); i++) {
+				if (currentServiceGroup.getServiceGroupName().equals(serviceGroups.get(i).getServiceGroupName())) {
+					serviceGroups.remove(i);
+					currentServiceGroup = serviceGroups.get(0);
+					return;
+				}
 			}
 		}
 		currentServiceGroup = null;
