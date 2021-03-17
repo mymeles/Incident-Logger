@@ -211,7 +211,10 @@ public class ServiceWolfManager {
 	 * @return a single array of service Group list
 	 */
 	public String[] getServiceGroupList() {
-
+		if(currentServiceGroup == null) {
+			return null;
+		}
+		
 		String[] list = new String[serviceGroups.size()];
 		for (int i = 0; i < serviceGroups.size(); i++) {
 			list[i] = serviceGroups.get(i).getServiceGroupName();
