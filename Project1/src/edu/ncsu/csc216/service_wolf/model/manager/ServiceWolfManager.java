@@ -173,9 +173,9 @@ public class ServiceWolfManager {
 	 * @param message message of the incident
 	 */
 	public void addIncidentToServiceGroup(String title, String caller, String message) {
-		if (currentServiceGroup == null) {
-			throw new IllegalArgumentException("Incident cannot be created.");
-		}
+//		if (currentServiceGroup == null) {
+//			throw new IllegalArgumentException("Incident cannot be created.");
+//		}
 
 		Incident i = new Incident(title, caller, message);
 		currentServiceGroup.addIncident(i);

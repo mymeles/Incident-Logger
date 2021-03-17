@@ -173,7 +173,7 @@ public class ServiceWolfManagerTest {
 	 * Test method for deleteIncidentById
 	 */
 	@Test
-	public void testDeleteIncidentById() {
+	public void testDeleteIncidentById() { 
 		manager.loadFromFile("test-files/incidents1.txt");
 		assertEquals(4, manager.getIncidentsAsArray().length);
 
