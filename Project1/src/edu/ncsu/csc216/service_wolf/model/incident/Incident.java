@@ -227,14 +227,16 @@ public class Incident {
 		setReopenCount(reopenCount);
 		setOwner(owner);
 		setStatusDetails(statusDetails);
-
-		if (incidentLog.isEmpty() || incidentLog == null) {
-			throw new IllegalArgumentException("Incident cannot be created.");
-		} else {
-			this.incidentLog = incidentLog;
-
-		}
+		setLog(incidentLog);
 		setState(state);
+	}
+
+	private void setLog(ArrayList<String> incidentLog) {
+		if (incidentLog == null) 
+			throw new IllegalArgumentException("Incident cannot be created.");
+		if (incidentLog.isEmpty()) 
+			throw new IllegalArgumentException("Incident cannot be created.");
+		this.incidentLog = incidentLog;
 	}
 
 	/**
@@ -281,9 +283,9 @@ public class Incident {
 		if (condition) {
 			this.currentState = state;
 			return;
-		} else {
-			throw new IllegalArgumentException("Incident cannot be created.");
 		}
+		throw new IllegalArgumentException("Incident cannot be created.");
+	
 	}
 
 	/**
@@ -316,14 +318,8 @@ public class Incident {
 					resolvedState);
 			break;
 		case CANCELED_NAME:
-			if (!owner.equals(UNOWNED)) {
-				throw new IllegalArgumentException("Incident cannot be created.");
-			}
-			else if(cstate) {
-				this.currentState = canceledState; 
-			}
+			createState(owner.equals(UNOWNED) && cstate, canceledState);
 			break;
-	
 		default:
 			throw new IllegalArgumentException("Incident cannot be created.");
 		}

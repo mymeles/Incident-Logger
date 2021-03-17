@@ -215,6 +215,15 @@ public class IncidentTest {
 			assertNull(null, in3);
 			assertEquals("Incident cannot be created.", e.getMessage());
 		}
+		
+		Incident in0 = null;
+		try {
+			in0 = new Incident(4, "New", TITLE, CALLER, REOPENCOUNT, "Unowned", "No Status", null);
+			fail();
+		} catch (IllegalArgumentException e) {
+			assertNull(null, in0);
+			assertEquals("Incident cannot be created.", e.getMessage());
+		}
 
 		try {
 			in3 = new Incident(4, "New", TITLE, CALLER, REOPENCOUNT, "owned", "Not an Incident", MESSAGES);
@@ -270,22 +279,6 @@ public class IncidentTest {
 		//System.out.println(in6.toString());
 	}
 
-//	/**
-//	 * A tes method for Inceremtn counter
-//	 */
-//	@Test
-//	public void testIncrementCounter() {
-//		fail("Not yet implemented"); // TODO
-//	}
-//
-//	/**
-//	 * A test method for setCounter
-//	 */
-//	@Test
-//	public void testSetCounter() {
-//		fail("Not yet implemented"); // TODO 
-//	}
-//
 	/**
 	 * A test method for toString
 	 */
