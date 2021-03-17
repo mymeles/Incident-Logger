@@ -145,26 +145,24 @@ public class ServiceWolfManagerTest {
 			assertEquals("2", manager.getIncidentsAsArray()[0][0]);
 			assertEquals("Canceled", manager.getIncidentsAsArray()[0][1]);
 			assertEquals("Piazza", manager.getIncidentsAsArray()[0][2]);
-			assertEquals("Permanently Solved", manager.getIncidentsAsArray()[0][3]);
+			assertEquals("Not an Incident", manager.getIncidentsAsArray()[0][3]);
 		}
 	
 		// assign command from resolved to open 
-		assertEquals("", manager.getIncidentsAsArray()[0][0]);
-		assertEquals("Resolved", manager.getIncidentsAsArray()[0][1]);
-		assertEquals("Set up Jenkins VMs", manager.getIncidentsAsArray()[0][2]);
-		assertEquals("Not an Incident", manager.getIncidentsAsArray()[0][3]);
+		assertEquals("3", manager.getIncidentsAsArray()[1][0]);
+		assertEquals("New", manager.getIncidentsAsArray()[1][1]);
+		assertEquals("Moodle down", manager.getIncidentsAsArray()[1][2]);
+		assertEquals("No Status", manager.getIncidentsAsArray()[1][3]);
 	
-		
-		
 		try {
-			Command cd = new Command(CommandValue.CANCEL, "james", "Message1");
-			manager.executeCommand(2, cd);
-			fail();
+			Command cd = new Command(CommandValue.ASSIGN, "james", "Message1");
+			manager.executeCommand(3, cd);
 		} catch (UnsupportedOperationException e) {
-			assertEquals("2", manager.getIncidentsAsArray()[0][0]);
-			assertEquals("Canceled", manager.getIncidentsAsArray()[0][1]);
-			assertEquals("Piazza", manager.getIncidentsAsArray()[0][2]);
-			assertEquals("Not an Incident", manager.getIncidentsAsArray()[0][3]);
+			assertEquals("3", manager.getIncidentsAsArray()[1][0]);
+			assertEquals("In Progress", manager.getIncidentsAsArray()[1][1]);
+			assertEquals("Moodle down", manager.getIncidentsAsArray()[1][2]);
+			assertEquals("No Status", manager.getIncidentsAsArray()[1][3]);
+			fail();
 		}
 		
 		

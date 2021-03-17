@@ -190,7 +190,7 @@ public class Incident {
 		setTitle(title);
 		setCaller(caller);
 		setOwner(UNOWNED);
-		setStatusDetails(NO_STATUS); 
+		setStatusDetails(NO_STATUS);
 		addMessageToIncidentLog(message);
 		this.incidentid = counter;
 		incrementCounter();
@@ -227,7 +227,8 @@ public class Incident {
 		setReopenCount(reopenCount);
 		setOwner(owner);
 		setStatusDetails(statusDetails);
-		if (incidentLog.size() < 1 || incidentLog == null )
+		this.incidentLog = incidentLog;
+		if (incidentLog.size() < 1)
 			throw new IllegalArgumentException("Incident cannot br created.");
 		this.incidentLog = incidentLog;
 		setState(state);
@@ -255,7 +256,7 @@ public class Incident {
 		if (id <= 0) {
 			throw new IllegalArgumentException("Incident cannot br created.");
 		}
-		this.incidentid = id; 
+		this.incidentid = id;
 
 		if (id > counter) {
 			setCounter(id + 1);
@@ -276,9 +277,9 @@ public class Incident {
 	private void createState(boolean condition, IncidentState state) {
 		if (condition) {
 			this.currentState = state;
-		} else {
-			throw new IllegalArgumentException("Incident cannot be created.");
+			return;
 		}
+		throw new IllegalArgumentException("Incident cannot be created.");
 	}
 
 	/**
@@ -287,6 +288,9 @@ public class Incident {
 	 * @param state the incident state to set
 	 */
 	private void setState(String state) {
+		boolean cstate = statusDetails.equals(CANCELLATION_DUPLICATE)	|| statusDetails.equals(CANCELLATION_UNNECESSARY)
+				|| statusDetails.equals(CANCELLATION_NOT_AN_INCIDENT);
+		
 		switch (state) {
 		case NEW_NAME:
 			createState(owner.equals(UNOWNED) && statusDetails.equals(NO_STATUS), newState);
@@ -300,19 +304,14 @@ public class Incident {
 					onHoldState);
 			break;
 		case RESOLVED_NAME:
-			createState(!(owner).equals(UNOWNED) && ((statusDetails).equals(RESOLUTION_PERMANENTLY_SOLVED)
-					|| statusDetails.equals(RESOLUTION_WORKAROUND) || statusDetails.equals(RESOLUTION_CALLER_CLOSED)),
+			createState(!owner.equals(UNOWNED) && (statusDetails).equals(RESOLUTION_PERMANENTLY_SOLVED)
+					|| statusDetails.equals(RESOLUTION_WORKAROUND) || statusDetails.equals(RESOLUTION_CALLER_CLOSED),
 					resolvedState);
 			break;
 		case CANCELED_NAME:
-			if ((!owner.equals(UNOWNED)) 
-					|| !(statusDetails.equals(CANCELLATION_DUPLICATE) || statusDetails.equals(CANCELLATION_UNNECESSARY)
-							|| statusDetails.equals(CANCELLATION_NOT_AN_INCIDENT))) {
-				throw new IllegalArgumentException("Incident cannot be created.");
-			}
-			this.currentState = canceledState;
+			createState(owner.equals(UNOWNED) && cstate, canceledState);
 			break;
-		default: 
+		default:
 			throw new IllegalArgumentException("Incident cannot be created.");
 		}
 
@@ -662,7 +661,7 @@ public class Incident {
 		 */
 		public void updateState(Command command) {
 			switch (command.getCommand()) {
-			case INVESTIGATE: 
+			case INVESTIGATE:
 				setStatusDetails(NO_STATUS);
 				currentState = inProgressState;
 				break;
@@ -758,7 +757,7 @@ public class Incident {
 		public void updateState(Command command) {
 			switch (command.getCommand()) {
 			case ASSIGN:
-			case CANCEL: 
+			case CANCEL:
 			case REOPEN:
 			case INVESTIGATE:
 			case HOLD:
