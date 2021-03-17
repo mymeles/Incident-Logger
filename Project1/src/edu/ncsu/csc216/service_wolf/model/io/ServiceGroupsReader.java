@@ -32,25 +32,39 @@ public class ServiceGroupsReader {
 
 		String str = "";
 		try {
-			Scanner fileReader = new Scanner(new FileInputStream(fileName)); // Create
+			Scanner fileReader = new Scanner(new FileInputStream(fileName));
+
 			while (fileReader.hasNext()) {
+
 				str += fileReader.nextLine() + "\n";
 			}
-		} catch (FileNotFoundException e) { 
-			//e.printStackTrace();
+
+			if (str.trim().charAt(0) != '#') {
+				throw new IllegalArgumentException("Unable to load file.");
+			}
+		} catch (FileNotFoundException e) {
+			throw new IllegalArgumentException("Unable to load file.");
+
 		}
 
 		Scanner scan = new Scanner(str);
 		scan.useDelimiter("\\r?\\n?[#]");
 
 		while (scan.hasNext()) {
-			String service = scan.next();
-			ServiceGroup sg1 = processServiceGroup(service);
+			try {
+				//
+				String service = scan.next();
+				ServiceGroup sg1 = processServiceGroup(service);
 
-			serviceg.add(sg1);
+				serviceg.add(sg1);
+			} catch (IllegalArgumentException e) {
+				continue;
+			}
 
 		}
 		scan.close();
+		if (serviceg.size() == 0)
+			throw new IllegalArgumentException("Unable to load file.");
 		return serviceg;
 
 	}
@@ -62,19 +76,33 @@ public class ServiceGroupsReader {
 	 * @return the ServiceGroup object based on file contents
 	 */
 	private static ServiceGroup processServiceGroup(String service) {
+		try {
+			ServiceGroup sg = null;
+			Scanner scan = new Scanner(service);
+			scan.useDelimiter("\\r?\\n?[*]");
+			String sn = scan.nextLine();
+			sg = new ServiceGroup(sn.trim());
 
-		ServiceGroup sg = null;
-		Scanner scan = new Scanner(service);
-		scan.useDelimiter("\\r?\\n?[*]");
-		String sn = scan.nextLine();
-		sg = new ServiceGroup(sn.trim());
-		while (scan.hasNext()) {
-			String stringIncident = scan.next();
-			Incident in1 = processIncident(stringIncident);
-			sg.addIncident(in1);
+			while (scan.hasNext()) {
+				try {
+					//
+					String stringIncident = scan.next();
+					Incident in1 = processIncident(stringIncident);
+					sg.addIncident(in1);
+				} catch (IllegalArgumentException e) {
+					//
+				}
+
+			}
+			scan.close();
+			if (sg.getIncidents().size() == 0)
+				throw new IllegalArgumentException("Unable to load file.");
+
+			return sg;
+
+		} catch (NoSuchElementException e) {
+			throw new IllegalArgumentException("Invalid service group");
 		}
-		scan.close();
-		return sg;
 
 	}
 
@@ -105,6 +133,7 @@ public class ServiceGroupsReader {
 
 			ArrayList<String> message = new ArrayList<String>();
 			while (scan.hasNext()) {
+
 				String line = scan.next().trim();
 				String messageS = line.substring(0);
 				message.add(messageS);
@@ -113,10 +142,8 @@ public class ServiceGroupsReader {
 
 			Incident i = new Incident(id, state, title, caller, reopen, owner, status, message);
 			return i;
-		} catch (IllegalArgumentException e) {
-			throw new IllegalArgumentException("Unable to load file.");
 		} catch (NoSuchElementException e) {
-			throw new IllegalArgumentException("Unable to load file.");
+			throw new IllegalArgumentException("Invalid incident.");
 		}
 	}
 }

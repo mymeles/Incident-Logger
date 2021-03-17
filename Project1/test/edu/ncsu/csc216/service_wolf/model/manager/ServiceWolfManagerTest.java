@@ -50,24 +50,28 @@ public class ServiceWolfManagerTest {
 	public void testSaveToFile() {
 		manager.addServiceGroup("one");
 		assertEquals(1, manager.getServiceGroupList().length);
-
+		
+		// adding incidnet one
 		manager.addIncidentToServiceGroup("title1", "caller1", "message1");
-		assertEquals("2", manager.getIncidentsAsArray()[0][0]);
+		assertEquals("1", manager.getIncidentsAsArray()[0][0]);
 		assertEquals("New", manager.getIncidentsAsArray()[0][1]);
 		assertEquals("title1", manager.getIncidentsAsArray()[0][2]);
 		assertEquals("No Status", manager.getIncidentsAsArray()[0][3]);
 
+		// ading incident two 
 		manager.addIncidentToServiceGroup("title2", "caller2", "message2");
-		assertEquals("2", manager.getIncidentsAsArray()[0][0]);
-		assertEquals("New", manager.getIncidentsAsArray()[0][1]);
-		assertEquals("title2", manager.getIncidentsAsArray()[0][2]);
-		assertEquals("No Status", manager.getIncidentsAsArray()[0][3]);
+		assertEquals("2", manager.getIncidentsAsArray()[1][0]);
+		assertEquals("New", manager.getIncidentsAsArray()[1][1]);
+		assertEquals("title2", manager.getIncidentsAsArray()[1][2]);
+		assertEquals("No Status", manager.getIncidentsAsArray()[1][3]);
+	
+		// adding incdient three 
 		manager.addIncidentToServiceGroup("title3", "caller3", "message3");
-		assertEquals("3", manager.getIncidentsAsArray()[0][0]);
-		assertEquals("New", manager.getIncidentsAsArray()[0][1]);
-		assertEquals("title3", manager.getIncidentsAsArray()[0][2]);
-		assertEquals("No Status", manager.getIncidentsAsArray()[0][3]);
-		manager.addIncidentToServiceGroup("title2", "caller2", "message2");
+		assertEquals("3", manager.getIncidentsAsArray()[2][0]);
+		assertEquals("New", manager.getIncidentsAsArray()[2][1]);
+		assertEquals("title3", manager.getIncidentsAsArray()[2][2]);
+		assertEquals("No Status", manager.getIncidentsAsArray()[2][3]);
+
 		assertEquals(3, manager.getIncidentsAsArray().length);
 
 		manager.addServiceGroup("two");

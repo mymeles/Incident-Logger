@@ -218,8 +218,8 @@ public class ServiceGroupTest {
 		assertEquals("Canceled", serviceGroup.getIncidentById(3).getState());
 		assertEquals("Unowned", serviceGroup.getIncidentById(3).getOwner());
 
-		ServiceGroupsReader.readServiceGroupsFile("test-files/incidnets1.txt");
-	}
+		ServiceGroupsReader.readServiceGroupsFile("test-files/incidents1.txt");
+	} 
 
 	/**
 	 * Test method for deletIncidentById

@@ -210,10 +210,6 @@ public class ServiceWolfManager {
 	 * @return a single array of service Group list
 	 */
 	public String[] getServiceGroupList() {
-		if (currentServiceGroup == null) {
-			return null;
-		}
-
 		String[] list = new String[serviceGroups.size()];
 		for (int i = 0; i < serviceGroups.size(); i++) {
 			list[i] = serviceGroups.get(i).getServiceGroupName();
@@ -300,7 +296,7 @@ public class ServiceWolfManager {
 		return false;
 	}
 
-	/**
+	/** 
 	 * A method to delet a service group
 	 */
 	public void deleteServiceGroup() {
@@ -311,7 +307,7 @@ public class ServiceWolfManager {
 			for (int i = 0; i < serviceGroups.size(); i++) {
 				if (currentServiceGroup.getServiceGroupName().equals(serviceGroups.get(i).getServiceGroupName())) {
 					serviceGroups.remove(i);
-					currentServiceGroup = serviceGroups.get(i-1);
+					currentServiceGroup = serviceGroups.get(0);
 					return;
 				}
 			}
