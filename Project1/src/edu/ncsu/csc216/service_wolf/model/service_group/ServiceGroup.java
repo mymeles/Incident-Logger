@@ -147,7 +147,7 @@ public class ServiceGroup {
 	 * @param command is a command for incident
 	 */
 	public void executeCommand(int id, Command command) {
-		try {
+		try { 
 			for (int i = 0; i < incident.size(); i++) {
 				if (incident.get(i).getId() == id) {
 					incident.get(i).update(command); 

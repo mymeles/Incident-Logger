@@ -107,13 +107,6 @@ public class ServiceWolfManagerTest {
 
 	}
 
-	/**
-	 * Test method for getIncidentById
-	 */
-	@Test
-	public void testGetIncidentById() {
-		fail("Not yet implemented"); // TODO
-	}
 
 	/**
 	 * Test method for executecommand
@@ -278,7 +271,7 @@ public class ServiceWolfManagerTest {
 			assertEquals("Invalid service group name.", e.getMessage());
 			assertEquals(3, manager.getServiceGroupList().length);
 			assertEquals("CSC IT", manager.getServiceGroupName());
-
+ 
 		}
 		
 

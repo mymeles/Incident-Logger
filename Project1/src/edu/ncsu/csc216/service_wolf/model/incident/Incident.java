@@ -662,7 +662,7 @@ public class Incident {
 		 */
 		public void updateState(Command command) {
 			switch (command.getCommand()) {
-			case INVESTIGATE:
+			case INVESTIGATE: 
 				setStatusDetails(NO_STATUS);
 				currentState = inProgressState;
 				break;

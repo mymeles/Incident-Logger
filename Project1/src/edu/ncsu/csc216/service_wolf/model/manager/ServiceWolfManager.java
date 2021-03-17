@@ -69,7 +69,9 @@ public class ServiceWolfManager {
 	 * @param fileName a location where the file is saved
 	 */
 	public void saveToFile(String fileName) {
-       // checiks for incidents and cutrent 
+		if (currentServiceGroup == null || currentServiceGroup.getIncidents().size() == 0) {
+			throw new IllegalArgumentException("“Unable to save file.”");
+		}
 		ServiceGroupWriter.writeServiceGroupsToFile(fileName, serviceGroups);
 	}
 
@@ -131,8 +133,8 @@ public class ServiceWolfManager {
 	 * @param command is a command to execute
 	 */
 	public void executeCommand(int id, Command command) {
-		if(currentServiceGroup == null) {
-			return; 
+		if (currentServiceGroup == null) {
+			return;
 		}
 		currentServiceGroup.executeCommand(id, command);
 	}
@@ -143,12 +145,12 @@ public class ServiceWolfManager {
 	 * @param id an integer that refrences incidents
 	 */
 	public void deleteIncidentById(int id) {
-		
-		if(currentServiceGroup == null) {
-			return; 
+
+		if (currentServiceGroup == null) {
+			return;
 		}
 		currentServiceGroup.deleteIncidentById(id);
-		
+
 	}
 
 	/**
@@ -159,13 +161,13 @@ public class ServiceWolfManager {
 	 * @param message message of the incident
 	 */
 	public void addIncidentToServiceGroup(String title, String caller, String message) {
-		if(currentServiceGroup == null ) {
+		if (currentServiceGroup == null) {
 			throw new IllegalArgumentException("Incident cannot be created.");
 		}
-		
-			Incident i = new Incident(title, caller, message);
-			currentServiceGroup.setIncidentCounter();
-			currentServiceGroup.addIncident(i);
+
+		Incident i = new Incident(title, caller, message);
+		currentServiceGroup.setIncidentCounter();
+		currentServiceGroup.addIncident(i);
 	}
 
 	/**
@@ -255,7 +257,6 @@ public class ServiceWolfManager {
 
 	}
 
-
 	/**
 	 * A method that takes in a String value for serviceName and creates a new
 	 * serviceGroup in the serviceGroup list
@@ -267,8 +268,10 @@ public class ServiceWolfManager {
 			throw new IllegalArgumentException("Invalid service group name.");
 		}
 		ServiceGroup addService = new ServiceGroup(serviceGroupName);
-		serviceGroups.add(addService);  
+		serviceGroups.add(addService);
 		loadServiceGroup(serviceGroupName);
+
+		// need to write the file to ht
 
 //		Collections.sort(serviceGroups, new Comparator<ServiceGroup>() {
 //			@Override

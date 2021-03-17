@@ -8,17 +8,22 @@ import java.util.ArrayList;
 import edu.ncsu.csc216.service_wolf.model.service_group.ServiceGroup;
 
 /**
- *  A class to write service group into a file 
+ * A class to write service group into a file
+ * 
  * @author meles
  *
  */
 public class ServiceGroupWriter {
-	
+
 	/**
 	 * Writes the given service group to the given file location
-	 * @param fileName and string that holds the loaction of the file that the service group is written
-	 * @param serviceGroup a list of service groups that are written in the file that is given
-	 * @throws IOExceptionIOException if Servicegroup can't not be written to the file given
+	 * 
+	 * @param fileName     and string that holds the loaction of the file that the
+	 *                     service group is written
+	 * @param serviceGroup a list of service groups that are written in the file
+	 *                     that is given
+	 * @throws IOExceptionIOException if Servicegroup can't not be written to the
+	 *                                file given
 	 */
 	public static void writeServiceGroupsToFile(String fileName, ArrayList<ServiceGroup> serviceGroup) {
 		PrintStream fileWriter;
@@ -27,14 +32,10 @@ public class ServiceGroupWriter {
 			for (int i = 0; i < serviceGroup.size(); i++) {
 				fileWriter.println(serviceGroup.get(i).toString().trim());
 			}
-	  
 			fileWriter.close();
 		} catch (FileNotFoundException e) {
-			e.printStackTrace();
+			 throw new IllegalArgumentException("Unable to save file.");
 		}
-		
-
-	} 
-
 	}
- 
+
+}
