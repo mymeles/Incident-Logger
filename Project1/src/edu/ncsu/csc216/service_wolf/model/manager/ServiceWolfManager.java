@@ -81,6 +81,14 @@ public class ServiceWolfManager {
 	 * @param fileName location of a service file
 	 */
 	public void loadFromFile(String fileName) {
+		if (currentServiceGroup != null) {
+			try {
+				serviceGroups = ServiceGroupsReader.readServiceGroupsFile(fileName);
+				serviceGroups.add(currentServiceGroup);
+			} catch (IllegalArgumentException e) {
+				throw new IllegalArgumentException(e.getMessage());
+			}
+		}
 		try {
 			serviceGroups = ServiceGroupsReader.readServiceGroupsFile(fileName);
 			currentServiceGroup = serviceGroups.get(0);
@@ -280,6 +288,7 @@ public class ServiceWolfManager {
 		}
 		ServiceGroup addService = new ServiceGroup(serviceGroupName);
 		serviceGroups.add(addService);
+
 		loadServiceGroup(serviceGroupName);
 
 		// need to write the file to ht
