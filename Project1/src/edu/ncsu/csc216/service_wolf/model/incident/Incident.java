@@ -190,11 +190,11 @@ public class Incident {
 		setTitle(title);
 		setCaller(caller);
 		setOwner(UNOWNED);
-		setStatusDetails(NO_STATUS);
-		setState(NEW_NAME);
+		setStatusDetails(NO_STATUS); 
 		addMessageToIncidentLog(message);
 		this.incidentid = counter;
 		incrementCounter();
+		setState(NEW_NAME);
 
 	}
 
@@ -255,7 +255,7 @@ public class Incident {
 		if (id <= 0) {
 			throw new IllegalArgumentException("Incident cannot br created.");
 		}
-		this.incidentid = id;
+		this.incidentid = id; 
 
 		if (id > counter) {
 			setCounter(id + 1);

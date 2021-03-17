@@ -166,8 +166,9 @@ public class ServiceWolfManager {
 		}
 
 		Incident i = new Incident(title, caller, message);
-		currentServiceGroup.setIncidentCounter();
 		currentServiceGroup.addIncident(i);
+		currentServiceGroup.setIncidentCounter();
+
 	}
 
 	/**
@@ -224,7 +225,7 @@ public class ServiceWolfManager {
 	public void clearServiceGroups() {
 		serviceGroups = null;
 		currentServiceGroup = null;
-	}
+	} 
 
 	/**
 	 * A method to edit service group of thier name
