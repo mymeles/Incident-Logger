@@ -228,7 +228,7 @@ public class Incident {
 		setOwner(owner);
 		setStatusDetails(statusDetails);
 		this.incidentLog = incidentLog;
-		if (incidentLog.size() < 1)
+		if (incidentLog.size() < 1 || incidentLog == null )
 			throw new IllegalArgumentException("Incident cannot br created.");
 		this.incidentLog = incidentLog;
 		setState(state);
@@ -288,7 +288,7 @@ public class Incident {
 	 * 
 	 * @param state the incident state to set
 	 */
-	private void setState(String state) {
+	private void setState(String state) { 
 		if(state == null || "".equals(state))
 			throw new IllegalArgumentException("Incident cannot be created.");
 
