@@ -122,6 +122,10 @@ public class ServiceWolfManager {
 	 * @return an incident
 	 */
 	public Incident getIncidentById(int id) {
+		
+		if(currentServiceGroup == null) {
+			return null;
+		}
 		return currentServiceGroup.getIncidentById(id);
 	}
 

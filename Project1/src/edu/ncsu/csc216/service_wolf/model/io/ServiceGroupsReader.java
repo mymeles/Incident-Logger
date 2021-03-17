@@ -39,9 +39,9 @@ public class ServiceGroupsReader {
 				str += fileReader.nextLine() + "\n";
 			}
 
-			if (str.trim().charAt(0) != '#') {
-				throw new IllegalArgumentException("Unable to load file.");
-			}
+//			if (str.trim().charAt(0) != '#') {
+//				throw new IllegalArgumentException("Unable to load file.");
+//			}
 		} catch (FileNotFoundException e) {
 			throw new IllegalArgumentException("Unable to load file.");
 
