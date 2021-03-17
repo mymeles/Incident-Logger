@@ -85,13 +85,14 @@ public class ServiceWolfManager {
 			try {
 				serviceGroups = ServiceGroupsReader.readServiceGroupsFile(fileName);
 				currentServiceGroup = serviceGroups.get(0);
+				// you need to sort it 
 				Collections.sort(serviceGroups, new Comparator<ServiceGroup>() {
 					@Override
 					public int compare(ServiceGroup sg1, ServiceGroup s2) {
 						return sg1.getServiceGroupName().compareToIgnoreCase(s2.getServiceGroupName());
 					}
 				});
-				return;
+				return; 
 			} catch (IllegalArgumentException e) {
 				throw new IllegalArgumentException(e.getMessage());
 			}
@@ -182,7 +183,6 @@ public class ServiceWolfManager {
 	 * @param message message of the incident
 	 */
 	public void addIncidentToServiceGroup(String title, String caller, String message) {
-
 		Incident i = new Incident(title, caller, message);
 		currentServiceGroup.addIncident(i);
 		currentServiceGroup.setIncidentCounter();

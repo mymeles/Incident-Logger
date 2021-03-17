@@ -94,11 +94,11 @@ public class ServiceGroup {
 	 * @param incidents a representation of an incident
 	 */
 	public void addIncident(Incident incidents) {
-		if (incident.size() > 0 && helper(incidents))
+		if (incident.size() < 0 || helper(incidents))
 			throw new IllegalArgumentException("Incident cannot be created.");
 		// add it at thge correct place
 		incident.add(incidents); // sort it
-		setIncidentCounter();
+		setIncidentCounter(); 
 
 //		// compring true and false staments to determine adding incidnet
 //		switch ((incident.size() > 0) + "-" + helper(incidents)) { 
@@ -110,7 +110,7 @@ public class ServiceGroup {
 //		case "true-false":
 //			incident.add(incidents);
 //			setIncidentCounter();
-//			break;
+//			break; 
 //		default:
 //			throw new IllegalArgumentException("Incident cannot be created.");
 //		}
