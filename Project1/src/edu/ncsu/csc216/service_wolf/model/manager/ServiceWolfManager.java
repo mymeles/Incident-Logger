@@ -211,10 +211,10 @@ public class ServiceWolfManager {
 	 * @return a single array of service Group list
 	 */
 	public String[] getServiceGroupList() {
-		if(currentServiceGroup == null) {
+		if (currentServiceGroup == null) {
 			return null;
 		}
-		
+
 		String[] list = new String[serviceGroups.size()];
 		for (int i = 0; i < serviceGroups.size(); i++) {
 			list[i] = serviceGroups.get(i).getServiceGroupName();
@@ -226,9 +226,9 @@ public class ServiceWolfManager {
 	 * a method to clear a service group
 	 */
 	public void clearServiceGroups() {
-		serviceGroups = null;
+		serviceGroups = new ArrayList<ServiceGroup>();
 		currentServiceGroup = null;
-	} 
+	}
 
 	/**
 	 * A method to edit service group of thier name
@@ -307,19 +307,16 @@ public class ServiceWolfManager {
 	public void deleteServiceGroup() {
 		if (currentServiceGroup == null) {
 			throw new IllegalArgumentException("No service group selected.");
-		} else if (serviceGroups.size() == 1 || serviceGroups.size() == 0) {
-			serviceGroups.remove(0);
-			currentServiceGroup = null;
- 
-		} 
-			for (int i = 0; i < serviceGroups.size(); i++) {
-				if (currentServiceGroup.getServiceGroupName().equals(serviceGroups.get(i).getServiceGroupName())) {
-					serviceGroups.remove(i);
-					currentServiceGroup = serviceGroups.get(0);
-				}
+		}
+		for (int i = 0; i < serviceGroups.size(); i++) {
+			if (currentServiceGroup.getServiceGroupName().equals(serviceGroups.get(i).getServiceGroupName())) {
+				serviceGroups.remove(i);
+				currentServiceGroup = serviceGroups.get(0);
+				return;
 			}
 		}
-
+		currentServiceGroup = null;
+	}
 
 	/**
 	 * A method to reset the incident manager for testing
