@@ -52,7 +52,7 @@ public class ServiceWolfManagerTest {
 		assertEquals(1, manager.getServiceGroupList().length);
 		
 		manager.addIncidentToServiceGroup("title1", "caller1", "message1");
-		assertEquals("1", manager.getIncidentsAsArray()[0][0]); 
+		assertEquals("2", manager.getIncidentsAsArray()[0][0]);  
 		assertEquals("New", manager.getIncidentsAsArray()[0][1]);
 		assertEquals("title1", manager.getIncidentsAsArray()[0][2]);
 		assertEquals("No Status", manager.getIncidentsAsArray()[0][3]);

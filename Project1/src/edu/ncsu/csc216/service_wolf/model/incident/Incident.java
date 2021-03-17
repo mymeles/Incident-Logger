@@ -312,7 +312,7 @@ public class Incident {
 			}
 			this.currentState = canceledState;
 			break;
-		default:
+		default: 
 			throw new IllegalArgumentException("Incident cannot be created.");
 		}
 

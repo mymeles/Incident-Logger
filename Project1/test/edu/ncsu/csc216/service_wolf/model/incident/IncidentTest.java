@@ -93,7 +93,6 @@ public class IncidentTest {
 		in = new Incident(TITLE, CALLER, "Set up piazza for spring 2021");
 		assertEquals(TITLE, in.getTitle());
 		assertEquals(CALLER, in.getCaller());
-		System.out.println(in.getId());
 		assertEquals(1, in.getId());
 		assertEquals("- Set up piazza for spring 2021\n", in.getIncidentLogMessages());
 
@@ -206,7 +205,7 @@ public class IncidentTest {
 		assertEquals(Incident.NO_STATUS, in2.getStatusDetails());
 		assertEquals("- Set up piazza for Spring 2021\n- Canceled; not an NC State IT service\n",
 				in2.getIncidentLogMessages());
-
+		
 		// check Incalid new state
 		Incident in3 = null;
 		try {
@@ -262,8 +261,12 @@ public class IncidentTest {
 			fail();
 		} catch (IllegalArgumentException e) {
 			assertNull(null, in5);
-			assertEquals("Incident cannot be created.", e.getMessage());
+			assertEquals("Incident cannot be created.", e.getMessage()); 
 		}
+		
+		// testing valid cancel state constructor 
+		Incident in6 = new Incident(40, "Canceled", "title40", "caller40", 1, "Unowned", "Not an Incident", MESSAGES);
+		assertEquals("Canceled", in6.getState());
 	}
 
 //	/**
