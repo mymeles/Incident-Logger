@@ -50,211 +50,98 @@ public class ServiceGroupsReaderTest {
 		assertEquals(0, sg.size());
 
 		// testing a file with missing id
-		try {
-			sg = ServiceGroupsReader.readServiceGroupsFile("test-files/incidents5.txt");
-			fail();
-		} catch (IllegalArgumentException e) {
-			assertEquals(0, sg.size());
-			assertEquals("Unable to load file.", e.getMessage());
-		}
+		sg = ServiceGroupsReader.readServiceGroupsFile("test-files/incidents5.txt");
+		assertEquals(0, sg.size());
 
 		// testing with incorrect state
-		try {
-			sg = ServiceGroupsReader.readServiceGroupsFile("test-files/incidents6.txt");
-			fail();
-		} catch (IllegalArgumentException e) {
-			assertEquals(0, sg.size());
-			assertEquals("Unable to load file.", e.getMessage());
-		}
+		sg = ServiceGroupsReader.readServiceGroupsFile("test-files/incidents6.txt");
+		assertEquals(0, sg.size());
 
 		// testing with missing state
-		try {
-			sg = ServiceGroupsReader.readServiceGroupsFile("test-files/incidents7.txt");
-			fail();
-		} catch (IllegalArgumentException e) {
-			assertEquals(0, sg.size());
-			assertEquals("Unable to load file.", e.getMessage());
-		}
+		sg = ServiceGroupsReader.readServiceGroupsFile("test-files/incidents7.txt");
+		assertEquals(0, sg.size());
 
 		// testing with missing title
-		try {
-			sg = ServiceGroupsReader.readServiceGroupsFile("test-files/incidents8.txt");
-			fail();
-		} catch (IllegalArgumentException e) {
-			assertEquals(0, sg.size());
-			assertEquals("Unable to load file.", e.getMessage());
-		}
+		sg = ServiceGroupsReader.readServiceGroupsFile("test-files/incidents8.txt");
+		assertEquals(0, sg.size());
 
 		// testing with empty caller
-		try {
-			sg = ServiceGroupsReader.readServiceGroupsFile("test-files/incidents9.txt");
-			fail();
-		} catch (IllegalArgumentException e) {
-			assertEquals(0, sg.size());
-			assertEquals("Unable to load file.", e.getMessage());
-		}
+		sg = ServiceGroupsReader.readServiceGroupsFile("test-files/incidents9.txt");
+
+		assertEquals(0, sg.size());
 
 		// testing with missing caller
-		try {
-			sg = ServiceGroupsReader.readServiceGroupsFile("test-files/incidents10.txt");
-			fail();
-		} catch (IllegalArgumentException e) {
-			assertEquals(0, sg.size());
-			assertEquals("Unable to load file.", e.getMessage());
-		}
+		sg = ServiceGroupsReader.readServiceGroupsFile("test-files/incidents10.txt");
+		assertEquals(0, sg.size());
 
 		// testing with negative reopen count
-		try {
-			sg = ServiceGroupsReader.readServiceGroupsFile("test-files/incidents11.txt");
-			fail();
-		} catch (IllegalArgumentException e) {
-			assertEquals(0, sg.size());
-			assertEquals("Unable to load file.", e.getMessage());
-		}
+		sg = ServiceGroupsReader.readServiceGroupsFile("test-files/incidents11.txt");
+		assertEquals(0, sg.size());
 
-		// testing with empty owner
-		try {
-			sg = ServiceGroupsReader.readServiceGroupsFile("test-files/incidents12.txt");
-			fail();
-		} catch (IllegalArgumentException e) {
-			assertEquals(0, sg.size());
-			assertEquals("Unable to load file.", e.getMessage());
-		}
+		// testing with empty ownerr
+		sg = ServiceGroupsReader.readServiceGroupsFile("test-files/incidents12.txt");
+		assertEquals(0, sg.size());
 
 		// testing with missing owner
-		try {
-			sg = ServiceGroupsReader.readServiceGroupsFile("test-files/incidents13.txt");
-			fail();
-		} catch (IllegalArgumentException e) {
-			assertEquals(0, sg.size());
-			assertEquals("Unable to load file.", e.getMessage());
-		}
+		sg = ServiceGroupsReader.readServiceGroupsFile("test-files/incidents13.txt");
+		assertEquals(0, sg.size());
 
 		// testing with empty status
-		try {
-			sg = ServiceGroupsReader.readServiceGroupsFile("test-files/incidents14.txt");
-			fail();
-		} catch (IllegalArgumentException e) {
-			assertEquals(0, sg.size());
-			assertEquals("Unable to load file.", e.getMessage());
-		}
+		sg = ServiceGroupsReader.readServiceGroupsFile("test-files/incidents14.txt");
+		assertEquals(0, sg.size());
 
 		// testing with missing status
-		try {
-			sg = ServiceGroupsReader.readServiceGroupsFile("test-files/incidents15.txt");
-			fail();
-		} catch (IllegalArgumentException e) {
-			assertEquals(0, sg.size());
-			assertEquals("Unable to load file.", e.getMessage());
-		}
+		sg = ServiceGroupsReader.readServiceGroupsFile("test-files/incidents15.txt");
+		assertEquals(0, sg.size());
 
 		// testing with missing log
-		try {
-			sg = ServiceGroupsReader.readServiceGroupsFile("test-files/incidents16.txt");
-			fail();
-		} catch (IllegalArgumentException e) {
-			assertEquals(0, sg.size());
-			assertEquals("Unable to load file.", e.getMessage());
-		}
+		sg = ServiceGroupsReader.readServiceGroupsFile("test-files/incidents16.txt");
+		assertEquals(0, sg.size());
 
 		// testing with New state with incorrect owner
-		try {
-			sg = ServiceGroupsReader.readServiceGroupsFile("test-files/incidents17.txt");
-			fail();
-		} catch (IllegalArgumentException e) {
-			assertEquals(0, sg.size());
-			assertEquals("Unable to load file.", e.getMessage());
-		}
+		sg = ServiceGroupsReader.readServiceGroupsFile("test-files/incidents17.txt");
+		assertEquals(0, sg.size());
 
 		// testing with New state with incorrect status details
-		try {
-			sg = ServiceGroupsReader.readServiceGroupsFile("test-files/incidents18.txt");
-			fail();
-		} catch (IllegalArgumentException e) {
-			assertEquals(0, sg.size());
-			assertEquals("Unable to load file.", e.getMessage());
-		}
+		sg = ServiceGroupsReader.readServiceGroupsFile("test-files/incidents18.txt");
+		assertEquals(0, sg.size());
 
 		// testing with In Progress state with incorrect owner
-		try {
-			sg = ServiceGroupsReader.readServiceGroupsFile("test-files/incidents19.txt");
-			fail();
-		} catch (IllegalArgumentException e) {
-			assertEquals(0, sg.size());
-			assertEquals("Unable to load file.", e.getMessage());
-		}
+		sg = ServiceGroupsReader.readServiceGroupsFile("test-files/incidents19.txt");
+		assertEquals(0, sg.size());
 
 		// testing with In Progress state with incorrect status details
-		try {
-			sg = ServiceGroupsReader.readServiceGroupsFile("test-files/incidents20.txt");
-			fail();
-		} catch (IllegalArgumentException e) {
-			assertEquals(0, sg.size());
-			assertEquals("Unable to load file.", e.getMessage());
-		}
+		sg = ServiceGroupsReader.readServiceGroupsFile("test-files/incidents20.txt");
+		assertEquals(0, sg.size());
 
 		// testing with On Hold state with incorrect owner
-		try {
-			sg = ServiceGroupsReader.readServiceGroupsFile("test-files/incidents21.txt");
-			fail();
-		} catch (IllegalArgumentException e) {
-			assertEquals(0, sg.size());
-			assertEquals("Unable to load file.", e.getMessage());
-		}
+		sg = ServiceGroupsReader.readServiceGroupsFile("test-files/incidents21.txt");
+		assertEquals(0, sg.size());
 
 		// testing with On Hold state with incorrect status details
-		try {
-			sg = ServiceGroupsReader.readServiceGroupsFile("test-files/incidents22.txt");
-			fail();
-		} catch (IllegalArgumentException e) {
-			assertEquals(0, sg.size());
-			assertEquals("Unable to load file.", e.getMessage());
-		}
+
+		sg = ServiceGroupsReader.readServiceGroupsFile("test-files/incidents22.txt");
+		assertEquals(0, sg.size());
 
 		// testing with Resolved state with incorrect owner
-		try {
-			sg = ServiceGroupsReader.readServiceGroupsFile("test-files/incidents23.txt");
-			fail();
-		} catch (IllegalArgumentException e) {
-			assertEquals(0, sg.size());
-			assertEquals("Unable to load file.", e.getMessage());
-		}
+		sg = ServiceGroupsReader.readServiceGroupsFile("test-files/incidents23.txt");
+		assertEquals(0, sg.size());
 
 		// testing with Resolved state with incorrect status details
-		try {
-			sg = ServiceGroupsReader.readServiceGroupsFile("test-files/incidents24.txt");
-			fail();
-		} catch (IllegalArgumentException e) {
-			assertEquals(0, sg.size());
-			assertEquals("Unable to load file.", e.getMessage());
-		}
+		sg = ServiceGroupsReader.readServiceGroupsFile("test-files/incidents24.txt");
+		assertEquals(0, sg.size());
 
 		// testing with Cancelled state with incorrect owner
-		try {
-			sg = ServiceGroupsReader.readServiceGroupsFile("test-files/incidents25.txt");
-			fail();
-		} catch (IllegalArgumentException e) {
-			assertEquals(0, sg.size());
-			assertEquals("Unable to load file.", e.getMessage());
-		}
+		sg = ServiceGroupsReader.readServiceGroupsFile("test-files/incidents25.txt");
+		assertEquals(0, sg.size());
 
 		// testing with Cancelled state with incorrect status details
-		try {
-			sg = ServiceGroupsReader.readServiceGroupsFile("test-files/incidents26.txt");
-			fail();
-		} catch (IllegalArgumentException e) {
-			assertEquals(0, sg.size());
-			assertEquals("Unable to load file.", e.getMessage());
-		}
+		sg = ServiceGroupsReader.readServiceGroupsFile("test-files/incidents26.txt");
+		assertEquals(0, sg.size());
 
 		// testing with Negative incident id
-		try {
-			sg = ServiceGroupsReader.readServiceGroupsFile("test-files/incidents27.txt");
-			fail();
-		} catch (IllegalArgumentException e) {
-			assertEquals(0, sg.size());
-			assertEquals("Unable to load file.", e.getMessage());
-		}
+		sg = ServiceGroupsReader.readServiceGroupsFile("test-files/incidents27.txt");
+		assertEquals(0, sg.size());
 
 	}
 

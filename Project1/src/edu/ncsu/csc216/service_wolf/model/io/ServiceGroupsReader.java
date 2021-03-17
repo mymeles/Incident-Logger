@@ -62,8 +62,7 @@ public class ServiceGroupsReader {
 
 		}
 		scan.close();
-		if (serviceg.size() == 0)
-			throw new IllegalArgumentException("Unable to load file.");
+		
 		return serviceg;
 
 	}
