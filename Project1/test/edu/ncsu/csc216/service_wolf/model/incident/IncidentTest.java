@@ -174,7 +174,7 @@ public class IncidentTest {
 				in.getIncidentLogMessages());
 
 		Incident in1 = null;
-		// Invalid state with null value 
+		// Invalid state with null value
 		try {
 			in1 = new Incident(ID, STATE, TITLE, CALLER, REOPENCOUNT, OWNER, null, MESSAGES);
 			fail();
@@ -205,7 +205,7 @@ public class IncidentTest {
 		assertEquals(Incident.NO_STATUS, in2.getStatusDetails());
 		assertEquals("- Set up piazza for Spring 2021\n- Canceled; not an NC State IT service\n",
 				in2.getIncidentLogMessages());
-		
+
 		// check Incalid new state
 		Incident in3 = null;
 		try {
@@ -261,10 +261,10 @@ public class IncidentTest {
 			fail();
 		} catch (IllegalArgumentException e) {
 			assertNull(null, in5);
-			assertEquals("Incident cannot be created.", e.getMessage()); 
+			assertEquals("Incident cannot be created.", e.getMessage());
 		}
-		
-		// testing valid cancel state constructor 
+
+		// testing valid cancel state constructor
 		Incident in6 = new Incident(40, "Canceled", "title40", "caller40", 1, "Unowned", "Not an Incident", MESSAGES);
 		assertEquals("Canceled", in6.getState());
 		System.out.println(in6.toString());
@@ -493,7 +493,7 @@ public class IncidentTest {
 				in.getIncidentLogMessages());
 
 		command = null;
-		command = new Command(CommandValue.RESOLVE, "Caller Closed", "Needs to be in progress");
+		command = new Command(CommandValue.RESOLVE, Incident.RESOLUTION_CALLER_CLOSED, "Needs to be in progress");
 		in.update(command);
 		assertEquals(Incident.RESOLVED_NAME, in.getState());
 		assertEquals(Incident.RESOLUTION_CALLER_CLOSED, in.getStatusDetails());
@@ -547,7 +547,7 @@ public class IncidentTest {
 		in.update(command);
 		assertEquals(Incident.CANCELED_NAME, in.getState());
 		assertEquals("Unowned", in.getOwner());
-		assertEquals(CALLER, in.getCaller()); 
+		assertEquals(CALLER, in.getCaller());
 		assertEquals(5, in.getId());
 		assertEquals("Not an Incident", in.getStatusDetails());
 		assertEquals(
@@ -570,4 +570,6 @@ public class IncidentTest {
 					in.getIncidentLogMessages());
 		}
 	}
+
+	
 }

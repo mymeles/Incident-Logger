@@ -246,6 +246,5 @@ public class ServiceGroupTest {
 		serviceGroup.deleteIncidentById(-1);
 		assertEquals(1, serviceGroup.getIncidents().size());
 	}
-	// assertNull(null, serviceGroup.getIncidentById(9));
-
+	
 }

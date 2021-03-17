@@ -15,7 +15,7 @@ public class Command {
 	 * A class within Command class that holds a list a possible command values the
 	 * incident state.
 	 *
-	 * @author meles meles
+	 * @author Meles Meles 
 	 */
 	public enum CommandValue { ASSIGN, HOLD, INVESTIGATE, RESOLVE, REOPEN, CANCEL } 
 

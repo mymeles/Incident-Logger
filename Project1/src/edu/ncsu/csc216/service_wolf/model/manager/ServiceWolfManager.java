@@ -81,17 +81,17 @@ public class ServiceWolfManager {
 	 * @param fileName location of a service file
 	 */
 	public void loadFromFile(String fileName) {
-		if (currentServiceGroup != null) {
+		if (currentServiceGroup == null) {
 			try {
 				serviceGroups = ServiceGroupsReader.readServiceGroupsFile(fileName);
-				serviceGroups.add(currentServiceGroup);
+				currentServiceGroup = serviceGroups.get(0);
 			} catch (IllegalArgumentException e) {
 				throw new IllegalArgumentException(e.getMessage());
 			}
 		}
 		try {
 			serviceGroups = ServiceGroupsReader.readServiceGroupsFile(fileName);
-			currentServiceGroup = serviceGroups.get(0);
+			serviceGroups.add(currentServiceGroup);
 		} catch (IllegalArgumentException e) {
 			throw new IllegalArgumentException(e.getMessage());
 		}
@@ -173,9 +173,6 @@ public class ServiceWolfManager {
 	 * @param message message of the incident
 	 */
 	public void addIncidentToServiceGroup(String title, String caller, String message) {
-//		if (currentServiceGroup == null) {
-//			throw new IllegalArgumentException("Incident cannot be created.");
-//		}
 
 		Incident i = new Incident(title, caller, message);
 		currentServiceGroup.addIncident(i);

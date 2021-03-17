@@ -11,7 +11,7 @@ import edu.ncsu.csc216.service_wolf.model.command.Command.CommandValue;
 /**
  * A class that represents an incident that is Mannaged
  * 
- * @author meles
+ * @author Meles Meles 
  *
  */
 public class Incident {
@@ -232,7 +232,7 @@ public class Incident {
 			throw new IllegalArgumentException("Incident cannot br created.");
 		this.incidentLog = incidentLog;
 		setState(state);
-	}
+	} 
 
 	/**
 	 * Retrives the unique vallue of incident id
@@ -276,7 +276,7 @@ public class Incident {
 	// helper method for determinign the incident state
 	private void createState(boolean condition, IncidentState state) {
 		if (condition) {
-			this.currentState = state;
+			this.currentState = state; 
 			return;
 		} else {
 			throw new IllegalArgumentException("Incident cannot be created.");
