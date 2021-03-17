@@ -246,13 +246,17 @@ public class ServiceWolfManager {
 		ServiceGroup temp = currentServiceGroup;
 		temp.setServiceGroupName(updateName.trim());
 		serviceGroups.add(temp);
+		deleteServiceGroup();
 		loadServiceGroup(updateName);
-		for (int i = 0; i < serviceGroups.size(); i++) {
-			if (currentServiceGroup.getServiceGroupName().equals(serviceGroups.get(i).getServiceGroupName())) {
-				serviceGroups.remove(i);
 
-			}
-		}
+		// if(serviceGroups.size() > 0) {
+//		for (int i = 0; i < serviceGroups.size(); i++) {
+//			if (currentServiceGroup.getServiceGroupName().equals(serviceGroups.get(i).getServiceGroupName())) {
+//				serviceGroups.remove(i);
+//				return;
+//			}
+//			
+//		}
 
 		Collections.sort(serviceGroups, new Comparator<ServiceGroup>() {
 
