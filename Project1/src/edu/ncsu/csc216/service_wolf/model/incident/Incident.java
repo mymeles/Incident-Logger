@@ -278,9 +278,10 @@ public class Incident {
 		if (condition) {
 			this.currentState = state;
 			return;
+		} else {
+			throw new IllegalArgumentException("Incident cannot be created.");
 		}
-		throw new IllegalArgumentException("Incident cannot be created.");
-	}
+	} 
 
 	/**
 	 * sets the incidets state from the passesd parameter
@@ -288,9 +289,9 @@ public class Incident {
 	 * @param state the incident state to set
 	 */
 	private void setState(String state) {
-		boolean cstate = statusDetails.equals(CANCELLATION_DUPLICATE)	|| statusDetails.equals(CANCELLATION_UNNECESSARY)
+		boolean cstate = statusDetails.equals(CANCELLATION_DUPLICATE) || statusDetails.equals(CANCELLATION_UNNECESSARY)
 				|| statusDetails.equals(CANCELLATION_NOT_AN_INCIDENT);
-		
+
 		switch (state) {
 		case NEW_NAME:
 			createState(owner.equals(UNOWNED) && statusDetails.equals(NO_STATUS), newState);
