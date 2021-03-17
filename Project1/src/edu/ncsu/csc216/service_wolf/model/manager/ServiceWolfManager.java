@@ -310,8 +310,8 @@ public class ServiceWolfManager {
 		} else if (serviceGroups.size() == 1 || serviceGroups.size() == 0) {
 			serviceGroups.remove(0);
 			currentServiceGroup = null;
-
-		} else {
+ 
+		} 
 			for (int i = 0; i < serviceGroups.size(); i++) {
 				if (currentServiceGroup.getServiceGroupName().equals(serviceGroups.get(i).getServiceGroupName())) {
 					serviceGroups.remove(i);
@@ -320,7 +320,6 @@ public class ServiceWolfManager {
 			}
 		}
 
-	}
 
 	/**
 	 * A method to reset the incident manager for testing
