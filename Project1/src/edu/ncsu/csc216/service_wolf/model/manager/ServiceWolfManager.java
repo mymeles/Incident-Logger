@@ -85,6 +85,7 @@ public class ServiceWolfManager {
 			try {
 				serviceGroups = ServiceGroupsReader.readServiceGroupsFile(fileName);
 				currentServiceGroup = serviceGroups.get(0);
+				currentServiceGroup.setIncidentCounter();
 				// you need to sort it
 				Collections.sort(serviceGroups, new Comparator<ServiceGroup>() {
 					@Override
@@ -95,13 +96,14 @@ public class ServiceWolfManager {
 				return;
 			} catch (IllegalArgumentException e) {
 				throw new IllegalArgumentException(e.getMessage());
-			}
+			} 
 		}
 		try {
 			serviceGroups = ServiceGroupsReader.readServiceGroupsFile(fileName);
 			serviceGroups.add(currentServiceGroup);
 			currentServiceGroup = serviceGroups.get(0);
-			Collections.sort(serviceGroups, new Comparator<ServiceGroup>() {
+			currentServiceGroup.setIncidentCounter();
+			Collections.sort(serviceGroups, new Comparator<ServiceGroup>() { 
 
 				@Override
 				public int compare(ServiceGroup sg1, ServiceGroup s2) {

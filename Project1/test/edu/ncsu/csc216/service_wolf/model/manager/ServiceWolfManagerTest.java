@@ -223,6 +223,20 @@ public class ServiceWolfManagerTest {
 		assertEquals("No Status", manager.getIncidentsAsArray()[2][3]);
 		
 		assertEquals(3, manager.getIncidentsAsArray().length);
+		
+		 
+		
+		manager.clearServiceGroups();
+		manager.loadFromFile("test-files/incidents1.txt");
+		assertEquals("CSC IT", manager.getServiceGroupName());
+		
+		// adding incident to the current service GROUP 
+		manager.addIncidentToServiceGroup("title3", "caller3", "message3");
+//		assertEquals("3", manager.getIncidentsAsArray()[2][0]);
+//		assertEquals("New", manager.getIncidentsAsArray()[2][1]);
+//		assertEquals("title3", manager.getIncidentsAsArray()[2][2]);
+//		assertEquals("No Status", manager.getIncidentsAsArray()[2][3]);
+		assertEquals(5, manager.getIncidentsAsArray().length); 
 	}
 
 	/**
@@ -341,7 +355,7 @@ public class ServiceWolfManagerTest {
 
 		try {
 			manager.addServiceGroup(null);
-			fail();
+			fail(); 
 		} catch (IllegalArgumentException e) {
 			assertEquals("Invalid service group name.", e.getMessage());
 			assertEquals(3, manager.getServiceGroupList().length);
@@ -352,7 +366,7 @@ public class ServiceWolfManagerTest {
 		try {
 			manager.addServiceGroup("");
 			fail();
-		} catch (IllegalArgumentException e) {
+		} catch (IllegalArgumentException e) { 
 			assertEquals("Invalid service group name.", e.getMessage());
 			assertEquals(3, manager.getServiceGroupList().length);
 			assertEquals("CSC IT", manager.getServiceGroupName());

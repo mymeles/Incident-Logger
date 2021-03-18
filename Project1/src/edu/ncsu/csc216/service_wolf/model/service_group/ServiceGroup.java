@@ -94,8 +94,8 @@ public class ServiceGroup {
 	 * @param incidents a representation of an incident
 	 */
 	public void addIncident(Incident incidents) {
-		if (incident.size() < 0 || helper(incidents))
-			throw new IllegalArgumentException("Incident cannot be created.");
+		if (helper(incidents))
+			throw new IllegalArgumentException("Incident cannot be created."); 
 		// add it at thge correct place
 		incident.add(incidents); // sort it 
 		setIncidentCounter(); 
