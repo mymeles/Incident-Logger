@@ -43,7 +43,7 @@ public class ServiceGroupsReader {
 				return serviceg; 
 			}
 		} catch (FileNotFoundException e) { 
-			throw new IllegalArgumentException("Unable to load file."); 
+			throw new IllegalArgumentException("Unable to load file.");  
 		}
 
 		Scanner scan = new Scanner(str);
@@ -57,7 +57,7 @@ public class ServiceGroupsReader {
 
 				serviceg.add(sg1);
 			} catch (IllegalArgumentException e) {
-				continue;
+				continue; 
 			}
 
 		}

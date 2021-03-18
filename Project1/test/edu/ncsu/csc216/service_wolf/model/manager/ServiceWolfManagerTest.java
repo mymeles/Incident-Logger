@@ -98,6 +98,9 @@ public class ServiceWolfManagerTest {
 	 */
 	@Test
 	public void testGetIncidentsAsArray() {
+		//testing incidents by id
+		assertNull(null, manager.getIncidentById(0));
+	
 		manager.loadFromFile("test-files/incidents1.txt");
 		assertEquals(3, manager.getServiceGroupList().length);
 		assertEquals("CSC IT", manager.getServiceGroupList()[0]);
@@ -180,7 +183,7 @@ public class ServiceWolfManagerTest {
 		manager.deleteIncidentById(2);
 		assertEquals(3, manager.getIncidentsAsArray().length);
 
-		manager.deleteIncidentById(9);
+		manager.deleteIncidentById(9); 
 		assertEquals(2, manager.getIncidentsAsArray().length);
 
 		manager.deleteIncidentById(4);
@@ -390,7 +393,7 @@ public class ServiceWolfManagerTest {
 		manager.deleteServiceGroup();
 
 		try {
-			manager.deleteServiceGroup();
+			manager.deleteServiceGroup(); 
 			fail();
 		} catch (IllegalArgumentException e) {
 			assertNull(null, manager.getServiceGroupName());

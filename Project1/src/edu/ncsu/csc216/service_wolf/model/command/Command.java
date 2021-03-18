@@ -12,8 +12,7 @@ package edu.ncsu.csc216.service_wolf.model.command;
 public class Command {
 
 	/**
-	 * A class within Command class that holds a list a possible command values the
-	 * incident state.
+	 * A class within Command class that holds a list a possible command values for incident state.
 	 *
 	 * @author Meles Meles 
 	 */
@@ -72,10 +71,11 @@ public class Command {
 			throw new IllegalArgumentException("These commands do NOT require an additional piece of information");
 		} 
 		else if ((CommandValue.ASSIGN.equals(command) || CommandValue.CANCEL.equals(command) || CommandValue.HOLD.equals(command) || CommandValue.RESOLVE.equals(command)) 
-				&& commandInformation.equals("")) {
+				&& 
+				"".equals(commandInformation)) { 
 			throw new IllegalArgumentException("These commands do NOT require an additional piece of information");
 		}
-		else {
+		else { 
 			this.command = command; 
 			this.commandInformation = commandInformation;  
 			this.commandMessage = commandMessage;  

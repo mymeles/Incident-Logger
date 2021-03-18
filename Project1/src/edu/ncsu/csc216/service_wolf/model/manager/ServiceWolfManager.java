@@ -34,7 +34,7 @@ public class ServiceWolfManager {
 	private ArrayList<ServiceGroup> serviceGroups = null;
 	/**
 	 * the currentservice group
-	 */
+	 */ 
 	private ServiceGroup currentServiceGroup;
 
 	/**
@@ -183,6 +183,9 @@ public class ServiceWolfManager {
 	 * @param message message of the incident
 	 */
 	public void addIncidentToServiceGroup(String title, String caller, String message) {
+		if(currentServiceGroup == null) {
+			return; 
+		}
 		Incident i = new Incident(title, caller, message);
 		currentServiceGroup.addIncident(i);
 		currentServiceGroup.setIncidentCounter();
@@ -204,7 +207,7 @@ public class ServiceWolfManager {
 					currentServiceGroup.setIncidentCounter();
 					return;
 				}
-			}
+			} 
 		}
 		throw new IllegalArgumentException("");
 

@@ -66,7 +66,7 @@ public class ServiceGroup {
 	/**
 	 * a method to set the incident counter
 	 */
-	public void setIncidentCounter() {
+	public void setIncidentCounter() { 
 		if (incident.size() == 0) {
 			Incident.setCounter(1);
 		} else {
@@ -78,7 +78,7 @@ public class ServiceGroup {
 	 * 
 	 * @param incidents is
 	 * @return a boolean
-	 */
+	 */ 
 	private boolean helper(Incident incidents) {
 		for (int i = 0; i < incident.size(); i++) {
 			if (incident.get(i).getId() == incidents.getId()) {
