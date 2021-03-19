@@ -80,25 +80,30 @@ public class ServiceWolfManager {
 	 */
 	public void loadFromFile(String fileName) {
 		ArrayList<ServiceGroup> temp = new ArrayList<ServiceGroup>();
-		try {
 		if (currentServiceGroup == null) {
-			
+			try {
 				temp = ServiceGroupsReader.readServiceGroupsFile(fileName);
 				currentServiceGroup = temp.get(0);
 				currentServiceGroup.setIncidentCounter();
 
-				for (int i = 0; i < temp.size(); i++) {
+				for (int i = temp.size() - 1; i >= 0; i--) {
 					sort(temp.get(i));
 				}
 				return;
+			} catch (IllegalArgumentException e) {
+				throw new IllegalArgumentException(e.getMessage());
 			}
-			temp = ServiceGroupsReader.readServiceGroupsFile(fileName);
-			currentServiceGroup = temp.get(0);
+		}
+
+		ArrayList<ServiceGroup> temp2 = new ArrayList<ServiceGroup>();
+		try {
+			temp2 = ServiceGroupsReader.readServiceGroupsFile(fileName);
+			currentServiceGroup = temp2.get(0);
 			currentServiceGroup.setIncidentCounter();
 			sort(currentServiceGroup);
- 
-			for (int i = 0; i < temp.size(); i++) {
-				sort(temp.get(i));
+
+			for (int i = temp2.size() - 1; i >= 0; i--) {
+				sort(temp2.get(i));
 			}
 
 		} catch (IllegalArgumentException e) {
@@ -126,7 +131,6 @@ public class ServiceWolfManager {
 			return list;
 		}
 	}
-
 	/**
 	 * A method the retrives an incident by a refernce id
 	 * 
@@ -261,7 +265,6 @@ public class ServiceWolfManager {
 		sort(temp);
 
 		loadServiceGroup(updateName);
-
 	}
 
 	/**
@@ -302,12 +305,10 @@ public class ServiceWolfManager {
 		if (currentServiceGroup == null) {
 			throw new IllegalArgumentException("No service group selected.");
 		}
-
 		else if (serviceGroups.size() == 1) {
 			serviceGroups.remove(0);
 			currentServiceGroup = null;
 		}
-
 		if (serviceGroups.size() > 0) {
 			for (int i = 0; i < serviceGroups.size(); i++) {
 				if (currentServiceGroup.getServiceGroupName().equals(serviceGroups.get(i).getServiceGroupName())) {
@@ -326,7 +327,6 @@ public class ServiceWolfManager {
 	 * @param sg serviceGroup passed to be sorted
 	 */
 	private void sort(ServiceGroup sg) {
-
 		for (int i = 0; i < serviceGroups.size(); i++) {
 			if (serviceGroups.get(i).getServiceGroupName().equals(sg.getServiceGroupName())) {
 				return;
