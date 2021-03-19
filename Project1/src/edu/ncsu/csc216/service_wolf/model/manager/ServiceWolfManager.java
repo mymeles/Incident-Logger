@@ -1,11 +1,6 @@
-
-/**
- * 
- */
 package edu.ncsu.csc216.service_wolf.model.manager;
 
 import java.util.ArrayList;
-
 
 import edu.ncsu.csc216.service_wolf.model.command.Command;
 import edu.ncsu.csc216.service_wolf.model.incident.Incident;
@@ -18,22 +13,22 @@ import edu.ncsu.csc216.service_wolf.model.service_group.ServiceGroup;
  * current serviceGroup, and handles events from the GUI. ServiceWolf implements
  * the Singleton Design Pattern and is accessed through the getInstance method.
  * 
- * @author meles
+ * @author Meles Meles
  *
  */
 public class ServiceWolfManager {
 
 	/**
-	 * cretae an instance of servicewolf manager
+	 * Creates an instance of servicewolf manager
 	 */
 	private static ServiceWolfManager instance;
 
 	/**
-	 * A represerntation of service groups
+	 * An ArrayList represerntation of service groups
 	 */
 	private ArrayList<ServiceGroup> serviceGroups = null;
 	/**
-	 * the currentservice group
+	 * A serviceGroup called currentServiceGroup
 	 */
 	private ServiceGroup currentServiceGroup;
 
@@ -43,7 +38,8 @@ public class ServiceWolfManager {
 	String name;
 
 	/**
-	 * A constructor for Service wolf manager
+	 * A constructor for Service wolf manager that constructs an ArrayList of
+	 * serviceGroup
 	 */
 	private ServiceWolfManager() {
 		serviceGroups = new ArrayList<ServiceGroup>();
@@ -51,7 +47,7 @@ public class ServiceWolfManager {
 	}
 
 	/**
-	 * a methos tha returns the instance of selfWolfService Manager
+	 * A method that return the instance of selfWolfService Manager
 	 * 
 	 * @return a serviceWolf Manager
 	 */
@@ -63,9 +59,13 @@ public class ServiceWolfManager {
 	}
 
 	/**
-	 * A method to save service groups to a file using service group writer
+	 * A method to save service groups to a file using the service writer class
+	 * class directly. then loads the file that it saved back again.
 	 * 
 	 * @param fileName a location where the file is saved
+	 * 
+	 * @throws IAE if the current service group is empty or the incidents in it are
+	 *             empty.
 	 */
 	public void saveToFile(String fileName) {
 		if (currentServiceGroup == null || currentServiceGroup.getIncidents().size() == 0) {
@@ -76,38 +76,33 @@ public class ServiceWolfManager {
 	}
 
 	/**
-	 * Uses the ServiceGroupReader to read the given fileName.
+	 * A method to read service groups from a file using the calls service reader
+	 * class. if the service group is empty it directly reads
 	 * 
-	 * @param fileName location of a service file
+	 * @param fileName location of a service file\
+	 * 
+	 * @throws IAE if the file can not be read
 	 */
 	public void loadFromFile(String fileName) {
 		ArrayList<ServiceGroup> temp = new ArrayList<ServiceGroup>();
-		if (currentServiceGroup == null) {
-			try {
+		try {
+			if (currentServiceGroup == null) {
 				temp = ServiceGroupsReader.readServiceGroupsFile(fileName);
 				currentServiceGroup = temp.get(0);
 				currentServiceGroup.setIncidentCounter();
-
 				for (int i = temp.size() - 1; i >= 0; i--) {
 					sort(temp.get(i));
 				}
 				return;
-			} catch (IllegalArgumentException e) {
-				throw new IllegalArgumentException(e.getMessage());
 			}
-		}
-
-		ArrayList<ServiceGroup> temp2 = new ArrayList<ServiceGroup>();
-		try {
-			temp2 = ServiceGroupsReader.readServiceGroupsFile(fileName);
-			currentServiceGroup = temp2.get(0);
+			temp = ServiceGroupsReader.readServiceGroupsFile(fileName);
+			currentServiceGroup = temp.get(0);
 			currentServiceGroup.setIncidentCounter();
 			sort(currentServiceGroup);
 
-			for (int i = temp2.size() - 1; i >= 0; i--) {
-				sort(temp2.get(i));
+			for (int i = temp.size() - 1; i >= 0; i--) {
+				sort(temp.get(i));
 			}
-
 		} catch (IllegalArgumentException e) {
 			throw new IllegalArgumentException(e.getMessage());
 		}
@@ -252,9 +247,16 @@ public class ServiceWolfManager {
 	}
 
 	/**
-	 * A method to edit service group of thier name
+	 * This method updates the serviceGroupName of the currentServicewGroupName and
+	 * loads the updates serviceGroup to be the current service group by calling the
+	 * method load service group.
 	 * 
-	 * @param updateName a string value of upadte service group name
+	 * @param updateName a string value of the new name of the update service group
+	 *                   name
+	 * 
+	 * @throws IAE if the name of the serviceGroup is null or empty or duplicate in
+	 *             the service sroup list - If the current service group is null
+	 *             throws an IAE.
 	 */
 	public void editServiceGroup(String updateName) {
 		if (updateName == null || "".equals(updateName) || checkDuplicateServiceName(updateName)) {
@@ -275,9 +277,14 @@ public class ServiceWolfManager {
 
 	/**
 	 * A method that takes in a String value for serviceName and creates a new
-	 * serviceGroup in the serviceGroup list
+	 * serviceGroup in the serviceGroup list and loads the new serviceGroup as the
+	 * CurrentServiceGroup by calling loadServiceGroup();
 	 * 
 	 * @param serviceGroupName a string value of the service group name
+	 * 
+	 * @throws IAE if the serviceGroupName is null or empty - if the
+	 *             serviceGroupName is duplicate and lareaday exist in the
+	 *             serviceGoups then an IAE is thrown.
 	 */
 	public void addServiceGroup(String serviceGroupName) {
 		if (serviceGroupName == null || "".equals(serviceGroupName) || checkDuplicateServiceName(serviceGroupName)) {
@@ -305,7 +312,12 @@ public class ServiceWolfManager {
 	}
 
 	/**
-	 * A method to delet a service group
+	 * A method to delete current serviceGroups from the serviceGroups. after
+	 * deleting the method sets the currentServiceGroup to the serviceGroups list of
+	 * index of zero. if the size of the list is empty the the current serviceGrroup
+	 * is set to null.
+	 * 
+	 * @throws IllegalArgumentException If the currentServiceGroup is null.
 	 */
 	public void deleteServiceGroup() {
 		if (currentServiceGroup == null) {
@@ -330,17 +342,17 @@ public class ServiceWolfManager {
 	}
 
 	/**
-	 * a helper method to sert the list
+	 * A helping method to sort service groups as thier are added into the list.
+	 * asorting by insertion.
 	 * 
-	 * @param sg serviceGroup passed to be sorted
+	 * @param sg serviceGroup passed to be added in serviceGroups list.
 	 */
 	private void sort(ServiceGroup sg) {
 
 		for (int i = 0; i < serviceGroups.size(); i++) {
 			if (serviceGroups.get(i).getServiceGroupName().equals(sg.getServiceGroupName())) {
 				return;
-			}
-			else if (serviceGroups.get(i).getServiceGroupName().compareTo(sg.getServiceGroupName()) > 0) {
+			} else if (serviceGroups.get(i).getServiceGroupName().compareTo(sg.getServiceGroupName()) > 0) {
 				serviceGroups.add(i, sg);
 				return;
 			}

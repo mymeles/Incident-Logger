@@ -9,25 +9,26 @@ import edu.ncsu.csc216.service_wolf.model.command.Command;
 import edu.ncsu.csc216.service_wolf.model.incident.Incident;
 
 /**
- * A class that represents ServiceGroups
+ * A class that represetns servicegroup that inclides a list of incidents.
  * 
- * @author meles
+ * @author Meles
  *
  */
 public class ServiceGroup {
 
 	/**
-	 * a string representaion of service group name
+	 * A string representaion of service group name.
 	 */
 	private String serviceGroupName;
 
 	/**
-	 * A List of incidents called incident
+	 * A List of incidents called incident.
 	 */
 	ArrayList<Incident> incident;
 
 	/**
-	 * a constructor for ServiceGroup
+	 * A method to construct s serviceGroup with a passed name pararmnter and an
+	 * arraylist of incdients
 	 * 
 	 * @param serviceGroupName is a string value of the service group name
 	 */
@@ -62,7 +63,9 @@ public class ServiceGroup {
 	}
 
 	/**
-	 * a method to set the incident counter
+	 * a method to set the incident counter, if the incidnets size is zero it will
+	 * set the counter by default to "1". other wise it will set the counter one
+	 * higher the the last incident in the list.
 	 */
 	public void setIncidentCounter() {
 		if (incident.size() == 0) {
@@ -76,7 +79,7 @@ public class ServiceGroup {
 	 * A helper method to look for duplicate incidents, returns true if duplicate,
 	 * false otherwise
 	 * 
-	 * @param incidents is
+	 * @param incidents that are processed for duplicate check
 	 * @return a boolean
 	 */
 	private boolean helper(Incident incidents) {
@@ -89,9 +92,14 @@ public class ServiceGroup {
 	}
 
 	/**
-	 * a method to add incdient
+	 * A method to add incdient by a sorted order by thier id and after adding the
+	 * incidents the counter is incremnted so the it is ready for the next id to be
+	 * added.
 	 * 
 	 * @param incidents a representation of an incident
+	 * 
+	 * @throws IllegalArgumentException if passed incidents to be added are
+	 *                                  duplicates by thier id's
 	 */
 	public void addIncident(Incident incidents) {
 		if (helper(incidents))
@@ -112,7 +120,7 @@ public class ServiceGroup {
 	}
 
 	/**
-	 * a method that returns incdeints
+	 * A method that returns incdeints as an ArrayList
 	 * 
 	 * @return an arraylist of incidents
 	 */
@@ -121,10 +129,11 @@ public class ServiceGroup {
 	}
 
 	/**
-	 * a method that retrives incidents with the given index nmber
+	 * a method that retrives incidents with the given index number, otherwise it
+	 * would just retrun null.
 	 * 
 	 * @param id an integer referance of an incident
-	 * @return an incident
+	 * @return an incident or null if the incidents can not be found.
 	 */
 	public Incident getIncidentById(int id) {
 		if (id > 0) {
@@ -139,10 +148,14 @@ public class ServiceGroup {
 	}
 
 	/**
-	 * a method that excetues commands
+	 * A methods that exceutes commands on incidents by lokking for them by thier
+	 * Id's.
 	 * 
-	 * @param id      a unique id if incident
+	 * @param id      An id that represents the wanted incidents.
 	 * @param command is a command for incident
+	 * 
+	 * @throws UnsupportedOperationException if the command issued is not supported
+	 *                                       by the incidnets states
 	 */
 	public void executeCommand(int id, Command command) {
 		try {
@@ -158,7 +171,7 @@ public class ServiceGroup {
 	}
 
 	/**
-	 * A method to delete an incident by the passed parameter
+	 * A method to delete an incident by the passed parameter(incidnets id)
 	 * 
 	 * @param id is an integer reference of incident
 	 */
@@ -172,6 +185,12 @@ public class ServiceGroup {
 
 	}
 
+	/**
+	 * The toString method is overriden so the required String format is returned
+	 * when we exporte the class onto a txt file.
+	 * 
+	 * @return a string representation of the class ServiceGroup
+	 */
 	@Override
 	public String toString() {
 		String inci = "";

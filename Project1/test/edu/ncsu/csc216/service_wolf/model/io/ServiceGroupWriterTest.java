@@ -88,14 +88,22 @@ public class ServiceGroupWriterTest {
 		ServiceGroupWriter.writeServiceGroupsToFile("test-files/test-Incident1.txt", serviceGroup);
 
 		checkFiles("test-files/exp_i1.txt", "test-files/test-Incident1.txt"); 
+
+		try {
+			ServiceGroupWriter.writeServiceGroupsToFile("test-fils/tjndfnf.txt", serviceGroup);
+			fail();
+		} catch(IllegalArgumentException e) {
+			assertEquals("Unable to save file.", e.getMessage());
+		}
+		
 	} 
 
 	/**
-	 * Helper method to compare two files for the same contents
+	 * Helper method to compare two files for the same contents 
 	 * 
 	 * @param expFile expected output
 	 * @param actFile actual output
-	 */
+	 */ 
 	private void checkFiles(String expFile, String actFile) {
 		try (Scanner expScanner = new Scanner(new FileInputStream(expFile));
 				Scanner actScanner = new Scanner(new FileInputStream(actFile));) {

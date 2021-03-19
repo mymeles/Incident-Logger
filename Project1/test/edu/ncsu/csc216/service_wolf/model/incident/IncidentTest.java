@@ -18,43 +18,46 @@ import edu.ncsu.csc216.service_wolf.model.command.Command.CommandValue;
  */
 public class IncidentTest {
 
-	// create a commad
-
 	/**
 	 * A command for testing
 	 */
 	private Command command;
 
-	// values to test the second constructor
-
 	/**
 	 * An integer id for test incident
 	 */
 	private static final int ID = 2;
+	
 	/**
 	 * A string state fot test incidnet
 	 */
 	private static final String STATE = "Canceled";
+	
 	/**
 	 * A string name title for incident
 	 */
 	private static final String TITLE = "Piazza";
+	
 	/**
 	 * A string name caller for incident
 	 */
 	private static final String CALLER = "sesmith5";
+	
 	/**
 	 * An integer named reopencount for incident
 	 */
 	private static final int REOPENCOUNT = 0;
+	
 	/**
 	 * A string named Owner for incident
 	 */
 	private static final String OWNER = "Unowned";
+	
 	/**
 	 * A string named statusd for incident
 	 */
 	private static final String STATUSD = Incident.CANCELLATION_NOT_AN_INCIDENT;
+	
 	/**
 	 * An arraylist of strings contatning incident messages
 	 */
@@ -149,9 +152,6 @@ public class IncidentTest {
 			assertEquals("Incident cannot be created.", e.getMessage());
 			assertNull(null, in1);
 		}
-
-		// assign = new Command(CommandValue.ASSIGN, "Assigned", "asking for a new
-		// setup");
 
 	}
 
@@ -312,10 +312,10 @@ public class IncidentTest {
 	}
 
 	/**
-	 * Testing ProgressState
+	 * Testing IncidentState through the method Update in incident calss 
 	 */
 	@Test
-	public void testProgressState() {
+	public void testStates() {
 		Incident in = null;
 		in = new Incident(TITLE, CALLER, "Set up piazza for spring 2021");
 		assertEquals("New", in.getState());
@@ -576,6 +576,6 @@ public class IncidentTest {
 					"- Set up piazza for spring 2021\n- IN progress; have been assign an owner\n- Waiting for a work around\n- It is not an incident\n",
 					in.getIncidentLogMessages());
 		}
-	}
+	} 
 
 }

@@ -10,7 +10,7 @@ import edu.ncsu.csc216.service_wolf.model.service_group.ServiceGroup;
 /**
  * A class to write service group into a file
  * 
- * @author meles
+ * @author Meles Meles 
  *
  */
 public class ServiceGroupWriter {
@@ -23,7 +23,7 @@ public class ServiceGroupWriter {
 	}
 	
 	/**
-	 * Writes the given service group to the given file location
+	 * Writes the given service group array list to the given file location
 	 * 
 	 * @param fileName     and string that holds the loaction of the file that the
 	 *                     service group is written

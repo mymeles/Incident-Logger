@@ -8,7 +8,11 @@ import java.util.ArrayList;
 import edu.ncsu.csc216.service_wolf.model.command.Command;
 
 /**
- * A class that represents an incident that is Mannaged
+ * A class that represents an incident that is Mannaged under
+ * serviceWolfManager. An incident can have 5 Incidet states which are, New, In
+ * progress, on HOld, Canceled and resolved. this states take is Commands like
+ * ASSIGN, RESOLVE, REOPEN, CANCEL, INVESTIGATW and ONHOLD to navigate through
+ * the FSM state.
  * 
  * @author Meles Meles
  *
@@ -182,7 +186,8 @@ public class Incident {
 	 * @param caller  the name of the incident caller
 	 * @param message the message of the incident
 	 * 
-	 * @throws IAE If any of the given parameters are null or empty string.
+	 * @throws IllegalArgumentException If any of the given parameters are null or
+	 *                                  empty string.
 	 */
 	public Incident(String title, String caller, String message) {
 
@@ -235,8 +240,8 @@ public class Incident {
 	 * the passed parameter
 	 * 
 	 * @param incidentLog an ArrayList of IncidentLog messages
-	 * @throws and IAE stating "Incident cannot be created" if the Arraylist is null
-	 *             or empty
+	 * @throws and IllegalArgumentException stating "Incident cannot be created" if
+	 *             the Arraylist is null or empty
 	 */
 	private void setLog(ArrayList<String> incidentLog) {
 		if (incidentLog == null)
@@ -263,7 +268,7 @@ public class Incident {
 	 * 
 	 * @param id the incident id to set
 	 * 
-	 * @throws and IAE if the id is zero and less than zero
+	 * @throws and IllegalArgumentException if the id is zero and less than zero
 	 */
 	private void setId(int id) {
 
@@ -293,7 +298,7 @@ public class Incident {
 	 * @param condition is a boolean
 	 * @param state     is the IncidnetState we want to set it to
 	 * 
-	 * @throws an IAE if the passed boolean is false
+	 * @throws an IllegalArgumentException if the passed boolean is false
 	 */
 	private void createState(boolean condition, IncidentState state) {
 		if (condition) {
@@ -307,12 +312,27 @@ public class Incident {
 
 	/**
 	 * sets the incidets state from the passesd parameter, it checks for the
-	 * approipraite values for the state to be set, checks owner and status detail
+	 * approipraite values for the states to be set and checks for the incidnets
+	 * owners and status detail
 	 * 
 	 * @param state the incident state to set
 	 * 
-	 * @throws an IAE if non of the five states condition is met or if the passed
-	 *            state string is null or empty or misspelled
+	 * @throws an IllegalArgumentException if non of the five states condition is
+	 *            met or if the passed state string is null or empty or misspelled.
+	 *            - If the state is New and the it does have an owner or a status
+	 *            detail it will the the IllegalArgumentException expception. - if
+	 *            the state is inProgreess and it doesn't have an owner and the
+	 *            status detail is other than NO_status it will throw an
+	 *            IllegalArgumentException excpetion. - If the state is onHold and
+	 *            it doesn't have an owner or the status detail isn't accoridng to
+	 *            the oh hold reasons it will throw an IllegalArgumentException
+	 *            exception. - If the state is resolved and it doesn't have an owner
+	 *            or the status detail isn't accoridng to the resolved reasons it
+	 *            will throw an IllegalArgumentException exception. -- If the state
+	 *            is canceled and it doesn't have an owner or the status detail
+	 *            isn't accoridng to the canceled reasons it will throw an
+	 *            IllegalArgumentException exception. - if state name is misspelled
+	 *            it will throw an IllegalArgumentException exception
 	 */
 	private void setState(String state) {
 		if (state == null || "".equals(state))
@@ -362,7 +382,7 @@ public class Incident {
 	 * 
 	 * @param title the title to set
 	 * 
-	 * @throws an IAE if title is null or an empty string 
+	 * @throws an IllegalArgumentException if title is null or an empty string
 	 */
 	private void setTitle(String title) {
 		if (title == null || "".equals(title)) {
@@ -384,6 +404,9 @@ public class Incident {
 	 * sets the incidets caller from the passesd paramter
 	 * 
 	 * @param caller the caller to set
+	 * 
+	 * @throws IllegalArgumentException if the passed paramter caller is null or
+	 *                                  empty
 	 */
 	private void setCaller(String caller) {
 		if (caller == null || "".equals(caller)) {
@@ -406,7 +429,8 @@ public class Incident {
 	 * 
 	 * @param reopenCount the reopenCount to set
 	 * 
-	 * @throws an IAE if the reopen count value is less then zero 
+	 * @throws an IllegalArgumentException if the reopen count value is less then
+	 *            zero
 	 */
 	private void setReopenCount(int reopenCount) {
 		if (reopenCount < 0) {
@@ -429,8 +453,8 @@ public class Incident {
 	 * 
 	 * @param owner the owner to set
 	 * 
-	 * @throws an IAE stating "Incident cannot be created" if the title is empty or
-	 *             null
+	 * @throws an IllegalArgumentException stating "Incident cannot be created" if
+	 *            the title is empty or null
 	 */
 	private void setOwner(String owner) {
 		if (owner == null || "".equals(owner)) {
@@ -453,8 +477,8 @@ public class Incident {
 	 * 
 	 * @param statusDetails the statusDetails to set
 	 * 
-	 * @throws IAE stating "Incident cannot be created" if the status detail is
-	 *             empty or null
+	 * @throws IllegalArgumentException stating "Incident cannot be created" if the
+	 *                                  status detail is null or empty
 	 */
 	private void setStatusDetails(String statusDetails) {
 		if (statusDetails == null || "".equals(statusDetails)) {
@@ -464,18 +488,19 @@ public class Incident {
 	}
 
 	/**
-	 * This method add messages to the inciodent log
+	 * This method adds messages to the inciodent log
 	 * 
 	 * @param message to set the message in the incident log
-	 * @return an integer reference of the log
+	 * 
+	 * @throws IllegalArgumentException if the passed parameter is null or an empty
+	 *                                  strig
 	 */
-	private int addMessageToIncidentLog(String message) {
+	private void addMessageToIncidentLog(String message) {
 		if (message == null || "".equals(message)) {
 			throw new IllegalArgumentException("Incident cannot be created.");
 		}
 		incidentLog.add(message);
 
-		return incidentLog.size();
 	}
 
 	/**
@@ -509,9 +534,12 @@ public class Incident {
 		return logMessages;
 	}
 
-	// int id, String state, String title, String caller, int reopenCount, String
-	// owner,
-	// String statusDetails, ArrayList<String> incidentLog) {
+	/**
+	 * an overriden toString method so the classes string prepresenataion can be
+	 * modified the the specified need below 2,
+	 * id,Incidentstate,titel,caller,reopencount,owner,statusdetails - message1 -
+	 * message2
+	 */
 	@Override
 	public String toString() {
 		return "* " + incidentid + "," + currentState.getStateName() + "," + title + "," + caller + "," + reopenCount
@@ -525,6 +553,8 @@ public class Incident {
 	 * @param command a Command
 	 * 
 	 * @throws UnsupportedOperationException if an invalid command is passed
+	 *                                       according to the Incidents state it is
+	 *                                       suppose to exceute.
 	 */
 	public void update(Command command) throws UnsupportedOperationException {
 		currentState.updateState(command);
@@ -563,25 +593,31 @@ public class Incident {
 	}
 
 	/**
-	 * A class that represents a New incident of the service wolf and implemented in
-	 * the Interface Incident State
+	 * A class that represents a New incident of the service wolf and implemented
+	 * New state is the Begining of the Incident FSM system. thourgh it's commands
+	 * it can go to eithre inprogress state or Canceld state.
 	 * 
-	 * @author meles
+	 * @author Meles Meles
 	 *
 	 */
 	public class NewState implements IncidentState {
 
 		/**
-		 * Constructs New State so it is implemneted in Incident interface
+		 * Constructs New State so it is implemneted in Incident interface.
 		 */
 		private NewState() {
 
 		}
 
 		/**
-		 * A method that updates the Incident state by passing through command.
+		 * A method that updates the Incident state by passing through command. the
+		 * passed command updates the incidnets according to what they are set to. the
+		 * commands this state can take is ASSIGN and CANCEL.
 		 *
 		 * @param command is a Command
+		 * 
+		 * @throws UnsupportedOperationException if the command issued is other than
+		 *                                       ASSIGN or CANCEL
 		 */
 		public void updateState(Command command) {
 
@@ -614,10 +650,12 @@ public class Incident {
 	}
 
 	/**
-	 * A class that represents a InProgress incident of the service wolf and
-	 * implemented in the Interface Incident State
+	 * A class that represents an InProgress incident of the service wolf. In the
+	 * FSM system in prgress incident state can only one of these Incident states.
+	 * it can go to itself, in On hold state, resolved state or it can go to
+	 * canceled state.
 	 * 
-	 * @author meles
+	 * @author Meles Meles
 	 *
 	 */
 	public class InProgressState implements IncidentState {
@@ -630,9 +668,15 @@ public class Incident {
 		}
 
 		/**
-		 * A method that updates the Incident state by passing through command
+		 * A method that updates the Incident state by passing through command. the
+		 * Commands that are valid in this method are ASSIGN, HOLD, RESOLVE, CANCEL.
+		 * depending on the command the incidnet goes into different incident classes.
+		 * 
 		 * 
 		 * @param command is a Command
+		 * 
+		 * @throws UnsupportedOperationException if the passed command is other than
+		 *                                       ASSIGN, HOLD, RESOLVE, CANCEL.
 		 */
 		public void updateState(Command command) {
 			switch (command.getCommand()) {
@@ -672,10 +716,12 @@ public class Incident {
 	}
 
 	/**
-	 * A class that represents a OnHold incident of the service wolf and implemented
-	 * in the Interface Incident State
+	 * A class that represents a OnHold incident of the service wolf and
+	 * implemented. In the FSM system this class can only go into inprgress by the
+	 * command INVESTIGATE.
 	 * 
-	 * @author meles
+	 * 
+	 * @author Meles Meles
 	 *
 	 */
 	public class OnHoldState implements IncidentState {
@@ -688,9 +734,14 @@ public class Incident {
 		}
 
 		/**
-		 * A method that updates the Incident state by passing through command
+		 * A method that updates the Incident state by passing through a Command. if the
+		 * passed Command is INVESTIGATE then the Status Details is set to No status and
+		 * teh incident is updated to InProgress.
 		 * 
 		 * @param command is a Command
+		 * 
+		 * @throws UnsupportedOperationException if the passed command is other than
+		 *                                       INVESTIGATE
 		 */
 		public void updateState(Command command) {
 			switch (command.getCommand()) {
@@ -710,14 +761,13 @@ public class Incident {
 		 */
 		public String getStateName() {
 			return ON_HOLD_NAME;
-
 		}
-
 	}
 
 	/**
-	 * A class that represents a Resolved incident of the service wolf and
-	 * implemented in the Interface Incident State
+	 * A class that represents a Resolved incident of the service wolf in the FSM
+	 * system. In resolved state an incdietns can only be Reopened or cancel by the
+	 * commands of REOPEN and CANCEL respectivly.
 	 * 
 	 * @author meles
 	 *
@@ -731,9 +781,15 @@ public class Incident {
 		}
 
 		/**
-		 * A method that updates the Incident state by passing through command
+		 * A method that updates the Incident state by passing through command. IF the
+		 * command is Reopen the status detail is set to No status and the incident is
+		 * update to go into inprogress state. If the command is cancel the incidents is
+		 * canceled and is updated to the cancel incidentSate class.
 		 * 
 		 * @param command is a Command
+		 * 
+		 * @throwsUnsupportedOperationException if the ordered command is other than
+		 *                                      REOPEN or CANCEL
 		 */
 		public void updateState(Command command) {
 			switch (command.getCommand()) {
@@ -758,7 +814,6 @@ public class Incident {
 		 * @return a string value of the incidents state name
 		 */
 		public String getStateName() {
-			// TODO Auto-generated method stub
 			return RESOLVED_NAME;
 		}
 
@@ -769,7 +824,7 @@ public class Incident {
 	 * implemented in the Interface Incident State
 	 * 
 	 * @author meles
-	 *
+	 * 
 	 */
 	public class CanceledState implements IncidentState {
 
@@ -782,10 +837,15 @@ public class Incident {
 		}
 
 		/**
-		 * A method that updates the Incident state by passing through command
+		 * A method that updates the Incident state by passing through command which are
+		 * validated by the the mothod to see if cancel state is preforming them. This
+		 * method does not modifiy the incidents, it cancels them and leaves them as is.
 		 * 
 		 * @param command a command that updates the state
-		 *
+		 * 
+		 * @throws UnsupportedOperationException if the command order is any of these;
+		 *                                       ASSIGN, CANCEL, REOPEN, INVESTIGATE,
+		 *                                       HOLD and RESOLVE
 		 */
 		public void updateState(Command command) {
 			switch (command.getCommand()) {
