@@ -73,13 +73,6 @@ public class ServiceWolfManager {
 		loadFromFile(fileName);
 	}
 
-	
-	private void fileProcess(ArrayList<ServiceGroup> temp) {
-		for (int i = 0; i < temp.size(); i++) {
-			sort(temp.get(i));
-		}
-	}
-
 	/**
 	 * Uses the ServiceGroupReader to read the given fileName.
 	 * 
@@ -88,16 +81,24 @@ public class ServiceWolfManager {
 	public void loadFromFile(String fileName) {
 		ArrayList<ServiceGroup> temp = new ArrayList<ServiceGroup>();
 		try {
-			if (currentServiceGroup == null) {
+		if (currentServiceGroup == null) {
+			
 				temp = ServiceGroupsReader.readServiceGroupsFile(fileName);
 				currentServiceGroup = temp.get(0);
-				fileProcess(temp);
+				currentServiceGroup.setIncidentCounter();
+
+				for (int i = 0; i < temp.size(); i++) {
+					sort(temp.get(i));
+				}
 				return;
-			} else { 
-				temp = ServiceGroupsReader.readServiceGroupsFile(fileName);
-				currentServiceGroup = temp.get(0);
-				sort(currentServiceGroup);
-				fileProcess(temp);
+			}
+			temp = ServiceGroupsReader.readServiceGroupsFile(fileName);
+			currentServiceGroup = temp.get(0);
+			currentServiceGroup.setIncidentCounter();
+			sort(currentServiceGroup);
+ 
+			for (int i = 0; i < temp.size(); i++) {
+				sort(temp.get(i));
 			}
 
 		} catch (IllegalArgumentException e) {
@@ -159,7 +160,6 @@ public class ServiceWolfManager {
 	 * @param id an integer that refrences incidents
 	 */
 	public void deleteIncidentById(int id) {
-
 		if (currentServiceGroup == null) {
 			return;
 		}
@@ -185,7 +185,6 @@ public class ServiceWolfManager {
 		} catch (IllegalArgumentException e) {
 			//
 		}
-
 	}
 
 	/**
