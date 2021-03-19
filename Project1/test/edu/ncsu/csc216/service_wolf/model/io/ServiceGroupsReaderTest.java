@@ -5,7 +5,6 @@ package edu.ncsu.csc216.service_wolf.model.io;
 
 import static org.junit.Assert.*;
 
-import java.io.FileNotFoundException;
 import java.util.ArrayList;
 
 import org.junit.Test;

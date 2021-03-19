@@ -275,7 +275,7 @@ public class IncidentTest {
 
 		// testing valid cancel state constructor
 		Incident in6 = new Incident(40, "Canceled", "title40", "caller40", 1, "Unowned", "Not an Incident", MESSAGES);
-		assertEquals("Canceled", in6.getState()); 
+		assertEquals("Canceled", in6.getState());
 		assertEquals("Not an Incident", in6.getStatusDetails());
 		// System.out.println(in6.toString());
 
@@ -311,6 +311,9 @@ public class IncidentTest {
 
 	}
 
+	/**
+	 * Testing ProgressState
+	 */
 	@Test
 	public void testProgressState() {
 		Incident in = null;

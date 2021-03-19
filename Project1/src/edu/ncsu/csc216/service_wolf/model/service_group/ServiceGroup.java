@@ -4,8 +4,6 @@
 package edu.ncsu.csc216.service_wolf.model.service_group;
 
 import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
 
 import edu.ncsu.csc216.service_wolf.model.command.Command;
 import edu.ncsu.csc216.service_wolf.model.incident.Incident;
@@ -75,6 +73,8 @@ public class ServiceGroup {
 	}
 
 	/**
+	 * A helper method to look for duplicate incidents, returns true if duplicate,
+	 * false otherwise
 	 * 
 	 * @param incidents is
 	 * @return a boolean
@@ -96,7 +96,6 @@ public class ServiceGroup {
 	public void addIncident(Incident incidents) {
 		if (helper(incidents))
 			throw new IllegalArgumentException("Incident cannot be created.");
-		// add it at thge correct place
 		if (incident.size() == 0) {
 			incident.add(incidents);
 			setIncidentCounter();
@@ -107,32 +106,9 @@ public class ServiceGroup {
 				incident.add(i, incidents);
 				setIncidentCounter();
 				return;
-			} 
+			}
 		}
 		incident.add(incidents);
-		// incident.add(incidents); // sort it
-
-//		// compring true and false staments to determine adding incidnet
-//		switch ((incident.size() > 0) + "-" + helper(incidents)) { 
-//		case "false-true":
-//		case "false-false":
-//			incident.add(incidents);
-//			setIncidentCounter();
-//			break; 
-//		case "true-false":
-//			incident.add(incidents);
-//			setIncidentCounter();
-//			break; 
-//		default:
-//			throw new IllegalArgumentException("Incident cannot be created.");
-//		}
-//		Collections.sort(incident, new Comparator<Incident>() {
-//			@Override
-//			public int compare(Incident i1, Incident i2) {
-//				return i1.getId() - i2.getId();
-//			}
-//		});
-//	}
 	}
 
 	/**

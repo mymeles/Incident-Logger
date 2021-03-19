@@ -16,6 +16,13 @@ import edu.ncsu.csc216.service_wolf.model.service_group.ServiceGroup;
 public class ServiceGroupWriter {
 
 	/**
+	 * A default constructor for ServiceGroupWriter
+	 */
+	public void servieGroupWriter() {
+		//
+	}
+	
+	/**
 	 * Writes the given service group to the given file location
 	 * 
 	 * @param fileName     and string that holds the loaction of the file that the
@@ -25,10 +32,6 @@ public class ServiceGroupWriter {
 	 * @throws IOExceptionIOException if Servicegroup can't not be written to the
 	 *                                file given
 	 */
-	
-	public void ServieGroupWriter() {
-		
-	}
 	public static void writeServiceGroupsToFile(String fileName, ArrayList<ServiceGroup> serviceGroup) {
 		PrintStream fileWriter;
 		try {

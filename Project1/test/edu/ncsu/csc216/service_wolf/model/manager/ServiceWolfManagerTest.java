@@ -5,19 +5,14 @@ package edu.ncsu.csc216.service_wolf.model.manager;
 
 import static org.junit.Assert.*;
 
-import java.io.FileInputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.util.ArrayList;
-import java.util.Properties;
+
 
 import org.junit.Before;
 import org.junit.Test;
 
 import edu.ncsu.csc216.service_wolf.model.command.Command;
 import edu.ncsu.csc216.service_wolf.model.command.Command.CommandValue;
-import edu.ncsu.csc216.service_wolf.model.incident.Incident;
-import edu.ncsu.csc216.service_wolf.model.service_group.ServiceGroup;
+
 
 /**
  * A class to test ServiceWolfManager
@@ -28,7 +23,7 @@ import edu.ncsu.csc216.service_wolf.model.service_group.ServiceGroup;
 public class ServiceWolfManagerTest {
 
 	/**
-	 * 
+	 * A instance of the the class its self called manager 
 	 */
 	private ServiceWolfManager manager;
 
