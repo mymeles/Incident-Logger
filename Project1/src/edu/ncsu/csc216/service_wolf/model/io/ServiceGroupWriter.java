@@ -18,7 +18,7 @@ public class ServiceGroupWriter {
 	/**
 	 * A default constructor for ServiceGroupWriter
 	 */
-	public void ervieGroupWriter() {
+	public void servieGroupWriter() {
 		//
 	}
 	
