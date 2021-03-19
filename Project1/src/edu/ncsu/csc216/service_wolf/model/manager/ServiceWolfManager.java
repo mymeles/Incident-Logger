@@ -19,7 +19,7 @@ import edu.ncsu.csc216.service_wolf.model.service_group.ServiceGroup;
 public class ServiceWolfManager {
 
 	/**
-	 * Creates an instance of servicewolf manager
+	 * Creates an instance of servicewolf manager 
 	 */
 	private static ServiceWolfManager instance;
 
@@ -64,8 +64,8 @@ public class ServiceWolfManager {
 	 * 
 	 * @param fileName a location where the file is saved
 	 * 
-	 * @throws IAE if the current service group is empty or the incidents in it are
-	 *             empty.
+	 * @throws IllegalArgumentException if the current service group is empty or the
+	 *                                  incidents in it are empty.
 	 */
 	public void saveToFile(String fileName) {
 		if (currentServiceGroup == null || currentServiceGroup.getIncidents().size() == 0) {
@@ -81,7 +81,7 @@ public class ServiceWolfManager {
 	 * 
 	 * @param fileName location of a service file\
 	 * 
-	 * @throws IAE if the file can not be read
+	 * @throws IllegalArgumentException if the file can not be read
 	 */
 	public void loadFromFile(String fileName) {
 		ArrayList<ServiceGroup> temp = new ArrayList<ServiceGroup>();
@@ -110,9 +110,12 @@ public class ServiceWolfManager {
 	}
 
 	/**
-	 * returns an array of incidents
+	 * Returns a 2d where the row is assign for the number of incidents and to
+	 * colums represent the incidets detial as followp; Id, state, title, and status
+	 * detail.
 	 * 
-	 * @return a 2D array string
+	 * @return a 2D array string or if the current service group is null, it returns
+	 *         null.
 	 */
 	public String[][] getIncidentsAsArray() {
 		if (currentServiceGroup == null) {
@@ -130,10 +133,11 @@ public class ServiceWolfManager {
 	}
 
 	/**
-	 * A method the retrives an incident by a refernce id
+	 * A method that retrives an incident by a refernce id. if the current
+	 * serviceGroup is null, it returns null incidet.
 	 * 
 	 * @param id an integer refernce to an incident
-	 * @return an incident
+	 * @return an incident from the CurrentServiceGroup
 	 */
 	public Incident getIncidentById(int id) {
 
@@ -144,7 +148,8 @@ public class ServiceWolfManager {
 	}
 
 	/**
-	 * executes command on the current incident by refrencinf to its incident
+	 * executes command on the current servicegroup by callig it with its incident
+	 * id.
 	 * 
 	 * @param id      an integer refrencing incident
 	 * @param command is a command to execute
@@ -157,7 +162,8 @@ public class ServiceWolfManager {
 	}
 
 	/**
-	 * a method to delete an incident by index number
+	 * a method to delete an incident by index number. if the current serviceGroup
+	 * is null then the methods exits executing.
 	 * 
 	 * @param id an integer that refrences incidents
 	 */
@@ -171,7 +177,8 @@ public class ServiceWolfManager {
 	}
 
 	/**
-	 * A method that adds incidents to service groups.
+	 * A method that creates an incident and adds it to the current service groups.
+	 * if the current service group is null then the method stops executing.
 	 * 
 	 * @param title   title of the incident
 	 * @param caller  caller of the incident
@@ -192,10 +199,14 @@ public class ServiceWolfManager {
 	}
 
 	/**
-	 * A method to load and read service groups from a given file name
+	 * A method to load a current service group from a given parameter
 	 * 
 	 * @param serviceGroupName is a string representaion of a file loaction to load
 	 *                         service groups
+	 * 
+	 * @throws IllegalArgumentException If the service group name can not be found
+	 *                                  in the serviceGroups or if the list is
+	 *                                  empty.
 	 */
 	public void loadServiceGroup(String serviceGroupName) {
 		// we are adding the given service group to the current service group
@@ -208,12 +219,13 @@ public class ServiceWolfManager {
 				}
 			}
 		}
-		throw new IllegalArgumentException("");
+		throw new IllegalArgumentException();
 
 	}
 
 	/**
-	 * retrives the service group name of the current service group
+	 * retrives the service group name of the current service group, or retruns null
+	 * if the currentServiceGroup is null
 	 * 
 	 * @return a string value of a service group name
 	 */
@@ -239,7 +251,8 @@ public class ServiceWolfManager {
 	}
 
 	/**
-	 * a method to clear a service group
+	 * a method to clear a service group. sets the serviceGroup list to null and the
+	 * current service group to null
 	 */
 	public void clearServiceGroups() {
 		serviceGroups = new ArrayList<ServiceGroup>();
@@ -254,9 +267,10 @@ public class ServiceWolfManager {
 	 * @param updateName a string value of the new name of the update service group
 	 *                   name
 	 * 
-	 * @throws IAE if the name of the serviceGroup is null or empty or duplicate in
-	 *             the service sroup list - If the current service group is null
-	 *             throws an IAE.
+	 * @throws IllegalArgumentException if the name of the serviceGroup is null or
+	 *                                  empty or duplicate in the service sroup list
+	 *                                  - If the current service group is null
+	 *                                  throws an IllegalArgumentException.
 	 */
 	public void editServiceGroup(String updateName) {
 		if (updateName == null || "".equals(updateName) || checkDuplicateServiceName(updateName)) {
@@ -282,9 +296,10 @@ public class ServiceWolfManager {
 	 * 
 	 * @param serviceGroupName a string value of the service group name
 	 * 
-	 * @throws IAE if the serviceGroupName is null or empty - if the
-	 *             serviceGroupName is duplicate and lareaday exist in the
-	 *             serviceGoups then an IAE is thrown.
+	 * @throws IllegalArgumentException if the serviceGroupName is null or empty -
+	 *                                  if the serviceGroupName is duplicate and
+	 *                                  lareaday exist in the serviceGoups then an
+	 *                                  IllegalArgumentException is thrown.
 	 */
 	public void addServiceGroup(String serviceGroupName) {
 		if (serviceGroupName == null || "".equals(serviceGroupName) || checkDuplicateServiceName(serviceGroupName)) {

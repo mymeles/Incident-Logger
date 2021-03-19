@@ -22,10 +22,13 @@ public class ServiceGroupsReader {
 
 	/**
 	 * A method that is used to read service groups from a file along with thier
-	 * incidents
+	 * incidents. if any of the files are corrupt or invalid other than empty it
+	 * will return an empty ArrayList
 	 * 
 	 * @param fileName a string represenaton of the file that is reade
 	 * @return returns an arraylist os service groups
+	 * 
+	 * @throws IllegalArgumentException if the file is not read
 	 */
 	public static ArrayList<ServiceGroup> readServiceGroupsFile(String fileName) {
 		ArrayList<ServiceGroup> serviceg = new ArrayList<ServiceGroup>();
@@ -40,14 +43,14 @@ public class ServiceGroupsReader {
 			}
 
 			if (str.trim().charAt(0) != '#') {
-				return serviceg; 
+				return serviceg;
 			}
-		} catch (FileNotFoundException e) { 
-			throw new IllegalArgumentException("Unable to load file.");  
+		} catch (FileNotFoundException e) {
+			throw new IllegalArgumentException("Unable to load file.");
 		}
 
 		Scanner scan = new Scanner(str);
-		scan.useDelimiter("\\r?\\n?[#]"); 
+		scan.useDelimiter("\\r?\\n?[#]");
 
 		while (scan.hasNext()) {
 			try {
@@ -57,21 +60,24 @@ public class ServiceGroupsReader {
 
 				serviceg.add(sg1);
 			} catch (IllegalArgumentException e) {
-				continue; 
+				continue;
 			}
 
 		}
 		scan.close();
-		
+
 		return serviceg;
 
 	}
 
 	/**
-	 * Private method for processing the service groups found in the file
+	 * Private method for processing the service groups found in the file. if isn't
+	 * able to processed then null is returned.
 	 * 
 	 * @param service of each service group found in the file
 	 * @return the ServiceGroup object based on file contents
+	 * 
+	 * @throws IllegalArgumentException if the constructed serviceGroup is invalid.
 	 */
 	private static ServiceGroup processServiceGroup(String service) {
 		try {
@@ -110,6 +116,8 @@ public class ServiceGroupsReader {
 	 * 
 	 * @param incidentL of the incident being read from the file
 	 * @return the Incident object that is owned by the service group
+	 * 
+	 * @throws IllegalArgumentException if the incident isn't created 
 	 */
 	private static Incident processIncident(String incidentL) {
 

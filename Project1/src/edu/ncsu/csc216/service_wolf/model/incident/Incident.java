@@ -535,7 +535,7 @@ public class Incident {
 	}
 
 	/**
-	 * an overriden toString method so the classes string prepresenataion can be
+	 * an overriden toString method so the classes strings representation can be
 	 * modified the the specified need below 2,
 	 * id,Incidentstate,titel,caller,reopencount,owner,statusdetails - message1 -
 	 * message2
