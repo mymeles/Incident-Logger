@@ -5,10 +5,6 @@ package edu.ncsu.csc216.service_wolf.model.manager;
 
 import static org.junit.Assert.*;
 
-import java.io.FileInputStream;
-import java.io.IOException;
-import java.util.Scanner;
-
 import org.junit.Before;
 import org.junit.Test;
 
