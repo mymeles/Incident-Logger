@@ -1,9 +1,11 @@
+
 /**
  * 
  */
 package edu.ncsu.csc216.service_wolf.model.manager;
 
 import java.util.ArrayList;
+
 
 import edu.ncsu.csc216.service_wolf.model.command.Command;
 import edu.ncsu.csc216.service_wolf.model.incident.Incident;
@@ -131,6 +133,7 @@ public class ServiceWolfManager {
 			return list;
 		}
 	}
+
 	/**
 	 * A method the retrives an incident by a refernce id
 	 * 
@@ -164,6 +167,7 @@ public class ServiceWolfManager {
 	 * @param id an integer that refrences incidents
 	 */
 	public void deleteIncidentById(int id) {
+
 		if (currentServiceGroup == null) {
 			return;
 		}
@@ -189,6 +193,7 @@ public class ServiceWolfManager {
 		} catch (IllegalArgumentException e) {
 			//
 		}
+
 	}
 
 	/**
@@ -265,6 +270,7 @@ public class ServiceWolfManager {
 		sort(temp);
 
 		loadServiceGroup(updateName);
+
 	}
 
 	/**
@@ -305,10 +311,12 @@ public class ServiceWolfManager {
 		if (currentServiceGroup == null) {
 			throw new IllegalArgumentException("No service group selected.");
 		}
+
 		else if (serviceGroups.size() == 1) {
 			serviceGroups.remove(0);
 			currentServiceGroup = null;
 		}
+
 		if (serviceGroups.size() > 0) {
 			for (int i = 0; i < serviceGroups.size(); i++) {
 				if (currentServiceGroup.getServiceGroupName().equals(serviceGroups.get(i).getServiceGroupName())) {
@@ -327,10 +335,12 @@ public class ServiceWolfManager {
 	 * @param sg serviceGroup passed to be sorted
 	 */
 	private void sort(ServiceGroup sg) {
+
 		for (int i = 0; i < serviceGroups.size(); i++) {
 			if (serviceGroups.get(i).getServiceGroupName().equals(sg.getServiceGroupName())) {
 				return;
-			} else if (serviceGroups.get(i).getServiceGroupName().compareTo(sg.getServiceGroupName()) > 0) {
+			}
+			else if (serviceGroups.get(i).getServiceGroupName().compareTo(sg.getServiceGroupName()) > 0) {
 				serviceGroups.add(i, sg);
 				return;
 			}
