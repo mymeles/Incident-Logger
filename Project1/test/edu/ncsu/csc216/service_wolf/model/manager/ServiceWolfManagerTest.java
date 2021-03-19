@@ -5,7 +5,9 @@ package edu.ncsu.csc216.service_wolf.model.manager;
 
 import static org.junit.Assert.*;
 
-
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.util.Scanner;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -23,7 +25,7 @@ import edu.ncsu.csc216.service_wolf.model.command.Command.CommandValue;
 public class ServiceWolfManagerTest {
 
 	/**
-	 * A instance of the the class its self called manager 
+	 * A instance of the the class its self called man
 	 */
 	private ServiceWolfManager manager;
 
@@ -69,12 +71,11 @@ public class ServiceWolfManagerTest {
 		assertEquals("title3", manager.getIncidentsAsArray()[2][2]);
 		assertEquals("No Status", manager.getIncidentsAsArray()[2][3]);
 
-		manager.loadFromFile("test-files/incidents1.txt");
-		for(int i = 0; i < manager.getServiceGroupList().length; i++) {
-			System.out.println("testing: " + manager.getServiceGroupList()[i]);
-		}
-		
+		manager.loadFromFile("test-files/incidents3.txt");
+		manager.saveToFile("test-files/test-one.txt");
 		assertEquals(4, manager.getServiceGroupList().length);
+		checkFiles("test-files/expo.txt", "test-files/test-one.txt"); 
+		
 
 	}
  
@@ -411,6 +412,27 @@ public class ServiceWolfManagerTest {
 			assertEquals("No service group selected.", e.getMessage());
 		}
 
+	}
+	
+	/**
+	 * Helper method to compare two files for the same contents
+	 * 
+	 * @param expFile expected output
+	 * @param actFile actual output
+	 */
+	private void checkFiles(String expFile, String actFile) {
+		try (Scanner expScanner = new Scanner(new FileInputStream(expFile));
+				Scanner actScanner = new Scanner(new FileInputStream(actFile));) {
+
+			while (expScanner.hasNextLine()) {
+				assertEquals(expScanner.nextLine(), actScanner.nextLine());
+			}
+
+			expScanner.close();
+			actScanner.close();
+		} catch (IOException e) {
+			fail("Error reading files.");
+		}
 	}
 
 }

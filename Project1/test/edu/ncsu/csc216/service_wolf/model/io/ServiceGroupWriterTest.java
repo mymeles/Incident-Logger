@@ -87,7 +87,7 @@ public class ServiceGroupWriterTest {
 
 		ServiceGroupWriter.writeServiceGroupsToFile("test-files/test-Incident1.txt", serviceGroup);
 
-		checkFiles("test-files/exp_i1.txt", "test-files/test-Incident1.txt");
+		checkFiles("test-files/exp_i1.txt", "test-files/test-Incident1.txt"); 
 	} 
 
 	/**

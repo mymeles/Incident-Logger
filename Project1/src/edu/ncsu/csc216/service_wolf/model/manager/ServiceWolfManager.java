@@ -5,7 +5,6 @@ package edu.ncsu.csc216.service_wolf.model.manager;
 
 import java.util.ArrayList;
 
-
 import edu.ncsu.csc216.service_wolf.model.command.Command;
 import edu.ncsu.csc216.service_wolf.model.incident.Incident;
 import edu.ncsu.csc216.service_wolf.model.io.ServiceGroupWriter;
@@ -75,38 +74,29 @@ public class ServiceWolfManager {
 	}
 
 	/**
+	 * Helper method for processeing
+	 * 
+	 * @param temp
+	 */
+	public void fileProcess(ArrayList<ServiceGroup> temp) {
+		currentServiceGroup = temp.get(0);
+		sort(currentServiceGroup);
+		currentServiceGroup.setIncidentCounter();
+		for (int i = 0; i < temp.size(); i++) {
+			sort(temp.get(i));
+		}
+	}
+
+	/**
 	 * Uses the ServiceGroupReader to read the given fileName.
 	 * 
 	 * @param fileName location of a service file
 	 */
 	public void loadFromFile(String fileName) {
 		ArrayList<ServiceGroup> temp = new ArrayList<ServiceGroup>();
-		if (currentServiceGroup == null) {
-			try {
-				temp = ServiceGroupsReader.readServiceGroupsFile(fileName);
-				currentServiceGroup = temp.get(0);
-				currentServiceGroup.setIncidentCounter();
-
-				for (int i = temp.size() - 1; i >= 0; i--) {
-					sort(temp.get(i));
-				}
-				return;
-			} catch (IllegalArgumentException e) {
-				throw new IllegalArgumentException(e.getMessage());
-			}
-		}
-
-		ArrayList<ServiceGroup> temp2 = new ArrayList<ServiceGroup>();
 		try {
-			temp2 = ServiceGroupsReader.readServiceGroupsFile(fileName);
-			currentServiceGroup = temp2.get(0);
-			currentServiceGroup.setIncidentCounter();
-			sort(currentServiceGroup);
-
-			for (int i = temp2.size() - 1; i >= 0; i--) {
-				sort(temp2.get(i));
-			}
-
+			temp = ServiceGroupsReader.readServiceGroupsFile(fileName);
+			fileProcess(temp);
 		} catch (IllegalArgumentException e) {
 			throw new IllegalArgumentException(e.getMessage());
 		}
@@ -338,8 +328,7 @@ public class ServiceWolfManager {
 		for (int i = 0; i < serviceGroups.size(); i++) {
 			if (serviceGroups.get(i).getServiceGroupName().equals(sg.getServiceGroupName())) {
 				return;
-			}
-			else if (serviceGroups.get(i).getServiceGroupName().compareTo(sg.getServiceGroupName()) > 0) {
+			} else if (serviceGroups.get(i).getServiceGroupName().compareTo(sg.getServiceGroupName()) > 0) {
 				serviceGroups.add(i, sg);
 				return;
 			}
