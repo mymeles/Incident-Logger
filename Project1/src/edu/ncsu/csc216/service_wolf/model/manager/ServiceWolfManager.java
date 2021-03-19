@@ -73,15 +73,8 @@ public class ServiceWolfManager {
 		loadFromFile(fileName);
 	}
 
-	/**
-	 * Helper method for processeing
-	 * 
-	 * @param temp
-	 */
-	public void fileProcess(ArrayList<ServiceGroup> temp) {
-		currentServiceGroup = temp.get(0);
-		sort(currentServiceGroup);
-		currentServiceGroup.setIncidentCounter();
+	
+	private void fileProcess(ArrayList<ServiceGroup> temp) {
 		for (int i = 0; i < temp.size(); i++) {
 			sort(temp.get(i));
 		}
@@ -95,8 +88,18 @@ public class ServiceWolfManager {
 	public void loadFromFile(String fileName) {
 		ArrayList<ServiceGroup> temp = new ArrayList<ServiceGroup>();
 		try {
-			temp = ServiceGroupsReader.readServiceGroupsFile(fileName);
-			fileProcess(temp);
+			if (currentServiceGroup == null) {
+				temp = ServiceGroupsReader.readServiceGroupsFile(fileName);
+				currentServiceGroup = temp.get(0);
+				fileProcess(temp);
+				return;
+			} else { 
+				temp = ServiceGroupsReader.readServiceGroupsFile(fileName);
+				currentServiceGroup = temp.get(0);
+				sort(currentServiceGroup);
+				fileProcess(temp);
+			}
+
 		} catch (IllegalArgumentException e) {
 			throw new IllegalArgumentException(e.getMessage());
 		}
