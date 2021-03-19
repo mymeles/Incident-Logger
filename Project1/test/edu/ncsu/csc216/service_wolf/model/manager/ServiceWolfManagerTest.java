@@ -71,10 +71,17 @@ public class ServiceWolfManagerTest {
 		assertEquals("title3", manager.getIncidentsAsArray()[2][2]);
 		assertEquals("No Status", manager.getIncidentsAsArray()[2][3]);
 
-		manager.loadFromFile("test-files/incidents3.txt");
+		manager.loadFromFile("test-files/incidents3.txt"); 
 		manager.saveToFile("test-files/test-one.txt");
 		assertEquals(4, manager.getServiceGroupList().length);
-		checkFiles("test-files/expo.txt", "test-files/test-one.txt"); 
+		manager.clearServiceGroups();
+		manager.loadFromFile("test-files/test-one.txt");
+		assertEquals(4, manager.getServiceGroupList().length);
+		assertEquals("CSC IT", manager.getServiceGroupName());
+
+		
+
+		
 		
 
 	}
@@ -240,8 +247,8 @@ public class ServiceWolfManagerTest {
 	@Test
 	public void testLoadServiceGroup() {
 		manager.loadFromFile("test-files/incidents3.txt");
-		
 		manager.loadServiceGroup("OIT");
+		assertEquals("OIT", manager.getServiceGroupName());
 		assertEquals("1", manager.getIncidentsAsArray()[0][0]);
 		assertEquals("In Progress", manager.getIncidentsAsArray()[0][1]);
 
@@ -256,7 +263,6 @@ public class ServiceWolfManagerTest {
 		assertEquals("OIT", manager.getServiceGroupName());
 		assertEquals(1, manager.getIncidentById(1).getId());
 		assertEquals("In Progress", manager.getIncidentById(1).getState());
-
 	}
 
 	/**
@@ -414,25 +420,4 @@ public class ServiceWolfManagerTest {
 
 	}
 	
-	/**
-	 * Helper method to compare two files for the same contents
-	 * 
-	 * @param expFile expected output
-	 * @param actFile actual output
-	 */
-	private void checkFiles(String expFile, String actFile) {
-		try (Scanner expScanner = new Scanner(new FileInputStream(expFile));
-				Scanner actScanner = new Scanner(new FileInputStream(actFile));) {
-
-			while (expScanner.hasNextLine()) {
-				assertEquals(expScanner.nextLine(), actScanner.nextLine());
-			}
-
-			expScanner.close();
-			actScanner.close();
-		} catch (IOException e) {
-			fail("Error reading files.");
-		}
-	}
-
 }
