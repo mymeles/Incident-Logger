@@ -6,7 +6,6 @@ package edu.ncsu.csc216.service_wolf.model.incident;
 import java.util.ArrayList;
 
 import edu.ncsu.csc216.service_wolf.model.command.Command;
-import edu.ncsu.csc216.service_wolf.model.command.Command.CommandValue;
 
 /**
  * A class that represents an incident that is Mannaged
@@ -231,6 +230,14 @@ public class Incident {
 		setState(state);
 	}
 
+	/**
+	 * A method to check for invalid values incidnet Log and set the incidentLog to
+	 * the passed parameter
+	 * 
+	 * @param incidentLog an ArrayList of IncidentLog messages
+	 * @throws and IAE stating "Incident cannot be created" if the Arraylist is null
+	 *             or empty
+	 */
 	private void setLog(ArrayList<String> incidentLog) {
 		if (incidentLog == null)
 			throw new IllegalArgumentException("Incident cannot be created.");
@@ -255,6 +262,8 @@ public class Incident {
 	 *
 	 * 
 	 * @param id the incident id to set
+	 * 
+	 * @throws and IAE if the id is zero and less than zero
 	 */
 	private void setId(int id) {
 
@@ -278,7 +287,14 @@ public class Incident {
 		return currentState.getStateName();
 	}
 
-	// helper method for determinign the incident state
+	/**
+	 * A method to help set the incidents state
+	 * 
+	 * @param condition is a boolean
+	 * @param state     is the IncidnetState we want to set it to
+	 * 
+	 * @throws an IAE if the passed boolean is false
+	 */
 	private void createState(boolean condition, IncidentState state) {
 		if (condition) {
 			this.currentState = state;
@@ -290,11 +306,15 @@ public class Incident {
 	}
 
 	/**
-	 * sets the incidets state from the passesd parameter
+	 * sets the incidets state from the passesd parameter, it checks for the
+	 * approipraite values for the state to be set, checks owner and status detail
 	 * 
 	 * @param state the incident state to set
+	 * 
+	 * @throws an IAE if non of the five states condition is met or if the passed
+	 *            state string is null or empty or misspelled
 	 */
-	private void setState(String state) { 
+	private void setState(String state) {
 		if (state == null || "".equals(state))
 			throw new IllegalArgumentException("Incident cannot be created.");
 
@@ -316,8 +336,11 @@ public class Incident {
 					resolvedState);
 			break;
 		case CANCELED_NAME:
-			createState(owner.equals(UNOWNED) && (statusDetails.equals(CANCELLATION_DUPLICATE) || statusDetails.equals(CANCELLATION_UNNECESSARY)
-					|| statusDetails.equals(CANCELLATION_NOT_AN_INCIDENT) || statusDetails.equals(CANCELLATION_CALLER_CANCELLED)), canceledState);
+			createState(owner.equals(UNOWNED)
+					&& (statusDetails.equals(CANCELLATION_DUPLICATE) || statusDetails.equals(CANCELLATION_UNNECESSARY)
+							|| statusDetails.equals(CANCELLATION_NOT_AN_INCIDENT)
+							|| statusDetails.equals(CANCELLATION_CALLER_CANCELLED)),
+					canceledState);
 			break;
 		default:
 			throw new IllegalArgumentException("Incident cannot be created.");
@@ -335,11 +358,11 @@ public class Incident {
 	}
 
 	/**
-	 * sets the incidets titke from the passesd parameter
+	 * sets the incidets title from the passesd parameter
 	 * 
 	 * @param title the title to set
 	 * 
-	 * @throws if title is empty or
+	 * @throws an IAE if title is null or an empty string 
 	 */
 	private void setTitle(String title) {
 		if (title == null || "".equals(title)) {
@@ -382,6 +405,8 @@ public class Incident {
 	 * sets the incidets reopen count from the passesd paramter
 	 * 
 	 * @param reopenCount the reopenCount to set
+	 * 
+	 * @throws an IAE if the reopen count value is less then zero 
 	 */
 	private void setReopenCount(int reopenCount) {
 		if (reopenCount < 0) {
@@ -404,7 +429,7 @@ public class Incident {
 	 * 
 	 * @param owner the owner to set
 	 * 
-	 * @throws IAE stating "Incident cannot be created" if the title is empty or
+	 * @throws an IAE stating "Incident cannot be created" if the title is empty or
 	 *             null
 	 */
 	private void setOwner(String owner) {
@@ -554,7 +579,7 @@ public class Incident {
 		}
 
 		/**
-		 * A method that updates the Incident state by passing through command
+		 * A method that updates the Incident state by passing through command.
 		 *
 		 * @param command is a Command
 		 */

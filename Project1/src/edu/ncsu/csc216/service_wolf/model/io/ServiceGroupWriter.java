@@ -25,6 +25,10 @@ public class ServiceGroupWriter {
 	 * @throws IOExceptionIOException if Servicegroup can't not be written to the
 	 *                                file given
 	 */
+	
+	public void ServieGroupWriter() {
+		
+	}
 	public static void writeServiceGroupsToFile(String fileName, ArrayList<ServiceGroup> serviceGroup) {
 		PrintStream fileWriter;
 		try {

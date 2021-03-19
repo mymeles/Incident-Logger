@@ -66,7 +66,7 @@ public class ServiceGroup {
 	/**
 	 * a method to set the incident counter
 	 */
-	public void setIncidentCounter() { 
+	public void setIncidentCounter() {
 		if (incident.size() == 0) {
 			Incident.setCounter(1);
 		} else {
@@ -78,7 +78,7 @@ public class ServiceGroup {
 	 * 
 	 * @param incidents is
 	 * @return a boolean
-	 */ 
+	 */
 	private boolean helper(Incident incidents) {
 		for (int i = 0; i < incident.size(); i++) {
 			if (incident.get(i).getId() == incidents.getId()) {
@@ -95,10 +95,22 @@ public class ServiceGroup {
 	 */
 	public void addIncident(Incident incidents) {
 		if (helper(incidents))
-			throw new IllegalArgumentException("Incident cannot be created."); 
+			throw new IllegalArgumentException("Incident cannot be created.");
 		// add it at thge correct place
-		incident.add(incidents); // sort it 
-		setIncidentCounter(); 
+		if (incident.size() == 0) {
+			incident.add(incidents);
+			setIncidentCounter();
+			return;
+		}
+		for (int i = 0; i < incident.size(); i++) {
+			if (incidents.getId() < incident.get(i).getId()) {
+				incident.add(i, incidents);
+				setIncidentCounter();
+				return;
+			} 
+		}
+		incident.add(incidents);
+		// incident.add(incidents); // sort it
 
 //		// compring true and false staments to determine adding incidnet
 //		switch ((incident.size() > 0) + "-" + helper(incidents)) { 
@@ -114,12 +126,13 @@ public class ServiceGroup {
 //		default:
 //			throw new IllegalArgumentException("Incident cannot be created.");
 //		}
-		Collections.sort(incident, new Comparator<Incident>() {
-			@Override
-			public int compare(Incident i1, Incident i2) {
-				return i1.getId() - i2.getId();
-			}
-		});
+//		Collections.sort(incident, new Comparator<Incident>() {
+//			@Override
+//			public int compare(Incident i1, Incident i2) {
+//				return i1.getId() - i2.getId();
+//			}
+//		});
+//	}
 	}
 
 	/**

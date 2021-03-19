@@ -81,35 +81,31 @@ public class ServiceWolfManager {
 	 * @param fileName location of a service file
 	 */
 	public void loadFromFile(String fileName) {
+		ArrayList<ServiceGroup> temp = new ArrayList<ServiceGroup>();
 		if (currentServiceGroup == null) {
 			try {
-				serviceGroups = ServiceGroupsReader.readServiceGroupsFile(fileName);
-				currentServiceGroup = serviceGroups.get(0);
+				temp = ServiceGroupsReader.readServiceGroupsFile(fileName);
+				currentServiceGroup = temp.get(0);
 				currentServiceGroup.setIncidentCounter();
-				// you need to sort it
-				Collections.sort(serviceGroups, new Comparator<ServiceGroup>() {
-					@Override
-					public int compare(ServiceGroup sg1, ServiceGroup s2) {
-						return sg1.getServiceGroupName().compareToIgnoreCase(s2.getServiceGroupName());
-					}
-				});
+
+				for (int i = temp.size() - 1; i >= 0; i--) {
+					sort(temp.get(i));
+				}
 				return;
 			} catch (IllegalArgumentException e) {
 				throw new IllegalArgumentException(e.getMessage());
-			} 
+			}
 		}
 		try {
-			serviceGroups = ServiceGroupsReader.readServiceGroupsFile(fileName);
 			serviceGroups.add(currentServiceGroup);
+			temp = ServiceGroupsReader.readServiceGroupsFile(fileName);
 			currentServiceGroup = serviceGroups.get(0);
+			sort(currentServiceGroup);
 			currentServiceGroup.setIncidentCounter();
-			Collections.sort(serviceGroups, new Comparator<ServiceGroup>() { 
+			for (int i = temp.size() - 1; i >= 0; i--) { 
+				sort(temp.get(i)); 
+			}
 
-				@Override
-				public int compare(ServiceGroup sg1, ServiceGroup s2) {
-					return sg1.getServiceGroupName().compareToIgnoreCase(s2.getServiceGroupName());
-				}
-			});
 		} catch (IllegalArgumentException e) {
 			throw new IllegalArgumentException(e.getMessage());
 		}
@@ -268,17 +264,9 @@ public class ServiceWolfManager {
 
 		ServiceGroup temp = currentServiceGroup;
 		temp.setServiceGroupName(updateName.trim());
-		serviceGroups.add(temp);
+		sort(temp);
 		deleteServiceGroup();
 		loadServiceGroup(updateName);
-
-		Collections.sort(serviceGroups, new Comparator<ServiceGroup>() {
-
-			@Override
-			public int compare(ServiceGroup sg1, ServiceGroup s2) {
-				return sg1.getServiceGroupName().compareToIgnoreCase(s2.getServiceGroupName());
-			}
-		});
 
 	}
 
@@ -293,7 +281,7 @@ public class ServiceWolfManager {
 			throw new IllegalArgumentException("Invalid service group name.");
 		}
 		ServiceGroup addService = new ServiceGroup(serviceGroupName);
-		serviceGroups.add(addService);
+		sort(addService);
 		loadServiceGroup(serviceGroupName);
 
 		// need to write the file to ht
@@ -345,6 +333,20 @@ public class ServiceWolfManager {
 			}
 		}
 
+	}
+
+	/**
+	 * 
+	 */
+	private void sort(ServiceGroup sg) {
+
+		for (int i = 0; i < serviceGroups.size(); i++) {
+			if (serviceGroups.get(i).getServiceGroupName().compareTo(sg.getServiceGroupName()) > 0) {
+				serviceGroups.add(i, sg);
+				return;
+			}
+		}
+		serviceGroups.add(sg);
 	}
 
 	/**

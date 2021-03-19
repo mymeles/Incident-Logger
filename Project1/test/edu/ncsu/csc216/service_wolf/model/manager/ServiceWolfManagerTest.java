@@ -191,7 +191,7 @@ public class ServiceWolfManagerTest {
 
 		manager.deleteIncidentById(3);
 		assertEquals(0, manager.getIncidentsAsArray().length);
-	}
+	} 
 
 	/**
 	 * Test method for addIncidentToServiceGroup.
@@ -221,7 +221,6 @@ public class ServiceWolfManagerTest {
 		assertEquals("New", manager.getIncidentsAsArray()[2][1]);
 		assertEquals("title3", manager.getIncidentsAsArray()[2][2]);
 		assertEquals("No Status", manager.getIncidentsAsArray()[2][3]);
-		
 		assertEquals(3, manager.getIncidentsAsArray().length);
 		
 		 
@@ -232,10 +231,6 @@ public class ServiceWolfManagerTest {
 		
 		// adding incident to the current service GROUP 
 		manager.addIncidentToServiceGroup("title3", "caller3", "message3");
-//		assertEquals("3", manager.getIncidentsAsArray()[2][0]);
-//		assertEquals("New", manager.getIncidentsAsArray()[2][1]);
-//		assertEquals("title3", manager.getIncidentsAsArray()[2][2]);
-//		assertEquals("No Status", manager.getIncidentsAsArray()[2][3]);
 		assertEquals(5, manager.getIncidentsAsArray().length); 
 	}
 
@@ -245,6 +240,9 @@ public class ServiceWolfManagerTest {
 	@Test
 	public void testLoadServiceGroup() {
 		manager.loadFromFile("test-files/incidents1.txt");
+		for(int i = 0; i < manager.getServiceGroupList().length; i++) {
+			System.out.println("testing: " + manager.getServiceGroupList()[i]);
+		}
 		manager.loadServiceGroup("OIT");
 		assertEquals("1", manager.getIncidentsAsArray()[0][0]);
 		assertEquals("In Progress", manager.getIncidentsAsArray()[0][1]);
@@ -363,6 +361,7 @@ public class ServiceWolfManagerTest {
 
 		}
 
+		// testing to 
 		try {
 			manager.addServiceGroup("");
 			fail();
@@ -372,7 +371,8 @@ public class ServiceWolfManagerTest {
 			assertEquals("CSC IT", manager.getServiceGroupName());
 
 		}
-
+		
+		// tesdting to add a serviceGroup with an exisitng list
 		try {
 			manager.addServiceGroup("CSC IT");
 			fail();
