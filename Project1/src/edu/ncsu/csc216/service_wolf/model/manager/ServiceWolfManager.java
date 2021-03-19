@@ -96,14 +96,16 @@ public class ServiceWolfManager {
 				throw new IllegalArgumentException(e.getMessage());
 			}
 		}
+
+		ArrayList<ServiceGroup> temp2 = new ArrayList<ServiceGroup>();
 		try {
-			serviceGroups.add(currentServiceGroup);
-			temp = ServiceGroupsReader.readServiceGroupsFile(fileName);
-			currentServiceGroup = serviceGroups.get(0);
-			sort(currentServiceGroup);
+			temp2 = ServiceGroupsReader.readServiceGroupsFile(fileName);
+			currentServiceGroup = temp2.get(0);
 			currentServiceGroup.setIncidentCounter();
-			for (int i = temp.size() - 1; i >= 0; i--) { 
-				sort(temp.get(i)); 
+			sort(currentServiceGroup);
+
+			for (int i = temp2.size() - 1; i >= 0; i--) {
+				sort(temp2.get(i));
 			}
 
 		} catch (IllegalArgumentException e) {
@@ -263,9 +265,10 @@ public class ServiceWolfManager {
 			throw new IllegalArgumentException("No service group selected.");
 
 		ServiceGroup temp = currentServiceGroup;
+		deleteServiceGroup();
 		temp.setServiceGroupName(updateName.trim());
 		sort(temp);
-		deleteServiceGroup();
+
 		loadServiceGroup(updateName);
 
 	}
@@ -283,15 +286,6 @@ public class ServiceWolfManager {
 		ServiceGroup addService = new ServiceGroup(serviceGroupName);
 		sort(addService);
 		loadServiceGroup(serviceGroupName);
-
-		// need to write the file to ht
-
-		Collections.sort(serviceGroups, new Comparator<ServiceGroup>() {
-			@Override
-			public int compare(ServiceGroup sg1, ServiceGroup s2) {
-				return sg1.getServiceGroupName().compareToIgnoreCase(s2.getServiceGroupName());
-			}
-		});
 	}
 
 	/**
@@ -336,12 +330,17 @@ public class ServiceWolfManager {
 	}
 
 	/**
+	 * a helper method to sert the list
 	 * 
+	 * @param sg serviceGroup passed to be sorted
 	 */
 	private void sort(ServiceGroup sg) {
 
 		for (int i = 0; i < serviceGroups.size(); i++) {
-			if (serviceGroups.get(i).getServiceGroupName().compareTo(sg.getServiceGroupName()) > 0) {
+			if (serviceGroups.get(i).getServiceGroupName().equals(sg.getServiceGroupName())) {
+				return;
+			}
+			else if (serviceGroups.get(i).getServiceGroupName().compareTo(sg.getServiceGroupName()) > 0) {
 				serviceGroups.add(i, sg);
 				return;
 			}

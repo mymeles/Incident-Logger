@@ -75,6 +75,10 @@ public class ServiceWolfManagerTest {
 		assertEquals("No Status", manager.getIncidentsAsArray()[2][3]);
 
 		manager.loadFromFile("test-files/incidents1.txt");
+		for(int i = 0; i < manager.getServiceGroupList().length; i++) {
+			System.out.println("testing: " + manager.getServiceGroupList()[i]);
+		}
+		
 		assertEquals(4, manager.getServiceGroupList().length);
 
 	}
@@ -239,10 +243,8 @@ public class ServiceWolfManagerTest {
 	 */
 	@Test
 	public void testLoadServiceGroup() {
-		manager.loadFromFile("test-files/incidents1.txt");
-		for(int i = 0; i < manager.getServiceGroupList().length; i++) {
-			System.out.println("testing: " + manager.getServiceGroupList()[i]);
-		}
+		manager.loadFromFile("test-files/incidents3.txt");
+		
 		manager.loadServiceGroup("OIT");
 		assertEquals("1", manager.getIncidentsAsArray()[0][0]);
 		assertEquals("In Progress", manager.getIncidentsAsArray()[0][1]);
